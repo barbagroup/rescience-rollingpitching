@@ -1,104 +1,594 @@
+\section{Introduction}
 
-Three years, we launched ReScience, a new scientific journal aimed at publishing the
-replication of existing computational research. Since ReScience published its first
-article\supercite{Topalidou:2015}, things have been
-going steadily. We are still alive, independent and without a budget. In the
-meantime, we have published around 24 articles (mostly in computational
-neuroscience \& computational ecology) and the initial
-\href{https://rescience-c.github.io/board/}{editorial board} has grown from
-around 10 to roughly 100 members (editors and reviewers), we have advertised
-ReScience at several conferences worldwide, gave some
-interviews\supercite{Science:2018}, and published an article introducing
-ReScience in PeerJ~CS\supercite{Rougier:2017}. Based on our
-experience\supercite{Rougier:2018} at managing the journal during these three
-years, we think that time is ripe for some changes.
+The minimum requirements to conduct reproducible computational research is to make code and data available to others.
+Reproducibility and replicability are essential components for the progress of evidence-based science.
+Three years ago, the Congress directed the National Science Foundation to contract with the National Academies of Sciences, Engineering, and Medicine to assess reproducibility and replicability in scientific and engineering research.
+A consensus report\supercite{nasem_2019} was released in May 2019 and provides findings and recommendations for improving rigor and transparency in research.
+The report also provides clear definitions of ``reproducibility'' and ``replicability'' that are intended to apply across all fields of science:
 
-\subsubsection{ReScience C \& ReScience X}
+\begin{itemize}
+  \item[] \textbf{Reproducibility} is obtaining consistent results using the same input data; computational steps, methods, and code; and conditions of analysis.
+  \item[] \textbf{Replicability} is obtaining consistent results across studies aimed at answering the same scientific question, each of which had obtained its own data. Two studies may be considered to have replicated if they obtain consistent results given the level of uncertainty inherent in the system under study.
+\end{itemize}
 
-The biggest and most visible change we would like to propose is to change the
-name of the journal ``ReScience'' in favor of ``ReScience C'' where the C
-stands for (c)omputational. This change would be necessary to have consistent
-naming with the upcoming creation of the ``ReScience X'' journal that will be
-dedicated to e(x)perimental replications and co-directed by E.Roesch
-(University of Reading) and N.Rougier (University of Bordeaux). The name
-``ReScience'' would then be used for the name of a non-profit organization
-(that is yet to be created) for the two journals as well as future journals
-(such as the utopian CoScience\supercite{Rougier:2017} or a future and
-tentative ``ReScience T'' for theoretical science).
+\citet{peng_2011} introduced the idea of a reproducibility spectrum, in which he defines reproducible research as being a ``minimum standard for judging scientific claims when full independent replication of a study is not possible'' or not available.
+The two extremes on the reproducibility spectrum are ``not reproducible'' (when the product of the study is only the a published manuscript) and "fully replicated" (the gold standard for a study).
 
+In the past, we have attempted to fully replicate our own results.\supercite{krishnan_et_al_2014}
+The outputs of this replication study have been published.\supercite{mesnard_barba_2017}
+Knowing how challenging it was to replicate our own results, we now want to estimate how much effort it would take to replication the computational results from other research groups.
+To partly answer that question, we have attempted to replicate a Computational Fluid Dynamics study on the pitching and rolling motion of an insect wing modeled as an elliptical flat plate.
+The original study was published in 2016 by Li and co-authors.\supercite{li_dong_2016}
+The output of the original study is a published manuscript.
+The computational code, input data, and conditions of analysis that were used to produce the numerical results reported in the publications are not publicly available.
+Thus, following Peng's reproducibility spectrum, we consider these studies to be not reproducible.
+But can we replicate the scientific findings claimed in the publications?
+And, can we do it in a reproducible manner?
 
-\subsubsection{A new submission process}
+The original study\supercite{li_dong_2016} deals with the rolling and pitching motion of an insect wing (modeled as an elliptical disk).
+Many prior studies have focused on the pitching and/or heaving motion of three-dimensional wings.
+But only few studies have focused the rolling and pitching motion.
+The pitching-rolling wing has the potential to be a better canonical model for instigating the hydrodynamics of bio-inspired flapping propulsors.
+The original study looked at the propulsive performance of a pitching and rolling elliptical disk over a wide range of parameters (Reynolds number, Strouhal, number, wing's aspect ratio, and phase-difference angle between the pitching and rolling).
+They used their own research code to produce the numerical results; it solve the incompressible Navier-Stokes equations with a projection method and with an immersed boundary method to handle the motion of the wing on a fixed structured Cartesian grid.
+The authors of the original publication have conducted a parametric study to investigate the effect of the Reynolds number, Strouhal number, and shape of the elliptical plate.
+They used their own research code to produce the numerical results, which implements a different immersed-boundary method that those implemented in PetIBM.
+The authors used a sharp-interface method (with a ghost-cell methodology), while we use a diffused-interface technique (with regularized delta functions) in PetIBM.
 
-The current submission process requires authors to fork, clone and branch the
-submission repository in order to write their article and to place code and
-data at the relevant places in the forked repository. Once done, authors have
-to push their changes and to make a pull request that is considered as a
-submission. This process is cumbersome for authors and has induced many
-troubles for editors as well once the article is accepted and ready to be
-published, mostly because of the complexity of the editing procedure. In order
-to make life easier for everyone, we greatly simplified the submission process
-for ReScience C and X. Authors are now responsible for getting a DOI for their
-code \& data and only have to submit a PDF and a metadata file in a GitHub
-issue.
-We also provide Python programs that largely automate the subsequent editing
-process. We will still archive the submission on Zenodo but this archive will
-be made for the final PDF only. However, both the PDF and the Zenodo entry will
-contain all associated DOIs (data and code).
+We have implemented the three-dimensional rolling and pitching kinematics in an open-source code that is version-controlled with Git and hosted on GitHub.
+The research code is released under the permissive (non-copyleft) 3-Clause BSD license and uses the \href{https://github.com/barbagroup/PetIBM}{PetIBM} library\supercite{chuang_et_al_2018} to solve the equations.
 
+\section{Numerical methods and implementation}
 
-\subsubsection{A simplified publishing process}
+The present replication study models the wing with an elliptical flat plate.
+The flat plate undergoes a rolling motion around the streamwise $x$-axis combined to a pitching motion around its spanwise axis.
+The wing is characterized by its chord length $c$ and its spanwise length $S$.
+The aspect ratio $AR$ of the wing is given by $AR = \frac{S^2}{A_\text{plan}}$, where $A_\text{plan}$ is the planform area of the plate ($A_\text{plan} = \frac{\pi c S}{4}$).
 
-In ReScience, we have have been using a combination of
-\href{https://daringfireball.net/projects/markdown/syntax}{markdown} and
-\href{http://pandoc.org/}{pandoc} for producing both the draft and the final
-version of all the published articles. This had worked reasonably well until it
-started to cause all kind of problems for both authors and editors, especially
-with the reference and citation plugins. Consequently, articles will be now
-submitted directly in PDF with accompanying metadata in a separate file using
-the \href{https://en.wikipedia.org/wiki/YAML}{YAML} format (they were
-previously embedded in the markdown file). Once an article has been accepted,
-authors will be responsible for updating the metadata and for rebuilding the PDF if
-necessary. We could also consider using the
-\href{https://github.com/openjournals/whedon}{Whedon} API that helps with automating
-most of the editorial tasks for \href{http://joss.theoj.org/}{JOSS} and
-\href{http://jose.theoj.org/}{JOSE}. This will most probably require some
-tweaking because our publishing pipeline is a bit different.
+The rolling motion is defined by the instantaneous rolling position:
 
+\begin{equation}
+  \phi (t) = -A_\phi \cos \left( 2 \pi f t \right)
+\end{equation}
 
-\subsubsection{A new design}
+where $t$ is the time, $f$ is the flapping frequency, and $A_\phi$ is the rolling amplitude.
 
-The combination of markdown and pandoc has also severely limited the layout and
-style possibilities for the article template and since we are switching to
-\LaTeX, this is the opportunity to propose a new design based on a more elegant
-style, using a new font stack\supercite{SourceSerifPro:2014, Roboto:2011,
-  SourceCodePro:2012} (you are currently reading it). The goal is to have a
-subtle but strong identity with enhanced readability. Considering that articles
-will be mostly read on screen (as opposed to printed), we can benefit from a
-more ethereal style. Once this design will have stabilized, an
-\href{https://www.overleaf.com/}{overleaf} template will be made available for
-those without a \TeX~installation. If a \TeX~expert is ready to help review
-the template (and possibly rewrite it as a class), their help would be much
-welcome and appreciated. The same holds for LibreOffice, Word or Pages, any
-template is welcome, just contact us beforehand such that we can coordinate
-efforts.
+The pitching motion along the (rolling) spanwise axis is defined by the instantaneous pitching position:
 
+\begin{equation}
+  \theta (t) = -A_\theta \cos(2 \pi f t + \psi)
+\end{equation}
 
-\subsubsection{Editorials, letters and special issues}
+where $A_\theta$ is the pitching amplitude and $\psi$ is the phase-difference angle between the pitching and rolling motions.
 
-ReScience C remains dedicated to the publication of computational replications
-but we (i.e., the editorial team) would like to have the opportunity to
-publish \emph{editorials} when deemed necessary and to give anyone the
-opportunity to write \emph{letters} to the community on a specific topic
-related to reproducibility. Both editorials and letters are expected to be 1 or
-2 pages long (but no hard limit will be enforced), will be (quickly) peer reviewed,
-and will be assigned a DOI. Furthermore, with the advent of reproducibility
-hackatons worldwide, we will host {\em special issues} with guest editors (such
-as, for example, the organizers of a hackaton) in order to publish the results
-and to enhance their discoverability. Each entry will have to go through the
-regular open peer-reviewed pipeline.\\
+In the present replication study, we generate the flow field variables (velocity and pressure) by numerically solving the three-dimensional Navier-Stokes for an incompressible viscous flow in a non-dimensional form.
+The Reynolds number is defined as $Re = \frac{U_\infty c}{\nu}$, where $U_\infty$ is the incoming freestream speed and $\nu$ is the kinematic viscosity.
+The convective and diffusion terms are advanced in time using second-order accurate Adams-Bashforth and Crank-Nicolson methods, respectively.
+We impose a Dirichlet condition (streamwise velocity set to the freestream speed $U_\infty$) on all boundaries, except at the outlet where we use a convective boundary condition (to convey the vortical structures outside the computational domain).
 
+Our code base, PetIBM, solves the incompressible Navier-Stokes equations via a projection method,seen as an approximate block-LU decomposition of the fully discretized equations.\supercite{perot_1993}
+To compute the external flow around moving objects (such as a pitching-rolling wing), we use an immersed boundary technique.
+In that framework, the fluid equations are solved over an extended domain that includes the inside of the immersed object.
+This technique allows us to solve the equations on simple fixed structured Cartesian grids.
+The boundary of the immersed objected is represented by a collection of Lagrangian markers at which locations we enforce a no-slip condition.
+To take into account the presence of an immersed object, the fluid equations are modified in the vicinity of its boundary.
+Different treatments lead to different immersed boundary methods.
+The original study used a sharp-interface method with a ghost-cell methodology.\supercite{mittal_et_al_2008}
+We aim to replicate the main scientific findings of the original study using a different immersed-boundary method.
+In PetIBM, we employ regularized delta functions to transfer data between the Lagrangian markers and the Eulerian grid points (on which the fluid equations are solved).
+PetIBM provide different implementations of the immersed boundary method, among them the immersed-boundary projection method\supercite{taira_colonius_2007} and its decoupled version.\supercite{li_et_al_2016}
+(The later is used in the present replication study.)
 
-We hope that most readers will agree on the proposed changes such that we can
-commit to them in the next few weeks. The review for this editorial is open (as
-usual) and anyone can comment on and/or oppose any of the proposed changes. New
-ideas are also welcome.
+\section{Reproducible computational workflow}
+
+The output of the original study consists in a published manuscript.
+Although the manuscript is well detailed, the code and input data used to produce the results were not made publicly available by the authors.
+In that regards, we consider the original study to not be computationally reproducible.
+Thus, we aim to replicate the scientific findings claimed in the original study with our own research software stack, and to produce reproducible results.
+
+PetIBM\supercite{chuang_et_al_2018} is developed open-source, version-controlled with Git, and hosted on a public GitHub repository.
+We release PetIBM under the permissive (non-copyleft) 3-Clause BSD license.
+(Each release is also archived on the data repository Zenodo.)
+
+Our implementation of the three-dimensional rolling and pitching wing with PetIBM is also open-source on GitHub and released under the same license, which allows others to use, modify, and re-distribute our work.
+In addition, the version-controlled repository contains all the input data and processing scripts needed to reproduce the simulation results (from submitting and running the simulations to re-generating the figures of the present manuscript).
+The repository also contains \textsc{README} files to guide readers that may be interested in re-running the analysis.
+Upon acceptation of the present article, the application repository, as well as secondary data needed to reproduce the figures, have been archived on Zenodo with a digital-object identifier associated to it.
+
+All simulations reported in the present article were submitted to our University-managed high-performance-computing (HPC) cluster called Pegasus.
+(We used computational nodes with Dual 20-Core 3.70GHz Intel Xeon Gold 6148 processors and NVIDIA P100 GPU devices.)
+To avoid the burden of building PetIBM and its applications on the cluster, we used the container technology from Docker and Singularity (citations needed).
+Containers allow us the capture the conditions of analysis.
+We have already used Docker containers in the past to create a reproducible workflow for scientific applications on the public cloud provider Microsoft Azure.\supercite{mesnard_barba_2020}
+Here, we aim to adopt a similar workflow on our local HPC cluster.
+In the early stage of this replication, we faced an obstacle: Docker is not available to users on Pegasus.
+In fact, we learned that Docker is not available at most HPC centers for security reasons.
+Indeed, submitting container-based jobs with Docker implies running a Docker daemon (a background process) that requires root privileges that users do not and should not have on shared production clusters.
+Thus, we decided to adopt another container technology, Singularity, to conduct the replication study on Pegasus (citation needed).
+Singularity is more recent than Docker and was designed from the ground up to prevent escalation of user privileges.
+The technology has also the capability to convert Docker images into Singularity images.
+
+Our reproducible workflow starts with creating a Docker image that installed PetIBM and its applications, as well as all there dependencies.
+We pushed the image to a public registry on DockerHub.
+Anyone interested in using the application code can now pull the image from the registry and create a container out of it with a faithfully reproduced computational environment.
+Next, we use the cloud service Singularity Hub to build a Singularity image, which is then pulled via a command-line terminal and used to run container-based jobs on Pegasus.
+Researchers interested in reproducing our results can pull our Singularity image to create a faithfully reproduced computational environment.
+
+\section{Results}
+
+\subsection{Grid-independence study}
+
+In the original study, the authors reported the results of a grid-independence study to justify the spatial and temporal grid sizes used in the parametric study.
+Force coefficients, profiles of the velocity components, profiles of the fluctuations of the kinetic energy, and distances between vortical structures in the near wake of the wing, were compared between the different grids to assess numerical independence in the results.
+Here, we also report the results of our grid-independence study.
+
+We use the same domain size as in the original study: $30c \times 25c \times 25c$.
+The root of the wing (around which the plate undergoes the rolling and pitching motions) is located at the center of the computational domain.
+The spatial grid is kept uniform with highest resolution in the region that covers the motion of the wing.
+Outside this area, we also add a uniform layer in the sub-domain $\left[ -2c, 6c \right] \times \left[ -3c, 3c \right] \times \left[ -c, 2c \right]$, that covers the near-wake region, with grid-spacing size $\Delta x / c = 0.05$.
+(We opted for a smooth transition between the two uniform regions, in which the grid-cell widths are stretched with a constant ratio of $1.1$ in all directions, except in the streamwise direction behind the wing where we used a ratio of $1.03$.)
+Finally, the grid-cell width is stretched to the external boundaries with a constant ration of $1.2$.
+The wing is modeled as a flat ellipse with Lagrangian markers uniformly distributed on the surface (with a similar resolution as the grid-cell width of the background Eulerian grid).
+
+For the present grid-independence study, we computed the flow with Reynolds number $Re = 200$, Strouhal number $St = 0.6$, and phase-difference angle $\psi = 90^o$.
+We investigated the effect of the grid-cell width, the time-step size, and the exit criterion of the iterative solvers, on the numerical solution.
+Since the original study modeled the wing with an elliptical disk (with a thickness equal to $3\%$ of the chord length), we also compared the results obtained with the flat plate to those using a similar disk.
+
+To assess the effect of the grid-cell width on the solution, we computed five flapping cycles on three grids: coarse ($\Delta x / c = 0.03$), nominal ($\Delta x / c = 0.01$) and fine ($\Delta x / c = 0.005$).
+
+Note that the original study does not report the number of time steps computed per flapping cycle.
+We only known that the results (force statistics and velocity profiles) remain similar when halving the time-step size.
+In the following results, we will show the history of the force coefficients when using $1000$ and $2000$ time steps per flapping cycle, to demonstrate independence in the results when halving the time-step size.
+
+\begin{table}
+  \centering
+  \begin{tabular}{lcccc}
+    \hline\hline
+    Grid & $(\Delta x / c)_\text{min}$ & $n_x \times n_y \times n_z$ & \# grid cells ($\times 10^6$) & \# body markers \\
+    \hline
+    Coarse & $0.03$ & $226 \times 185 \times 122$ & $5.1$ & $1005$ \\
+    Nominal & $0.01$ & $331 \times 302 \times 211$ & $21.1$ & $9042$ \\
+    Fine & $0.005$ & $467 \times 465 \times 333$ & $72.3$ & $36158$ \\
+    \hline\hline
+  \end{tabular}
+  \caption{Characteristics of the computational grids used for in the grid-independence study. Body markers were uniformly distributed on the surface of the wing using a similar resolution as the background fluid grid.}
+  \label{tab:independence_grid_charateristics}
+\end{table}
+
+\begin{table}
+  \centering
+  \begin{tabular}{lcccc}
+    \hline\hline
+    Case & $\overline{C_T}$ & $\left( C_L \right)_\text{r.m.s.}$ & $\left( C_Z \right)_\text{r.m.s.}$ & $\eta$ \\
+    \hline
+    Li \& Dong (2016) & $1.462$ & $3.417$ & $1.912$ & $0.1927$ \\
+    Coarse grid ($\Delta x / c = 0.03$) & $0.443$ & $3.324$ & $2.098$ & $0.1002$ \\
+    Nominal grid ($\Delta x / c = 0.01$) & $0.914$ & $2.852$ & $1.651$ & $0.1635$ \\
+    Fine grid ($\Delta x / c = 0.005$) & $0.986$ & $2.817$ & $1.601$ & $0.1727$ \\
+    Disk ($3\%$ thickness) & $0.762$ & $3.014$ & $1.886$ & $-$ \\
+    $1000$ steps/cycle & $0.918$ & $2.853$ & $1.644$ & $0.1636$ \\
+    Tighter solvers ($atol = 10^{-9}$) & $0.914$ & $2.852$ & $1.651$ & $0.1635$ \\
+    \hline\hline
+  \end{tabular}
+  \caption{Results of the grid-independence study for a flapping wing with $AR = 1.27$, $St = 0.6$, $Re = 200$, and $\psi = 90^o$. We also report the results from \citet{li_dong_2016}.}
+  \label{tab:independence_results}
+\end{table}
+
+\begin{figure}
+  \centering
+  \includegraphics[width=\textwidth]{../runs/independence/figures/force_coefficients_compare_dx.png}
+  \caption{History of the thrust ($C_T$), lift ($C_L$), and spanwise ($C_Z$) coefficients over two flapping cycles of a circular plate ($AR = 1.27$) at Reynolds number $Re = 200$ and Strouhal number $St = 0.6$. We compare the solution obtained with PetIBM on three spatial grids: coarse ($\Delta x / c = 0.03$), nominal ($\Delta x / c = 0.01$), and fine ($\Delta x / c = 0.005$). We also report the force coefficients published in \citet{li_dong_2016}.}
+  \label{fig:independence_force_coefficients_dx}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \includegraphics[width=\textwidth]{../runs/independence/figures/force_coefficients_compare_disk.png}
+  \caption{History of the thrust ($C_T$), lift ($C_L$), and spanwise ($C_Z$) coefficients over two flapping cycles of a circular plate ($AR = 1.27$) at Reynolds number $Re = 200$ and Strouhal number $St = 0.6$. We compare solutions on the nominal grid where the wing is modeled as a flat plate and as a disk with a thickness of $3\%$ of the chord length (as done in the original study\supercite{li_dong_2016}).}
+  \label{fig:independence_force_coefficients_disk}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \includegraphics[width=\textwidth]{../runs/independence/figures/force_coefficients_compare_dt.png}
+  \caption{History of the thrust ($C_T$), lift ($C_L$), and spanwise ($C_Z$) coefficients over two flapping cycles of a circular plate ($AR = 1.27$) at Reynolds number $Re = 200$ and Strouhal number $St = 0.6$. We compare the instantaneous force coefficients obtained with $n_t = 2000$ and $n_t = 1000$ time steps per flapping cycle obtained on the nominal grid. Markers show digitized data from \citet{li_dong_2016}.}
+  \label{fig:independence_force_coefficients_dt}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \begin{subfigure}[c]{0.45\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{../runs/independence/figures/ux_profiles_compare_dx_dt.png}
+    \caption{}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[c]{0.45\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{../runs/independence/figures/uy_profiles_compare_dx_dt.png}
+    \caption{}
+  \end{subfigure}
+  \vspace{1cm}
+  \begin{subfigure}[c]{0.45\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{../runs/independence/figures/uz_profiles_compare_dx_dt.png}
+    \caption{}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[c]{0.45\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{../runs/independence/figures/kin_profiles_compare_dx_dt.png}
+    \caption{}
+  \end{subfigure}
+  \caption{Comparison of the velocity profiles and profiles of the fluctuation of the kinetic energy in the wake of a flapping circular plate ($AR = 1.27$) at Reynolds number $Re = 200$ and Strouhal number $St = 0.6$. We report profiles at locations $x / c = 1$, $2$, $3$, $4$, and $5$. We compare the profiles obtained on the nominal grid, on the finer grid in space, and on the coarser grid in time. (a) Streamwise velocity ($\overline{u_1} - U_\infty$) profiles in the $x/y$ plane at $z = S / 2$; (b) transverse velocity ($\overline{u_2}$) profiles in the $x/y$ plane at $z = S / 2$; (c) spanwise velocity ($\overline{u_3}$) in the $x/z$ plane at $y = 0$; (d) fluctuation of the kinetic energy $( \overline{{u_1'}^2} + \overline{{u_2'}^2} + \overline{{u_3'}^2} ) / 2$ in the $x/y$ plane at $z = S / 2$. We also report data from the original study.\supercite{li_dong_2016}}
+  \label{fig:independence_profiles}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \begin{subfigure}[c]{0.45\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{../runs/independence/figures/wx_slice_c_distances.png}
+    \caption{}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[c]{0.45\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{../runs/independence/figures/wx_slice_f_distances.png}
+    \caption{}
+  \end{subfigure}
+  \caption{Two-dimensional contours of the streamwise vorticity ($-5 \leq w_x \leq 5$) in the $y/z$ plane at $t/T = 4.25$ in the near wake at $x / c = 0.3$ (a) and in the far wake at $x / c = 1.3$ (b). We compare the distances between vortical structures obtained on different grids to assess independence of the numerical solution.}
+  \label{fig:independence_wx_distances}
+\end{figure}
+
+\begin{table}
+  \centering
+  \begin{tabular}{lcccc}
+    \hline\hline
+    Case & $d_1$ & $d_2$ & $d_3$ & $d_4$ \\
+    \hline
+    Nominal & $0.810$ & $0.630$ & $0.200$ & $0.900$ \\
+    Finer in space & $0.780$ & $0.575$ & $0.215$ & $0.900$ \\
+    Coarser in time & $0.810$ & $0.600$ & $0.190$ & $0.900$ \\
+    \hline\hline
+  \end{tabular}
+  \caption{Comparison of the distances between vortical structures at $t / T = 4.25$ for a flapping wing with $AR = 1.27$, $St = 0.6$, $Re = 200$, and $\psi = 90^o$.}
+  \label{tab:independence_wx_distances}
+\end{table}
+
+\subsection{Baseline case}
+
+\begin{figure}
+  \centering
+  \begin{subfigure}[b]{0.3\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{../runs/Re200_St0.6_AR1.27_psi90/figures/qcrit_wx_perspective_zoom_view_0007750.png}
+    \caption{$t / T = 3.875$}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[b]{0.3\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{../runs/Re200_St0.6_AR1.27_psi90/figures/qcrit_wx_perspective_zoom_view_0007875.png}
+    \caption{$t / T = 3.9375$}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[b]{0.3\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{../runs/Re200_St0.6_AR1.27_psi90/figures/qcrit_wx_perspective_zoom_view_0008000.png}
+    \caption{$t / T = 4.0$}
+  \end{subfigure}
+  \vspace{1cm}
+  \begin{subfigure}[b]{0.3\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{../runs/Re200_St0.6_AR1.27_psi90/figures/qcrit_wx_perspective_zoom_view_0008250.png}
+    \caption{$t / T = 4.125$}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[b]{0.3\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{../runs/Re200_St0.6_AR1.27_psi90/figures/qcrit_wx_perspective_zoom_view_0008375.png}
+    \caption{$t / T = 4.1875$}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[b]{0.3\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{../runs/Re200_St0.6_AR1.27_psi90/figures/qcrit_wx_perspective_zoom_view_0008500.png}
+    \caption{$t / T = 4.25$}
+  \end{subfigure}
+  \vspace{1cm}
+  \begin{subfigure}[b]{0.3\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{../runs/Re200_St0.6_AR1.27_psi90/figures/qcrit_wx_perspective_zoom_view_0008625.png}
+    \caption{$t / T = 4.3125$}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[b]{0.3\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{../runs/Re200_St0.6_AR1.27_psi90/figures/qcrit_wx_perspective_zoom_view_0008750.png}
+    \caption{$t / T = 4.375$}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[b]{0.3\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{../runs/Re200_St0.6_AR1.27_psi90/figures/qcrit_wx_perspective_zoom_view_0008875.png}
+    \caption{$t / T = 4.4375$}
+  \end{subfigure}
+  \caption{Wake topology for a flapping circular plate ($AR = 1.27$) with $St = 0.6$, $Re = 200$, and $\psi = 90^o$ at $t / T = 3.875$, $3.9375$, $4.0$, $4.125$, $4.1875$, $4.25$, $4.3125$, $4.375$, $4.4375$. We show the contours of the $Q$-criterion for $Q = 1$ (gray) and $Q = 6$ (colored by the streamwise vorticity, $-5 \leq w_x \leq 5$).}
+  \label{fig:baseline_qcrit_perspective}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \begin{minipage}{0.45\linewidth}
+    \begin{subfigure}[t]{\linewidth}
+      \includegraphics[width=\textwidth]{../runs/Re200_St0.6_AR1.27_psi90/figures/qcrit_wx_perspective_view_0008500.png}
+      \caption{}
+    \end{subfigure}
+  \end{minipage}
+  \begin{minipage}{0.45\linewidth}
+    \begin{subfigure}[t]{\linewidth}
+      \includegraphics[width=\textwidth]{../runs/Re200_St0.6_AR1.27_psi90/figures/qcrit_wx_lateral_view_0008500.png}
+      \caption{}
+    \end{subfigure}
+    \vspace{1cm}
+    \begin{subfigure}[b]{\linewidth}
+      \includegraphics[width=\textwidth]{../runs/Re200_St0.6_AR1.27_psi90/figures/qcrit_wx_top_view_0008500.png}
+      \caption{}
+    \end{subfigure}
+  \end{minipage}
+  \caption{Wake topology of a pitching-rolling circular plate after four flapping cycles. We show flow structures  using the $Q$-criterion for $Q = 1$ (gray) and $Q = 6$ (colored by the streamwise vorticity, $-5 \leq w_x \leq 5$). (a) Perspective view, (b) side view, and (c) top view.}
+  \label{fig:baseline_wake_topology}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \begin{subfigure}[b]{0.2\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{../runs/Re200_St0.6_AR1.27_psi90/figures/wx_slice_a.png}
+    \caption{}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[b]{0.2\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{../runs/Re200_St0.6_AR1.27_psi90/figures/wx_slice_b.png}
+    \caption{}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[b]{0.2\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{../runs/Re200_St0.6_AR1.27_psi90/figures/wx_slice_c.png}
+    \caption{}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[b]{0.2\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{../runs/Re200_St0.6_AR1.27_psi90/figures/wx_slice_d.png}
+    \caption{}
+  \end{subfigure}
+  \vspace{0.5cm}
+  \begin{subfigure}[b]{0.2\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{../runs/Re200_St0.6_AR1.27_psi90/figures/wx_slice_e.png}
+    \caption{}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[b]{0.2\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{../runs/Re200_St0.6_AR1.27_psi90/figures/wx_slice_f.png}
+    \caption{}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[b]{0.2\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{../runs/Re200_St0.6_AR1.27_psi90/figures/wx_slice_g.png}
+    \caption{}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[b]{0.2\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{../runs/Re200_St0.6_AR1.27_psi90/figures/wx_slice_h.png}
+    \caption{}
+  \end{subfigure}
+  \vspace{0.5cm}
+  \begin{subfigure}[b]{0.2\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{../runs/Re200_St0.6_AR1.27_psi90/figures/wx_slice_i.png}
+    \caption{}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[b]{0.2\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{../runs/Re200_St0.6_AR1.27_psi90/figures/wx_slice_j.png}
+    \caption{}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[b]{0.2\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{../runs/Re200_St0.6_AR1.27_psi90/figures/wx_slice_k.png}
+    \caption{}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[b]{0.2\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{../runs/Re200_St0.6_AR1.27_psi90/figures/wx_slice_l.png}
+    \caption{}
+  \end{subfigure}
+  \caption{Two-dimensional slices of the streamwise vorticity ($-5 \leq w_x \leq 5$) at $t / T = 4.25$ in the $y/z$ plane at different $x$ locations in the wake of a flapping circular plate ($AR = 1.27$) with $St = 0.6$, $Re = 200$, and $\psi = 90^o$. (a-l)Wake locations: $x / c = 0$, $0.2$, $0.3$, $0.75$, $1.1$, $1.3$, $1.85$, $2.0$, $2.7$, $3.8$, $4.5$, and $5.25$.}
+  \label{fig:baseline_wx_slices}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \includegraphics[width=\linewidth]{../runs/Re200_St0.6_AR1.27_psi90/figures/force_coefficients.png}
+  \caption{History of the thrust ($C_T$), lift ($C_L$), and spanwise ($C_Z$) coefficients during the fourth and fifth flapping cycles of a circular plate ($AR = 1.27$) with $St = 0.6$, $Re = 200$, and $\psi = 90^o$. We also report the digitized coefficients from \cite{li_dong_2016} and the instantaneous values of the instantaneous rolling and pitching angles (dashed blue line and dotted green line, respectively).}
+  \label{fig:baseline_force_coefficients}
+\end{figure}
+
+\subsection{Effect of the Strouhal number}
+
+\begin{figure}
+  \centering
+  \begin{subfigure}[]{0.45\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{../runs/Re200_St0.4_AR1.27_psi90/figures/qcrit_wx_lateral_view_0008500_post.png}
+    \caption{}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[]{0.45\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{../runs/Re200_St0.4_AR1.27_psi90/figures/qcrit_wx_top_view_0008500_post.png}
+    \caption{}
+  \end{subfigure}
+  \vspace{1cm}
+  \begin{subfigure}[]{0.45\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{../runs/Re200_St0.8_AR1.27_psi90/figures/qcrit_wx_lateral_view_0008500_post.png}
+    \caption{}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[]{0.45\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{../runs/Re200_St0.8_AR1.27_psi90/figures/qcrit_wx_top_view_0008500_post.png}
+    \caption{}
+  \end{subfigure}
+  \caption{Wake topology captured at $t / T = 4.25$ (when the plate is at middle point during the upstroke) for a circular plate ($AR = 1.27$) at Reynolds number $200$ and Strouhal numbers $0.4$ (top) and $0.8$ (bottom). Wake structures are represented with the Q-criterion for $Q = 1$ (gray) and $Q = 6$ (colored with the streamwise vorticity, $-5 \leq w_x \leq 5$). (a,c) lateral view of the wake; (b,d) top view.}
+  \label{fig:strouhal_wake_topology}
+\end{figure}
+
+\begin{table}
+  \centering
+  \begin{tabular}{ccc}
+    \hline\hline
+    $St$ & $\alpha$ ($^o$) & $\beta$ ($^o$) \\
+    \hline
+    0.4 & 16 & 13 \\
+    0.6 & 18 & 23 \\
+    0.8 & 20 & 31 \\
+    1.0 & 20 & 8 \\
+    1.2 & 28 & 8 \\
+    \hline\hline
+  \end{tabular}
+  \caption{Effect of the Strouhal number on the wake oblique angle ($\alpha$) and vortex ring orientation angle ($\beta$) at $Re = 200$ with $\psi = 90^o$.}
+  \label{tab:strouhal_angles}
+\end{table}
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.7\textwidth]{../runs/figures/efficiency_compare_St.png}
+  \caption{Cycle-averaged thrust coefficient ($\overline{C_T}$) and propulsive efficiency ($\eta$) for the baseline case as functions of the Strouhal number. Data were computed and averaged during the fifth flapping cycle.}
+  \label{fig:strouhal_propulsive_efficiency}
+\end{figure}
+
+\subsection{Effect of the Reynolds number}
+
+\begin{figure}
+  \centering
+  \begin{subfigure}[c]{0.45\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{../runs/Re100_St0.6_AR1.27_psi90/figures/qcrit_wx_perspective_zoom_view_0008500.png}
+    \caption{}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[c]{0.45\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{../runs/Re400_St0.6_AR1.27_psi90/figures/qcrit_wx_perspective_zoom_view_0008500.png}
+    \caption{}
+  \end{subfigure}
+  \caption{Vortex topology at $t / T = 4.25$ for a circular plate ($AR = 1.27$) with $St = 0.6$ and $\psi = 90^o$ at Reynolds numbers $Re = 100$ (a) and $Re = 400$ (b). We visualized vortical structures using the $Q$-criterion with $Q = 1$ (in gray) and $Q = 6$ (colored by the streamwise vorticity, $-5 \leq w_x \leq 5$).}
+  \label{fig:reynolds_wake_topology}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \includegraphics[width=\linewidth]{../runs/figures/force_coefficients_compare_Re.png}
+  \caption{History of the thrust ($C_T$), lift ($C_L$), and spanwise ($C_Z$) coefficients over two flapping cycles for a circular flat plate ($AR = 1.27$) at Reynolds numbers $100$, $200$, and $400$. Strouhal number is $0.6$ with a phase difference of $90^o$ for all these cases.}
+  \label{fig:reynolds_force_coefficients}
+\end{figure}
+
+\subsection{Effect of the wing aspect ratio}
+
+\begin{figure}
+  \centering
+  \includegraphics[width=\textwidth]{../runs/figures/force_coefficients_compare_AR.png}
+  \caption{History of the thrust ($C_T$), lift ($C_L$), and spanwise ($C_Z$) coefficients over two flapping cycles for plates with different aspect ratios ($AR$) and with $St = 0.6$, $Re = 200$, and $\psi = 90^o$.}
+  \label{fig:ratio_force_coefficients}
+\end{figure}
+
+\subsection{Effect of the phase difference between pitching and rolling}
+
+\begin{figure}
+  \centering
+  \begin{subfigure}[]{0.45\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{../runs/Re200_St0.6_AR1.27_psi100/figures/qcrit_wx_lateral_view_0008500_post.png}
+    \caption{}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[]{0.45\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{../runs/Re200_St0.6_AR1.27_psi100/figures/qcrit_wx_top_view_0008500_post.png}
+    \caption{}
+  \end{subfigure}
+  \vspace{1cm}
+  \begin{subfigure}[]{0.45\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{../runs/Re200_St0.6_AR1.27_psi110/figures/qcrit_wx_lateral_view_0008500.png}
+    \caption{}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[]{0.45\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{../runs/Re200_St0.6_AR1.27_psi110/figures/qcrit_wx_top_view_0008500.png}
+    \caption{}
+  \end{subfigure}
+  \vspace{1cm}
+  \begin{subfigure}[]{0.45\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{../runs/Re200_St0.6_AR1.27_psi120/figures/qcrit_wx_lateral_view_0008500.png}
+    \caption{}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[]{0.45\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{../runs/Re200_St0.6_AR1.27_psi120/figures/qcrit_wx_top_view_0008500.png}
+    \caption{}
+  \end{subfigure}
+  \caption{Wake topology captured at $t / T = 4.25$ (when the plate is at middle point during the upstroke) for a circular plate ($AR = 1.27$) at Reynolds number $200$, Strouhal number $0.6$, and phase differences $\psi = 100^o$ (top), $110^o$ (center), and $120^o$ (bottom). Wake structures are represented with the $Q$-criterion for $Q = 1$ (gray) and $Q = 6$ (colored with the streamwise vorticity, $-5 \leq w_x \leq 5$). (a,c,e) Lateral view of the wake; (b,d,f) top view.}
+  \label{fig:phase_wake_topology}
+\end{figure}
+
+\begin{table}
+  \centering
+  \begin{tabular}{ccc}
+    \hline\hline
+    $\psi$ ($^o$) & $\alpha$ ($^o$) & $\gamma$ ($^o$) \\
+    \hline
+    90 & 18 & 0 \\
+    100 & 19 & 1 \\
+    110 & 21 & 2 \\
+    120 & 23 & 3 \\
+    \hline\hline
+  \end{tabular}
+  \caption{Effect of the phase difference on the wake oblique angle ($\alpha$) and wake deflection angle ($\gamma$) at $St = 0.6$ and $Re = 200$.}
+  \label{tab:phase_angles}
+\end{table}
+
+\begin{figure}
+  \centering
+  \includegraphics[width=\textwidth]{../runs/figures/force_coefficients_compare_psi.png}
+  \caption{History of the thrust ($C_T$), lift ($C_L$), and spanwise ($C_Z$) coefficients over two flapping cycles for a circular plate ($AR = 1.27$) for various phase-difference angles ($\psi$) between the pitching and rolling motions. Strouhal number is $0.6$ and Reynolds number is $200$ for all these cases.}
+  \label{fig:phase_force_coefficients}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.75\textwidth]{../runs/figures/efficiency_compare_psi.png}
+  \caption{Cycle-averaged thrust coefficient ($\overline{C_T}$) and propulsive efficiency ($\eta$) for the baseline case as functions of the phase difference between the rolling and pitching motions. Data were computed and averaged during the fifth flapping cycle.}
+  \label{fig:phase_efficiency}
+\end{figure}
+
+\section{Conclusion}
+
+The GitHub repository will contain all the input files and command-line instructions to reproduce the numerical results obtained from running container-based jobs with Singularity.
+It will also contain all the scripts used to post-process the raw data and re-generate the figures of manuscript (to be published).
+Main output data will be archived on Zenodo.
