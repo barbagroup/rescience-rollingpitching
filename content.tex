@@ -79,9 +79,32 @@ In PetIBM, we employ regularized delta functions to transfer data between the La
 PetIBM provide different implementations of the immersed boundary method, among them the immersed-boundary projection method\supercite{taira_colonius_2007} and its decoupled version.\supercite{li_et_al_2016}
 (The later is used in the present replication study.)
 
+Each time step, we sequentially solve three linear systems to compute an intermediate velocity field, the Lagrangian forces, and the pressure.
+The system for the velocity is solved using a stabilized bi-conjugate gradient method (from PETSc library) with a Jacobi preconditioner with a convergence criterion based on the absolute $L_2$-norm of the residual and is set to $atol = 10^{-6}$.
+We solve the system for the Lagrangian forces with a direct solver (SuperLU\_dist library).
+The pressure Poisson system is solved with a conjugate-gradient method with a classical algebraic multigrid technique (from NVIDIA AmgX library); here too, the convergence is reached when the absolute $L_2$-norm of the residual is $10^{-6}$.
+
+\begin{table}
+  \centering
+  \begin{tabular}{ll}
+    \hline\hline
+    Parameter & Values \\
+    \hline
+    Wing aspect ratio $AR$ & $1.27$, $1.91$, $2.55$ \\
+    Reynolds number $Re$ & $100$, $200$, $400$ \\
+    Strouhal number $St$ & $0.4$, $0.6$, $0.8$, $1.0$, $1.2$ \\
+    Rolling amplitude $A_\phi$ & $45^o$ \\
+    Pitching amplitude $A_\theta$ & $45^o$ \\
+    Phase-difference angle $\psi$ & $60^o$, $70^o$, $80^o$, $90^o$, $100^o$, $110^o$, $120^o$ \\
+    \hline\hline
+  \end{tabular}
+  \caption{Parameter values used in the present replication study.}
+  \label{tab:parameters}
+\end{table}
+
 \section{Reproducible computational workflow}
 
-The output of the original study consists in a published manuscript.
+The final product of the original study consists in a published manuscript in the journal Physics of Fluids.
 Although the manuscript is well detailed, the code and input data used to produce the results were not made publicly available by the authors.
 In that regards, we consider the original study to not be computationally reproducible.
 Thus, we aim to replicate the scientific findings claimed in the original study with our own research software stack, and to produce reproducible results.
@@ -125,20 +148,14 @@ Here, we also report the results of our grid-independence study.
 We use the same domain size as in the original study: $30c \times 25c \times 25c$.
 The root of the wing (around which the plate undergoes the rolling and pitching motions) is located at the center of the computational domain.
 The spatial grid is kept uniform with highest resolution in the region that covers the motion of the wing.
-Outside this area, we also add a uniform layer in the sub-domain $\left[ -2c, 6c \right] \times \left[ -3c, 3c \right] \times \left[ -c, 2c \right]$, that covers the near-wake region, with grid-spacing size $\Delta x / c = 0.05$.
+Outside this area, we also add a uniform layer in the sub-domain $\left[ -2c, 6c \right] \times \left[ -3c, 3c \right] \times \left[ -c, 2c \right]$, that covers the near-wake region, with grid-spacing size $\Delta x = 0.05c$.
 (We opted for a smooth transition between the two uniform regions, in which the grid-cell widths are stretched with a constant ratio of $1.1$ in all directions, except in the streamwise direction behind the wing where we used a ratio of $1.03$.)
 Finally, the grid-cell width is stretched to the external boundaries with a constant ration of $1.2$.
 The wing is modeled as a flat ellipse with Lagrangian markers uniformly distributed on the surface (with a similar resolution as the grid-cell width of the background Eulerian grid).
 
 For the present grid-independence study, we computed the flow with Reynolds number $Re = 200$, Strouhal number $St = 0.6$, and phase-difference angle $\psi = 90^o$.
 We investigated the effect of the grid-cell width, the time-step size, and the exit criterion of the iterative solvers, on the numerical solution.
-Since the original study modeled the wing with an elliptical disk (with a thickness equal to $3\%$ of the chord length), we also compared the results obtained with the flat plate to those using a similar disk.
-
-To assess the effect of the grid-cell width on the solution, we computed five flapping cycles on three grids: coarse ($\Delta x / c = 0.03$), nominal ($\Delta x / c = 0.01$) and fine ($\Delta x / c = 0.005$).
-
-Note that the original study does not report the number of time steps computed per flapping cycle.
-We only known that the results (force statistics and velocity profiles) remain similar when halving the time-step size.
-In the following results, we will show the history of the force coefficients when using $1000$ and $2000$ time steps per flapping cycle, to demonstrate independence in the results when halving the time-step size.
+Moreover, since the original study modeled the wing with an elliptical disk (with a thickness equal to $3\%$ of the chord length), we also compared the results obtained with the flat plate to those using a similar disk.
 
 \begin{table}
   \centering
@@ -155,6 +172,16 @@ In the following results, we will show the history of the force coefficients whe
   \label{tab:independence_grid_charateristics}
 \end{table}
 
+To assess the effect of the grid-cell width on the solution, we computed five flapping cycles on three grids: coarse ($\Delta x = 0.03c$), nominal ($\Delta x = 0.01c$) and fine ($\Delta x = 0.005c$).
+Table \ref{tab:independence_grid_charateristics} reports characteristics of the spatial grids used for the independence study.
+
+\begin{figure}
+  \centering
+  \includegraphics[width=\textwidth]{../runs/independence/figures/force_coefficients_compare_dx.png}
+  \caption{History of the thrust ($C_T$), lift ($C_L$), and spanwise ($C_Z$) coefficients over two flapping cycles of a circular plate ($AR = 1.27$) at Reynolds number $Re = 200$ and Strouhal number $St = 0.6$. We compare the solution obtained with PetIBM on three spatial grids: coarse ($\Delta x = 0.03c$), nominal ($\Delta x = 0.01c$), and fine ($\Delta x = 0.005c$). We also report the force coefficients published in \citet{li_dong_2016}.}
+  \label{fig:independence_force_coefficients_dx}
+\end{figure}
+
 \begin{table}
   \centering
   \begin{tabular}{lcccc}
@@ -162,9 +189,9 @@ In the following results, we will show the history of the force coefficients whe
     Case & $\overline{C_T}$ & $\left( C_L \right)_\text{r.m.s.}$ & $\left( C_Z \right)_\text{r.m.s.}$ & $\eta$ \\
     \hline
     Li \& Dong (2016) & $1.462$ & $3.417$ & $1.912$ & $0.1927$ \\
-    Coarse grid ($\Delta x / c = 0.03$) & $0.443$ & $3.324$ & $2.098$ & $0.1002$ \\
-    Nominal grid ($\Delta x / c = 0.01$) & $0.914$ & $2.852$ & $1.651$ & $0.1635$ \\
-    Fine grid ($\Delta x / c = 0.005$) & $0.986$ & $2.817$ & $1.601$ & $0.1727$ \\
+    Coarse grid ($\Delta x = 0.03c$) & $0.443$ & $3.324$ & $2.098$ & $0.1002$ \\
+    Nominal grid ($\Delta x = 0.01c$) & $0.914$ & $2.852$ & $1.651$ & $0.1635$ \\
+    Fine grid ($\Delta x = 0.005c$) & $0.986$ & $2.817$ & $1.601$ & $0.1727$ \\
     Disk ($3\%$ thickness) & $0.762$ & $3.014$ & $1.886$ & $-$ \\
     $1000$ steps/cycle & $0.918$ & $2.853$ & $1.644$ & $0.1636$ \\
     Tighter solvers ($atol = 10^{-9}$) & $0.914$ & $2.852$ & $1.651$ & $0.1635$ \\
@@ -174,12 +201,13 @@ In the following results, we will show the history of the force coefficients whe
   \label{tab:independence_results}
 \end{table}
 
-\begin{figure}
-  \centering
-  \includegraphics[width=\textwidth]{../runs/independence/figures/force_coefficients_compare_dx.png}
-  \caption{History of the thrust ($C_T$), lift ($C_L$), and spanwise ($C_Z$) coefficients over two flapping cycles of a circular plate ($AR = 1.27$) at Reynolds number $Re = 200$ and Strouhal number $St = 0.6$. We compare the solution obtained with PetIBM on three spatial grids: coarse ($\Delta x / c = 0.03$), nominal ($\Delta x / c = 0.01$), and fine ($\Delta x / c = 0.005$). We also report the force coefficients published in \citet{li_dong_2016}.}
-  \label{fig:independence_force_coefficients_dx}
-\end{figure}
+Figure \ref{fig:independence_force_coefficients_dx} displays the history of the thrust, lift, and spanwise coefficients over two flapping cycles ($2000$ time steps per cycle), obtained on the coarse, nominal, finer spatial grids.
+When using a similar grid resolution as in the original study ($\Delta x = 0.03c$), the instantaneous force components are noisy and we cannot distinguish two peaks in the lift coefficient, each half cycle.
+Force productions are visually similar for the nominal and fine grids, with the presence of two peaks in the thrust and lift coefficients each half cycle (as reported in the original study).
+Table \ref{tab:independence_results} reports hydrodynamic quantities and propulsive efficiency obtained from the simulations performed during the independence study.
+Refining to computational grid leads to a relative difference of $7.8\%$ in the mean thrust coefficient, $1.2\%$ in the r.m.s. value for the lift coefficient, and $3\%$ in the r.m.s. value of spanwise coefficients.
+Compared to \citet{li_dong_2016}, we obtain lower magnitude in the peaks of the force coefficients.
+Note that we used the nominal spatial grid ($\Delta x = 0.01c$) to conduct a replication of the parametric study.
 
 \begin{figure}
   \centering
@@ -188,12 +216,27 @@ In the following results, we will show the history of the force coefficients whe
   \label{fig:independence_force_coefficients_disk}
 \end{figure}
 
+The original study modeled the wing with a disk (with a thickness equal to $3\%$ of the chord length).
+Here, we use a different immersed boundary method which allows us to model thin volumes with flat surfaces.
+Thus, we decided to employ a flat plate to model the wing, requiring fewer Lagrangian markers to discretize the immersed boundary.
+Still, we wanted to compute the solution obtained with a disk (with same thickness as in the original study) to compare with the flat-plate-bases solution.
+We obtained very similar history for the force coefficients (Figure \ref{fig:independence_force_coefficients_disk}), whether we used a disk or a flat plate.
+Since using a disk does not really improve the solution, we decided to model the wing with a flat plate for the parametric study.
+
 \begin{figure}
   \centering
   \includegraphics[width=\textwidth]{../runs/independence/figures/force_coefficients_compare_dt.png}
   \caption{History of the thrust ($C_T$), lift ($C_L$), and spanwise ($C_Z$) coefficients over two flapping cycles of a circular plate ($AR = 1.27$) at Reynolds number $Re = 200$ and Strouhal number $St = 0.6$. We compare the instantaneous force coefficients obtained with $n_t = 2000$ and $n_t = 1000$ time steps per flapping cycle obtained on the nominal grid. Markers show digitized data from \citet{li_dong_2016}.}
   \label{fig:independence_force_coefficients_dt}
 \end{figure}
+
+Although the authors of the original reported results to assess independence in the results when refining the temporal, they forgot to mention how may time steps per flapping cycle were computed.
+(We know that force statistics and profiles of the velocity components remained unchanged when the time-step size was halved.)
+Figure \ref{fig:independence_force_coefficients_dt} shows the history of the force coefficients obtained on two temporal grids ($2000$ and $1000$ time steps per flapping cycle), using the nominal spatial grid.
+We note that the force production remain unchanged when doubling the time-step size.
+
+Finally, we also checked that aerodynamic statistics do not change significantly when setting tighter convergence criterion for the iterative solvers.
+Mean thrust coefficient, root-mean-square values of the lift and spanwise coefficients, and propulsive efficiency remain identical when decreasing the convergence criterion of the iterative solvers by 3 orders of magnitude (reported in Table \ref{tab:independence_results}).
 
 \begin{figure}
   \centering
@@ -224,6 +267,10 @@ In the following results, we will show the history of the force coefficients whe
   \label{fig:independence_profiles}
 \end{figure}
 
+We also assess the effect of the numerical parameters (grid-spacing size and time-step size) on the flow features by comparing the profiles of the velocity components and of the fluctuations of the kinetic energy at several locations in the wake of the wing.
+Figure \ref{fig:independence_profiles} reports the profiles with a direct comparison to the digitized data from \citet{li_dong_2016}.
+We note that the profiles are visually similar when refining the spatial grid and when using fewer time steps per flapping cycle.
+
 \begin{figure}
   \centering
   \begin{subfigure}[c]{0.45\textwidth}
@@ -252,11 +299,15 @@ In the following results, we will show the history of the force coefficients whe
     Coarser in time & $0.810$ & $0.600$ & $0.190$ & $0.900$ \\
     \hline\hline
   \end{tabular}
-  \caption{Comparison of the distances between vortical structures at $t / T = 4.25$ for a flapping wing with $AR = 1.27$, $St = 0.6$, $Re = 200$, and $\psi = 90^o$.}
+  \caption{Comparison of the distances between vortex structures at $t / T = 4.25$ for a flapping wing with $AR = 1.27$, $St = 0.6$, $Re = 200$, and $\psi = 90^o$.}
   \label{tab:independence_wx_distances}
 \end{table}
 
+Based on the results of our independence study, we decided to replicate the parametric study using our nominal grid (with smallest cell-width $\Delta x = 0.01c$), computing $2000$ time steps per flapping cycles of a wing modeled as a flat plate.
+
 \subsection{Baseline case}
+
+As in the original study, we start by looking at the wake topology and aerodynamic forces generated by a flapping circular plate ($AR = 1.27$) at Reynolds number $Re = 200$, with Strouhal number $St = 0.6$ and a phase-difference angle of $\psi = 90^o$.
 
 \begin{figure}
   \centering
@@ -319,26 +370,37 @@ In the following results, we will show the history of the force coefficients whe
 
 \begin{figure}
   \centering
-  \begin{minipage}{0.45\linewidth}
+  \begin{minipage}{0.55\linewidth}
     \begin{subfigure}[t]{\linewidth}
-      \includegraphics[width=\textwidth]{../runs/Re200_St0.6_AR1.27_psi90/figures/qcrit_wx_perspective_view_0008500.png}
+      \includegraphics[width=\textwidth]{../runs/Re200_St0.6_AR1.27_psi90/figures/qcrit_wx_perspective_view_0008500_post.png}
       \caption{}
     \end{subfigure}
   \end{minipage}
-  \begin{minipage}{0.45\linewidth}
+  \begin{minipage}{0.35\linewidth}
     \begin{subfigure}[t]{\linewidth}
-      \includegraphics[width=\textwidth]{../runs/Re200_St0.6_AR1.27_psi90/figures/qcrit_wx_lateral_view_0008500.png}
+      \includegraphics[width=\textwidth]{../runs/Re200_St0.6_AR1.27_psi90/figures/qcrit_wx_lateral_view_0008500_post.png}
       \caption{}
     \end{subfigure}
     \vspace{1cm}
     \begin{subfigure}[b]{\linewidth}
-      \includegraphics[width=\textwidth]{../runs/Re200_St0.6_AR1.27_psi90/figures/qcrit_wx_top_view_0008500.png}
+      \includegraphics[width=\textwidth]{../runs/Re200_St0.6_AR1.27_psi90/figures/qcrit_wx_top_view_0008500_post.png}
       \caption{}
     \end{subfigure}
   \end{minipage}
   \caption{Wake topology of a pitching-rolling circular plate after four flapping cycles. We show flow structures  using the $Q$-criterion for $Q = 1$ (gray) and $Q = 6$ (colored by the streamwise vorticity, $-5 \leq w_x \leq 5$). (a) Perspective view, (b) side view, and (c) top view.}
   \label{fig:baseline_wake_topology}
 \end{figure}
+
+Figure \ref{fig:baseline_qcrit_perspective} shows the vortex shedding process in the vicinity of the wing at nine different time values.
+We visualize vortex structures using the $Q$-criterion at $Q = 1$ (in gray) and $Q = 6$ (colored by the streamwise vorticity).
+As the wing rolls downward (Figures \ref{fig:baseline_qcrit_perspective}(a-c)), we observe the formation of a ``C''-shaped vortex loop between the root vortex ($V_1$), the tip vortex ($V_2$), and the trailing-edge vortex (TEV).
+When the wing reaches its lowest point (Figure \ref{fig:baseline_qcrit_perspective}(c)), we also note a strength asymmetry between $V_1$ and $V_2$.
+As the plate starts rolling upward while pitching up (Figures \ref{fig:baseline_qcrit_perspective}(d-f)), we note the formation of new vortices from the trailing edge ($V_3$) and from the leading-edge vortex ($V_4$).
+These vortices interact with each other to form a new ``C''-shaped vortex loop with opposite direction.
+As the vortex loops move further downstream from the wing, they form a ``double-C''-shaped vortex structures, which was reported in the original study.
+Each flapping cycle produces a pair of ``double-C''-shaped vortex structures (in opposite direction), leading to a bifurcated wake pattern (Figures \ref{fig:baseline_wake_topology}(a,b)).
+The ``double-C''-shaped vortex structures evolve into single-loop vortex as they are convected downstream.
+As noted in the original study, vortex rings shed in the wake gradually increase in size as they move further downstream, with a slight deflection in the spanwise $z$-direction towards the tip of the wing.
 
 \begin{figure}
   \centering
@@ -408,6 +470,8 @@ In the following results, we will show the history of the force coefficients whe
   \label{fig:baseline_wx_slices}
 \end{figure}
 
+Figure \ref{fig:baseline_wx_slices} shows two-dimensional slices of the streamwise vorticity component, in the $y/z$ plane at various locations along the $x$-axis, at the middle of the upstroke ($t/T = 4.25$)
+
 \begin{figure}
   \centering
   \includegraphics[width=\linewidth]{../runs/Re200_St0.6_AR1.27_psi90/figures/force_coefficients.png}
@@ -415,7 +479,31 @@ In the following results, we will show the history of the force coefficients whe
   \label{fig:baseline_force_coefficients}
 \end{figure}
 
+\begin{table}
+  \centering
+  \begin{tabular}{lcccccc}
+    \hline\hline
+    Case & $\left| C_T \right|_\text{max}$ & $\overline{C_T}$ & $\left| C_L \right|_\text{max}$ & $\overline{C_L}$ & $\left| C_Z \right|_\text{max}$ & $\overline{C_Z}$ \\
+    \hline
+    Present & $2.66$ & $0.91$ & $3.96$ & $0.0$ & $2.56$ & $0.1$ \\
+    \citet{li_dong_2016} & $3.98$ & $1.46$ & $5.35$ & $0.0$ & $3.19$ & $0.1$ \\
+    \hline\hline
+  \end{tabular}
+  \caption{Statistics about force coefficients for the baseline case. We also report the values from \citet{li_dong_2016}.}
+  \label{tab:baseline_force_coefficients}
+\end{table}
+
+Figure \ref{fig:baseline_force_coefficients} shows the history of the thrust, lift, and spanwise coefficients over two flapping cycles.
+Table \ref{tab:baseline_force_coefficients} reports statistics about the force coefficients with comparison to the values reported in the original study.
+Although we obtained smaller values in the peaks for the force coefficients as well as for the mean thrust coefficient, we still observe similar trends between our results and the one reported in \citet{li_dong_2016}.
+Thrust peaks occur twice during each cycle, when the plate is near the center of its trajectory, with production of small drag when the plate starts to reverse its rolling direction.
+Peak values of the lift and spanwise coefficients are in a similar range than the peak of the thrust coefficient.
+Each half cycle, we also note the presence of two peaks in the thrust and lift coefficients, with the first peak having a smaller absolute value than the second one.
+
 \subsection{Effect of the Strouhal number}
+
+We now look at the effect of the Strouhal number on the wake topology and aerodynamic performances.
+We computed the three-dimensional flow around a circular flat plate ($AR = 1.27$) at Reynolds number $200$ with a fixed phase-difference angle $\psi = 90^o$, while varying the Strouhal number $St$.
 
 \begin{figure}
   \centering
@@ -463,6 +551,20 @@ In the following results, we will show the history of the force coefficients whe
   \label{tab:strouhal_angles}
 \end{table}
 
+Figure \ref{fig:strouhal_wake_topology} shows lateral and top views of the shedding vortex pattern, at $t/T = 4.25$, obtained at Strouhal numbers $St = 0.4$ and $0.8$.
+(Figure \ref{fig:baseline_wake_topology} shows the wake topology for $St = 0.6$.)
+As reported in the original study, we note a decrease in the vorticity strength as the Strouhal number is lower, and a rapid evolution of the ``double-C''-shaped vortex structures into single vortex rings.
+At higher Strouhal number ($St = 0.8$), we observe an enhancement of the mutual induction between two adjacent vortex rings.
+\citet{li_dong_2016} reported values of the oblique angle ($\alpha$), defined as the angle between the horizontal $x$-axis and the line passing through the first two shed vortex rings adjacent to the trailing-edge of the plate.
+They also evaluated the inclination angle ($\beta$) of a near vortex ring with respect to the wake centerline.
+Table \ref{tab:strouhal_angles} reports the oblique and inclination angles obtained with our simulations.
+Our angles are different from the ones reported in the original study.
+The authors observed a monotonic increase in the oblique angle with respect to the Strouhal number and a peak in the orientation angle at Strouhal number $St = 1.0$ (followed by a sudden decrease).
+Here, we observe an increase in the oblique angle but we a peak for Strouhal number $St = 1.0$, while the inclination peaks at Strouhal number $St = 0.8$.
+Matching the observations reported in the original study, we also note the wake deflection along the mid-span axis (Figures \ref{fig:strouhal_wake_topology}(b, d) and Figure \ref{fig:baseline_wake_topology}(c)).
+The main difference is that the authors reported that for the higher Strouhal number case, the wake starts deflecting towards the tip of the wing and then gradually deflects back in the far wake.
+We do not observe the back deflection in our simulation at Strouhal number $St = 0.8$ (Figure \ref{fig:strouhal_wake_topology}(d)), which is probably due to the fact that we stopped the computation at $t/T = 5$, while it looks like the simulation in the original study was computed for a longer time (and therefore, more rings present in the wake).
+
 \begin{figure}
   \centering
   \includegraphics[width=0.7\textwidth]{../runs/figures/efficiency_compare_St.png}
@@ -471,6 +573,8 @@ In the following results, we will show the history of the force coefficients whe
 \end{figure}
 
 \subsection{Effect of the Reynolds number}
+
+We also computed the three-dimensional flow at additional Reynolds numbers $100$ and $400$ for a circular flat plate ($AR = 1.27$) with Strouhal number $St = 0.6$ and a $90$-degree phase difference between the rolling and pitching motions.
 
 \begin{figure}
   \centering
@@ -489,6 +593,12 @@ In the following results, we will show the history of the force coefficients whe
   \label{fig:reynolds_wake_topology}
 \end{figure}
 
+Figure \ref{fig:reynolds_wake_topology} shows a perspective view of the near-wake topology at $t/T = 4.25$ at Reynolds numbers $100$ and $400$, which can be compared to Figure \ref{fig:baseline_wake_topology}(f) for the case at $Re = 200$.
+For all Reynolds numbers investigated, we note the formation of a double-loop vortex around the trailing edge of the plate.
+As expected, vortex structures dissipate more rapidly for low Reynolds numbers.
+At Reynolds number $Re = 400$, ``double-C''-shaped vortex rings propagate downstream.
+Overall, we observe similar trends between our results and the one from the original study and note that the vortex dynamics remain unchanged for the range of Reynolds numbers investigated here.
+
 \begin{figure}
   \centering
   \includegraphics[width=\linewidth]{../runs/figures/force_coefficients_compare_Re.png}
@@ -496,7 +606,18 @@ In the following results, we will show the history of the force coefficients whe
   \label{fig:reynolds_force_coefficients}
 \end{figure}
 
+Figure \ref{fig:reynolds_force_coefficients} compares the history of the force coefficients over two flapping cycles for Reynolds numbers $Re = 100$, $200$, and $400$.
+Although we obtained different statistics in the force coefficients (mean and peak values), we observe similar features as in the original study.
+First, the absolute peak value and mean value for the thrust coefficient increase with the Reynolds number.
+Second, we note the presence of two peaks in the lift coefficient every half cycle, for all Reynolds numbers.
+Third, the negative peak in the spanwise coefficient becomes smaller as the Reynolds number decreases.
+Finally, the mean lift and spanwise coefficients are approximately zero in all cases.
+
 \subsection{Effect of the wing aspect ratio}
+
+In the baseline simulation, the wing surface is circular with $AR = 1.27$.
+We ran two additional simulations, with $AR = 1.91$ and $AR = 2.55$ to look at the effect of the wing aspect ratio on the wake topology and aerodynamic force coefficients.
+(Other parameters remained identical compared to the baseline case.)
 
 \begin{figure}
   \centering
@@ -552,6 +673,10 @@ In the following results, we will show the history of the force coefficients whe
   \label{fig:ratio_vorticity_slices}
 \end{figure}
 
+Figure \ref{fig:ratio_wake_topology} shows snapshots of the vortical structures at $t/T = 4.25$ generated by elliptical plates with aspect ratios $AR = 1.91$ and $2.55$.
+Figures \ref{fig:ratio_vorticity_slices} shows two-dimensional contours of the streamwise (a-c) and spanwise (d-f) vorticity components for different wing aspect ratios at the same time unit.
+As reported in the original study, we too observe an increase in the size of the inner loop in streamwise direction (formed by vortices $V_3$ and $V_4$) along with the plate aspect ratio, and a decrease in the magnitude of the spanwise vorticity of the inner loop.
+
 \begin{figure}
   \centering
   \includegraphics[width=\textwidth]{../runs/figures/force_coefficients_compare_AR.png}
@@ -559,7 +684,18 @@ In the following results, we will show the history of the force coefficients whe
   \label{fig:ratio_force_coefficients}
 \end{figure}
 
+Figure \ref{fig:ratio_force_coefficients} displays the history of the force coefficients over two flapping cycles, obtained with aspect ratios $AR = 1.27$, $1.91$, and $2.55$.
+The mean thrust coefficient increases with the wing aspect ratio ($\overline{C_T} = 1.17$ for $AR = 1.91$ and $1.37$ for $AR = 2.55$).
+We note a slight increase in the magnitude of the thrust peak as we increase the aspect ratio.
+The authors of the original study reported a decrease in magnitude of the peak for the lift and spanwise coefficients.
+However, our results show an increase in magnitude of the peak for the lift coefficient as the ratio increases.
+Furthermore, the maximum value for the spanwise coefficient remains the same, while we note a decrease in the minimum value (as the ratio increases).
+
 \subsection{Effect of the phase difference between pitching and rolling}
+
+For all simulations reported so far, the phase-difference angle between the rolling and pitching motions was set to $\psi = 90^o$.
+In this section, we look at the effect of the phase-difference angle on the wake topology and propulsive performance for a circular plate ($AR = 1.27$) at Reynolds number $Re = 200$ and Strouhal number $St = 0.6$.
+We ran six additional simulations with phase-difference angle $\psi = 60^o$, $70^o$, $80^o$, $100^o$, $110^o$, and $120^o$.
 
 \begin{figure}
   \centering
@@ -618,6 +754,13 @@ In the following results, we will show the history of the force coefficients whe
   \label{tab:phase_angles}
 \end{table}
 
+Figure \ref{fig:phase_wake_topology} shows snapshots (lateral and side views) of the wake topology at time $t/T = 4.25$ for phase-difference angles $\psi = 100^o$, $110^o$, and $120^o$.
+(Figure \ref{fig:baseline_wake_topology} shows similar snapshots for the the baseline case with $\psi = 90^o$.)
+Looking at the top views, we note an increase in the deflection angle $\gamma$ as the phase-difference angle increases.
+In other words, larger phase-difference angles lead to larger deflection of the wake from the tip towards the root.
+We also note the wake oblique angle $\alpha$ increases with the phase-difference angles.
+Table \ref{tab:phase_angles} reports the wake oblique angles and wake deflection angles computed at time $t/T = 4.25$ for solutions obtained with various phase-difference angles.
+
 \begin{figure}
   \centering
   \includegraphics[width=\textwidth]{../runs/figures/force_coefficients_compare_psi.png}
@@ -632,8 +775,28 @@ In the following results, we will show the history of the force coefficients whe
   \label{fig:phase_efficiency}
 \end{figure}
 
+Figure \ref{fig:phase_force_coefficients} shows the history of the force coefficients over two flapping cycles for a circular wing with phase-difference angles between $90^o$ and $120^o$.
+We note that peak magnitudes for all three force components increase with the phase-difference angle.
+This increase coincides with the disappearance of the second peak in the thrust and lift forces, that was reported for the baseline case ($\psi = 90^o$).
+Figure \ref{fig:phase_efficiency} reports the computed mean thrust coefficients and propulsive performance obtained for phase-difference angles between $60^o$ and $120^o$.
+The mean thrust coefficient increases as we increase the phase-difference angle.
+As reported in the original study, we obtained a maximum propulsive efficiency for the case with $\psi = 100^o$.
+
 \section{Conclusion}
 
-The GitHub repository will contain all the input files and command-line instructions to reproduce the numerical results obtained from running container-based jobs with Singularity.
-It will also contain all the scripts used to post-process the raw data and re-generate the figures of manuscript (to be published).
-Main output data will be archived on Zenodo.
+In this study, we attempted to replicate the scientific findings published in \citet{li_dong_2016}.
+We used our own research software PetIBM\cite{chuang_et_al_2018} to conduct a similar parametric study.
+Although the immersed boundary method used is different than the one used in the original study, we observe similar features in the force production, the wake topology, and the propulsive performance of a pitching and rolling wing.
+Thus, we consider this replication attempt to be successful.
+
+The final product of the original study consists in a published manuscript.
+Thus, we consider the study to be not reproducible.
+We made our best efforts to make our replication study to be reproducible.
+Our computational application for the three-dimensional pitching-rolling motion of a wing (modeled as an elliptical flat plate) makes use of our open-source research software, called PetIBM.\cite{chuang_et_al_2018}
+To increase the likeliness of the study to be reproducible, we created a GitHub repository for this study (\url{github.com/barbagroup/petibm-rollingpitching}).
+The repository contains the source code of the PetIBM applications, as well as all input files of the simulations reported here and pre- and post-processing Python scripts.
+We adopted a reproducible workflow to run computational simulations.
+It makes use of Docker images and Singularity recipes to capture the computational environment.
+With Singularity, we ran container-based jobs on our University-managed HPC cluster.
+(SLURM job-submission scripts can be adapted to run on other platforms if readers are interested in reproducing our results.)
+The repository is also archived on Zenodo, along with data needed to re-generate the figures on the present manuscript.
