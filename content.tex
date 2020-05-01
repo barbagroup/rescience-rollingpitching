@@ -43,7 +43,7 @@ The research code is released under the permissive (non-copyleft) 3-Clause BSD l
 The present replication study models the wing with an elliptical flat plate.
 The flat plate undergoes a rolling motion around the streamwise $x$-axis combined to a pitching motion around its spanwise axis.
 The wing is characterized by its chord length $c$ and its spanwise length $S$.
-The aspect ratio $AR$ of the wing is given by $AR = \frac{S^2}{A_\text{plan}}$, where $A_\text{plan}$ is the planform area of the plate ($A_\text{plan} = \frac{\pi c S}{4}$).
+The aspect ratio $AR$ of the wing is given by $AR = S^2 / A_\text{plan}$, where $A_\text{plan}$ is the planform area of the plate ($A_\text{plan} = \pi c S / 4$).
 
 The rolling motion is defined by the instantaneous rolling position:
 
@@ -83,6 +83,25 @@ Each time step, we sequentially solve three linear systems to compute an interme
 The system for the velocity is solved using a stabilized bi-conjugate gradient method (from PETSc library) with a Jacobi preconditioner with a convergence criterion based on the absolute $L_2$-norm of the residual and is set to $atol = 10^{-6}$.
 We solve the system for the Lagrangian forces with a direct solver (SuperLU\_dist library).
 The pressure Poisson system is solved with a conjugate-gradient method with a classical algebraic multigrid technique (from NVIDIA AmgX library); here too, the convergence is reached when the absolute $L_2$-norm of the residual is $10^{-6}$.
+
+To quantify aerodynamic performances, we compute the thrust, lift, and spanwise force coefficients:
+
+\begin{equation}
+  C_{T, L, Z} = \frac{\left( T, L, Z \right)}{\frac{1}{2} \rho U_\infty^2 A_\text{plan}}
+\end{equation}
+
+where $T$, $L$, and $Z$ are the thrust, lift, and spanwise forces, obtained by integrating the $x$, $y$, and $z$ components of the Lagrangian forces along the surface of the immersed boundary.
+We also report the propulsive efficiency defined as
+
+\begin{equation}
+  \eta = \frac{\overline{T} U_\infty}{\overline{P}}
+\end{equation}
+
+where the overline represents the cycle-averaged of a quantity and $P$ is the hydrodynamic power.
+
+\begin{equation}
+  P = - \int_\Gamma \langle p \mathbf{n}, \mathbf{u} \rangle ds
+\end{equation}
 
 \begin{table}
   \centering
@@ -263,7 +282,7 @@ Mean thrust coefficient, root-mean-square values of the lift and spanwise coeffi
     \includegraphics[width=\linewidth]{../runs/independence/figures/kin_profiles_compare_dx_dt.png}
     \caption{}
   \end{subfigure}
-  \caption{Comparison of the velocity profiles and profiles of the fluctuation of the kinetic energy in the wake of a flapping circular plate ($AR = 1.27$) at Reynolds number $Re = 200$ and Strouhal number $St = 0.6$. We report profiles at locations $x / c = 1$, $2$, $3$, $4$, and $5$. We compare the profiles obtained on the nominal grid, on the finer grid in space, and on the coarser grid in time. (a) Streamwise velocity ($\overline{u_1} - U_\infty$) profiles in the $x/y$ plane at $z = S / 2$; (b) transverse velocity ($\overline{u_2}$) profiles in the $x/y$ plane at $z = S / 2$; (c) spanwise velocity ($\overline{u_3}$) in the $x/z$ plane at $y = 0$; (d) fluctuation of the kinetic energy $( \overline{{u_1'}^2} + \overline{{u_2'}^2} + \overline{{u_3'}^2} ) / 2$ in the $x/y$ plane at $z = S / 2$. We also report data from the original study.\supercite{li_dong_2016}}
+  \caption{Comparison of the velocity profiles and profiles of the fluctuation of the kinetic energy in the wake of a flapping circular plate ($AR = 1.27$) at Reynolds number $Re = 200$ and Strouhal number $St = 0.6$. We report profiles at locations $x / c = 1$, $2$, $3$, $4$, and $5$. We compare the profiles obtained on the nominal grid, on the finer grid in space, and on the coarser grid in time. (a) Streamwise velocity ($\overline{u_1} - U_\infty$) profiles in the $x/y$ plane at $z = S / 2$; (b) transverse velocity ($\overline{u_2}$) profiles in the $x/y$ plane at $z = S / 2$; (c) spanwise velocity ($\overline{u_3}$) in the $x/z$ plane at $y = 0$; (d) fluctuation of the kinetic energy $( \overline{{u_1'}^2} + \overline{{u_2'}^2} + \overline{{u_3'}^2} ) / 2$ in the $x/y$ plane at $z = S / 2$. We also report digitized data from the original study.\supercite{li_dong_2016}}
   \label{fig:independence_profiles}
 \end{figure}
 
@@ -284,7 +303,7 @@ We note that the profiles are visually similar when refining the spatial grid an
     \includegraphics[width=\linewidth]{../runs/independence/figures/wx_slice_f_distances.png}
     \caption{}
   \end{subfigure}
-  \caption{Two-dimensional contours of the streamwise vorticity ($-5 \leq w_x \leq 5$) in the $y/z$ plane at $t/T = 4.25$ in the near wake at $x / c = 0.3$ (a) and in the far wake at $x / c = 1.3$ (b). We compare the distances between vortical structures obtained on different grids to assess independence of the numerical solution.}
+  \caption{Two-dimensional contours of the streamwise vorticity ($-5 \leq w_x \leq 5$) in the $y/z$ plane at $t/T = 4.25$ in the near wake at $x / c = 0.3$ (a) and in the far wake at $x / c = 1.3$ (b). We compare the distances between vortical structures obtained on different grids to assess independence of the numerical solution. (To compare with Fig. 5 of \citet{li_dong_2016}.)}
   \label{fig:independence_wx_distances}
 \end{figure}
 
@@ -364,7 +383,7 @@ As in the original study, we start by looking at the wake topology and aerodynam
     \includegraphics[width=\linewidth]{../runs/Re200_St0.6_AR1.27_psi90/figures/qcrit_wx_perspective_zoom_view_0008875_post.png}
     \caption{$t / T = 4.4375$}
   \end{subfigure}
-  \caption{Wake topology for a flapping circular plate ($AR = 1.27$) with $St = 0.6$, $Re = 200$, and $\psi = 90^o$ at $t / T = 3.875$, $3.9375$, $4.0$, $4.125$, $4.1875$, $4.25$, $4.3125$, $4.375$, $4.4375$. We show the contours of the $Q$-criterion for $Q = 1$ (gray) and $Q = 6$ (colored by the streamwise vorticity, $-5 \leq w_x \leq 5$).}
+  \caption{Wake topology for a flapping circular plate ($AR = 1.27$) with $St = 0.6$, $Re = 200$, and $\psi = 90^o$ at $t / T = 3.875$, $3.9375$, $4.0$, $4.125$, $4.1875$, $4.25$, $4.3125$, $4.375$, $4.4375$. We show the contours of the $Q$-criterion for $Q = 1$ (gray) and $Q = 6$ (colored by the streamwise vorticity, $-5 \leq w_x \leq 5$). (To compare with Fig. 6 of \citet{li_dong_2016}.)}
   \label{fig:baseline_qcrit_perspective}
 \end{figure}
 
@@ -387,7 +406,7 @@ As in the original study, we start by looking at the wake topology and aerodynam
       \caption{}
     \end{subfigure}
   \end{minipage}
-  \caption{Wake topology of a pitching-rolling circular plate after four flapping cycles. We show flow structures  using the $Q$-criterion for $Q = 1$ (gray) and $Q = 6$ (colored by the streamwise vorticity, $-5 \leq w_x \leq 5$). (a) Perspective view, (b) side view, and (c) top view.}
+  \caption{Wake topology of a pitching-rolling circular plate after four flapping cycles. We show flow structures  using the $Q$-criterion for $Q = 1$ (gray) and $Q = 6$ (colored by the streamwise vorticity, $-5 \leq w_x \leq 5$). (a) Perspective view, (b) side view, and (c) top view. (To compare with Fig. 7 of \citet{li_dong_2016}.)}
   \label{fig:baseline_wake_topology}
 \end{figure}
 
@@ -466,7 +485,7 @@ As noted in the original study, vortex rings shed in the wake gradually increase
     \includegraphics[width=\linewidth]{../runs/Re200_St0.6_AR1.27_psi90/figures/wx_slice_l.png}
     \caption{}
   \end{subfigure}
-  \caption{Two-dimensional slices of the streamwise vorticity ($-5 \leq w_x \leq 5$) at $t / T = 4.25$ in the $y/z$ plane at different $x$ locations in the wake of a flapping circular plate ($AR = 1.27$) with $St = 0.6$, $Re = 200$, and $\psi = 90^o$. (a-l)Wake locations: $x / c = 0$, $0.2$, $0.3$, $0.75$, $1.1$, $1.3$, $1.85$, $2.0$, $2.7$, $3.8$, $4.5$, and $5.25$.}
+  \caption{Two-dimensional slices of the streamwise vorticity ($-5 \leq w_x \leq 5$) at $t / T = 4.25$ in the $y/z$ plane at different $x$ locations in the wake of a flapping circular plate ($AR = 1.27$) with $St = 0.6$, $Re = 200$, and $\psi = 90^o$. (a-l)Wake locations: $x / c = 0$, $0.2$, $0.3$, $0.75$, $1.1$, $1.3$, $1.85$, $2.0$, $2.7$, $3.8$, $4.5$, and $5.25$. (To compare with Fig. 8 of \citet{li_dong_2016}.)}
   \label{fig:baseline_wx_slices}
 \end{figure}
 
@@ -530,24 +549,27 @@ We computed the three-dimensional flow around a circular flat plate ($AR = 1.27$
     \includegraphics[width=\linewidth]{../runs/Re200_St0.8_AR1.27_psi90/figures/qcrit_wx_top_view_0008500_post.png}
     \caption{}
   \end{subfigure}
-  \caption{Wake topology captured at $t / T = 4.25$ (when the plate is at middle point during the upstroke) for a circular plate ($AR = 1.27$) at Reynolds number $200$ and Strouhal numbers $0.4$ (top) and $0.8$ (bottom). Wake structures are represented with the Q-criterion for $Q = 1$ (gray) and $Q = 6$ (colored with the streamwise vorticity, $-5 \leq w_x \leq 5$). (a,c) lateral view of the wake; (b,d) top view.}
+  \caption{Wake topology captured at $t / T = 4.25$ (when the plate is at middle point during the upstroke) for a circular plate ($AR = 1.27$) at Reynolds number $200$ and Strouhal numbers $0.4$ (top) and $0.8$ (bottom). Wake structures are represented with the Q-criterion for $Q = 1$ (gray) and $Q = 6$ (colored with the streamwise vorticity, $-5 \leq w_x \leq 5$). (a,c) lateral view of the wake; (b,d) top view. (To compare with Fig. 10 \citet{li_dong_2016}.)}
   \label{fig:strouhal_wake_topology}
 \end{figure}
 
 \begin{table}
   \centering
-  \begin{tabular}{ccc}
+  \begin{tabular}{ccccc}
     \hline\hline
-    $St$ & $\alpha$ ($^o$) & $\beta$ ($^o$) \\
+    \multirow{2}{*}{$St$} &
+      \multicolumn{2}{c}{Present} &
+      \multicolumn{2}{c}{\citet{li_dong_2016}} \\
+    & $\alpha$ ($^o$) & $\beta$ ($^o$) & $\alpha$ ($^o$) & $\beta$ ($^o$) \\
     \hline
-    0.4 & 13 & 13 \\
-    0.6 & 18 & 29 \\
-    0.8 & 21 & 32 \\
-    1.0 & 26 & 26 \\
-    1.2 & 24 & 25 \\
+    0.4 & 13 & 13 & 16 & 20 \\
+    0.6 & 18 & 29 & 21 & 24 \\
+    0.8 & 21 & 32 & 27 & 35 \\
+    1.0 & 26 & 26 & 30 & 40 \\
+    1.2 & 24 & 25 & 31 & 28 \\
     \hline\hline
   \end{tabular}
-  \caption{Effect of the Strouhal number on the wake oblique angle ($\alpha$) and vortex ring orientation angle ($\beta$) at $Re = 200$ with $\psi = 90^o$.}
+  \caption{Effect of the Strouhal number on the wake oblique angle ($\alpha$) and vortex ring orientation angle ($\beta$) at $Re = 200$ with $\psi = 90^o$. For comparison, we also report angles published in \citet{li_dong_2016}.}
   \label{tab:strouhal_angles}
 \end{table}
 
@@ -567,8 +589,8 @@ We do not observe the back deflection in our simulation at Strouhal number $St =
 
 \begin{figure}
   \centering
-  \includegraphics[width=0.7\textwidth]{../runs/figures/efficiency_compare_St.png}
-  \caption{Cycle-averaged thrust coefficient ($\overline{C_T}$) and propulsive efficiency ($\eta$) for the baseline case as functions of the Strouhal number. Data were computed and averaged during the fifth flapping cycle.}
+  \includegraphics[width=0.5\textwidth]{../runs/figures/efficiency_compare_St.png}
+  \caption{Cycle-averaged thrust coefficient ($\overline{C_T}$) and propulsive efficiency ($\eta$) for the baseline case as functions of the Strouhal number. Data were computed and averaged during the fifth flapping cycle. (To compare with Fig. 11 of \citet{li_dong_2016}.)}
   \label{fig:strouhal_propulsive_efficiency}
 \end{figure}
 
@@ -589,7 +611,7 @@ We also computed the three-dimensional flow at additional Reynolds numbers $100$
     \includegraphics[width=\linewidth]{../runs/Re400_St0.6_AR1.27_psi90/figures/qcrit_wx_perspective_zoom_view_0008500_post.png}
     \caption{}
   \end{subfigure}
-  \caption{Vortex topology at $t / T = 4.25$ for a circular plate ($AR = 1.27$) with $St = 0.6$ and $\psi = 90^o$ at Reynolds numbers $Re = 100$ (a) and $Re = 400$ (b). We visualized vortical structures using the $Q$-criterion with $Q = 1$ (in gray) and $Q = 6$ (colored by the streamwise vorticity, $-5 \leq w_x \leq 5$).}
+  \caption{Vortex topology at $t / T = 4.25$ for a circular plate ($AR = 1.27$) with $St = 0.6$ and $\psi = 90^o$ at Reynolds numbers $Re = 100$ (a) and $Re = 400$ (b). We visualized vortical structures using the $Q$-criterion with $Q = 1$ (in gray) and $Q = 6$ (colored by the streamwise vorticity, $-5 \leq w_x \leq 5$). (To compare with Fig. 12 of \citet{li_dong_2016}.)}
   \label{fig:reynolds_wake_topology}
 \end{figure}
 
@@ -602,7 +624,7 @@ Overall, we observe similar trends between our results and the one from the orig
 \begin{figure}
   \centering
   \includegraphics[width=\linewidth]{../runs/figures/force_coefficients_compare_Re.png}
-  \caption{History of the thrust ($C_T$), lift ($C_L$), and spanwise ($C_Z$) coefficients over two flapping cycles for a circular flat plate ($AR = 1.27$) at Reynolds numbers $100$, $200$, and $400$. Strouhal number is $0.6$ with a phase difference of $90^o$ for all these cases.}
+  \caption{History of the thrust ($C_T$), lift ($C_L$), and spanwise ($C_Z$) coefficients over two flapping cycles for a circular flat plate ($AR = 1.27$) at Reynolds numbers $100$, $200$, and $400$. Strouhal number is $0.6$ with a phase difference of $90^o$ for all these cases. (To compare with Fig. 13 of \citet{li_dong_2016}.)}
   \label{fig:reynolds_force_coefficients}
 \end{figure}
 
@@ -632,7 +654,7 @@ We ran two additional simulations, with $AR = 1.91$ and $AR = 2.55$ to look at t
     \includegraphics[width=\linewidth]{../runs/Re200_St0.6_AR2.55_psi90/figures/qcrit_wx_perspective_zoom_view_0008500_post.png}
     \caption{}
   \end{subfigure}
-  \caption{Vortex topology at $t / T = 4.25$ for an elliptical plate with $AR = 1.91$ (a) and $AR = 2.55$ (b) for $Re = 200$, $St = 0.6$, and $\psi = 90^o$. We visualized vortical structures using the $Q$-criterion with $Q = 1$ (in gray) and $Q = 6$ (colored by the streamwise vorticity, $-5 \leq w_x \leq 5$).}
+  \caption{Vortex topology at $t / T = 4.25$ for an elliptical plate with $AR = 1.91$ (a) and $AR = 2.55$ (b) for $Re = 200$, $St = 0.6$, and $\psi = 90^o$. We visualized vortical structures using the $Q$-criterion with $Q = 1$ (in gray) and $Q = 6$ (colored by the streamwise vorticity, $-5 \leq w_x \leq 5$). (To compare with Fig. 14 of \citet{li_dong_2016}.)}
   \label{fig:ratio_wake_topology}
 \end{figure}
 
@@ -669,7 +691,7 @@ We ran two additional simulations, with $AR = 1.91$ and $AR = 2.55$ to look at t
     \includegraphics[width=\linewidth]{../runs/Re200_St0.6_AR2.55_psi90/figures/wz_slice_xy_0008500.png}
     \caption{}
   \end{subfigure}
-  \caption{Comparison of the two-dimensional contours of the vorticity at $t/T = 4.25$ for elliptical plates with $AR = 1.27$ (a, d), $AR = 1.91$ (b, e), and $AR = 2.55$ (c, f). (a-c): streamwise vorticity ($-5 \leq w_x \leq 5$) in the $y/z$ plane at $x/c = 0.3$ (near wake). (d-f): spanwise vorticity ($-5 \leq w_z \leq 5$) in the $x/y$ plane at $z = S/2$ (midspan).}
+  \caption{Comparison of the two-dimensional contours of the vorticity at $t/T = 4.25$ for elliptical plates with $AR = 1.27$ (a, d), $AR = 1.91$ (b, e), and $AR = 2.55$ (c, f). (a-c): streamwise vorticity ($-5 \leq w_x \leq 5$) in the $y/z$ plane at $x/c = 0.3$ (near wake). (d-f): spanwise vorticity ($-5 \leq w_z \leq 5$) in the $x/y$ plane at $z = S/2$ (mid-span). (To compare with Fig. 15 of \citet{li_dong_2016}.)}
   \label{fig:ratio_vorticity_slices}
 \end{figure}
 
@@ -680,7 +702,7 @@ As reported in the original study, we too observe an increase in the size of the
 \begin{figure}
   \centering
   \includegraphics[width=\textwidth]{../runs/figures/force_coefficients_compare_AR.png}
-  \caption{History of the thrust ($C_T$), lift ($C_L$), and spanwise ($C_Z$) coefficients over two flapping cycles for plates with different aspect ratios ($AR$) and with $St = 0.6$, $Re = 200$, and $\psi = 90^o$.}
+  \caption{History of the thrust ($C_T$), lift ($C_L$), and spanwise ($C_Z$) coefficients over two flapping cycles for plates with different aspect ratios ($AR$) and with $St = 0.6$, $Re = 200$, and $\psi = 90^o$. (To compare with Fig. 16 of \citet{li_dong_2016}.)}
   \label{fig:ratio_force_coefficients}
 \end{figure}
 
@@ -734,23 +756,26 @@ We ran six additional simulations with phase-difference angle $\psi = 60^o$, $70
     \includegraphics[width=\linewidth]{../runs/Re200_St0.6_AR1.27_psi120/figures/qcrit_wx_top_view_0008500_post.png}
     \caption{}
   \end{subfigure}
-  \caption{Wake topology captured at $t / T = 4.25$ (when the plate is at middle point during the upstroke) for a circular plate ($AR = 1.27$) at Reynolds number $200$, Strouhal number $0.6$, and phase differences $\psi = 100^o$ (top), $110^o$ (center), and $120^o$ (bottom). Wake structures are represented with the $Q$-criterion for $Q = 1$ (gray) and $Q = 6$ (colored with the streamwise vorticity, $-5 \leq w_x \leq 5$). (a,c,e) Lateral view of the wake; (b,d,f) top view.}
+  \caption{Wake topology captured at $t / T = 4.25$ (when the plate is at middle point during the upstroke) for a circular plate ($AR = 1.27$) at Reynolds number $200$, Strouhal number $0.6$, and phase differences $\psi = 100^o$ (top), $110^o$ (center), and $120^o$ (bottom). Wake structures are represented with the $Q$-criterion for $Q = 1$ (gray) and $Q = 6$ (colored with the streamwise vorticity, $-5 \leq w_x \leq 5$). (a,c,e) Lateral view of the wake; (b,d,f) top view. (To compare with Fig. 17 of \citet{li_dong_2016}.)}
   \label{fig:phase_wake_topology}
 \end{figure}
 
 \begin{table}
   \centering
-  \begin{tabular}{ccc}
+  \begin{tabular}{ccccc}
     \hline\hline
-    $\psi$ ($^o$) & $\alpha$ ($^o$) & $\gamma$ ($^o$) \\
+    \multirow{2}{*}{$\psi$ ($^o$)} &
+      \multicolumn{2}{c}{Present} &
+      \multicolumn{2}{c}{\citet{li_dong_2016}} \\
+    & $\alpha$ ($^o$) & $\gamma$ ($^o$) & $\alpha$ ($^o$) & $\gamma$ ($^o$) \\
     \hline
-    90 & 18 & -1 \\
-    100 & 21 & -4 \\
-    110 & 23 & -6 \\
-    120 & 24 & -6 \\
+    90 & 18 & -1 & 21 & 5 \\
+    100 & 21 & -4 & 22 & -2 \\
+    110 & 23 & -6 & 25 & -5 \\
+    120 & 24 & -6 & 27 & -7 \\
     \hline\hline
   \end{tabular}
-  \caption{Effect of the phase difference on the wake oblique angle ($\alpha$) and wake deflection angle ($\gamma$) at $St = 0.6$ and $Re = 200$.}
+  \caption{Effect of the phase difference on the wake oblique angle ($\alpha$) and wake deflection angle ($\gamma$) at $St = 0.6$ and $Re = 200$. For comparison, we also report angles published in \citet{li_dong_2016}.}
   \label{tab:phase_angles}
 \end{table}
 
@@ -764,14 +789,14 @@ Table \ref{tab:phase_angles} reports the wake oblique angles and wake deflection
 \begin{figure}
   \centering
   \includegraphics[width=\textwidth]{../runs/figures/force_coefficients_compare_psi.png}
-  \caption{History of the thrust ($C_T$), lift ($C_L$), and spanwise ($C_Z$) coefficients over two flapping cycles for a circular plate ($AR = 1.27$) for various phase-difference angles ($\psi$) between the pitching and rolling motions. Strouhal number is $0.6$ and Reynolds number is $200$ for all these cases.}
+  \caption{History of the thrust ($C_T$), lift ($C_L$), and spanwise ($C_Z$) coefficients over two flapping cycles for a circular plate ($AR = 1.27$) for various phase-difference angles ($\psi$) between the pitching and rolling motions. Strouhal number is $0.6$ and Reynolds number is $200$ for all these cases. (To compare with Fig. 18 of \citet{li_dong_2016}.)}
   \label{fig:phase_force_coefficients}
 \end{figure}
 
 \begin{figure}
   \centering
-  \includegraphics[width=0.75\textwidth]{../runs/figures/efficiency_compare_psi.png}
-  \caption{Cycle-averaged thrust coefficient ($\overline{C_T}$) and propulsive efficiency ($\eta$) for the baseline case as functions of the phase difference between the rolling and pitching motions. Data were computed and averaged during the fifth flapping cycle.}
+  \includegraphics[width=0.5\textwidth]{../runs/figures/efficiency_compare_psi.png}
+  \caption{Cycle-averaged thrust coefficient ($\overline{C_T}$) and propulsive efficiency ($\eta$) for the baseline case as functions of the phase difference between the rolling and pitching motions. Data were computed and averaged during the fifth flapping cycle. (To compare with Fig. 19 of \citet{li_dong_2016}.)}
   \label{fig:phase_efficiency}
 \end{figure}
 
