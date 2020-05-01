@@ -11,15 +11,15 @@ The report also provides clear definitions of ``reproducibility'' and ``replicab
   \item[] \textbf{Replicability} is obtaining consistent results across studies aimed at answering the same scientific question, each of which had obtained its own data. Two studies may be considered to have replicated if they obtain consistent results given the level of uncertainty inherent in the system under study.
 \end{itemize}
 
-\citet{peng_2011} introduced the idea of a reproducibility spectrum, in which he defines reproducible research as being a ``minimum standard for judging scientific claims when full independent replication of a study is not possible'' or not available.
+\citet{peng_2011} introduced the concept of a reproducibility spectrum, in which he defines reproducible research as being a ``minimum standard for judging scientific claims when full independent replication of a study is not possible'' or not available.
 The two extremes on the reproducibility spectrum are ``not reproducible'' (when the product of the study is only the a published manuscript) and "fully replicated" (the gold standard for a study).
 
 In the past, we have attempted to fully replicate our own results.\supercite{krishnan_et_al_2014}
-The outputs of this replication study have been published.\supercite{mesnard_barba_2017}
-Knowing how challenging it was to replicate our own results, we now want to estimate how much effort it would take to replication the computational results from other research groups.
-To partly answer that question, we have attempted to replicate a Computational Fluid Dynamics study on the pitching and rolling motion of an insect wing modeled as an elliptical flat plate.
+The outputs and lessons learned from this replication study have been published.\supercite{mesnard_barba_2017}
+Knowing how challenging it was to replicate our own results, we now want to estimate how much effort it would take to replicate the computational results from another research group.
+In that regard, we have attempted to replicate a Computational Fluid Dynamics study on the pitching and rolling motion of an insect wing modeled as an elliptical flat plate.
 The original study was published in 2016 by Li and co-authors.\supercite{li_dong_2016}
-The output of the original study is a published manuscript.
+The product of the original study consists in a published manuscript.
 The computational code, input data, and conditions of analysis that were used to produce the numerical results reported in the publications are not publicly available.
 Thus, following Peng's reproducibility spectrum, we consider these studies to be not reproducible.
 But can we replicate the scientific findings claimed in the publications?
@@ -53,7 +53,7 @@ The rolling motion is defined by the instantaneous rolling position:
 
 where $t$ is the time, $f$ is the flapping frequency, and $A_\phi$ is the rolling amplitude.
 
-The pitching motion along the (rolling) spanwise axis is defined by the instantaneous pitching position:
+The pitching motion along the spanwise axis is defined by the instantaneous pitching position:
 
 \begin{equation}
   \theta (t) = -A_\theta \cos(2 \pi f t + \psi)
@@ -80,9 +80,9 @@ PetIBM provide different implementations of the immersed boundary method, among 
 (The later is used in the present replication study.)
 
 Each time step, we sequentially solve three linear systems to compute an intermediate velocity field, the Lagrangian forces, and the pressure.
-The system for the velocity is solved using a stabilized bi-conjugate gradient method (from PETSc library) with a Jacobi preconditioner with a convergence criterion based on the absolute $L_2$-norm of the residual and is set to $atol = 10^{-6}$.
+The system for the velocity is solved using a stabilized bi-conjugate gradient method (PETSc library) with a Jacobi preconditioner with a convergence criterion based on the absolute $L_2$-norm of the residual and is set to $atol = 10^{-6}$.
 We solve the system for the Lagrangian forces with a direct solver (SuperLU\_dist library).
-The pressure Poisson system is solved with a conjugate-gradient method with a classical algebraic multigrid technique (from NVIDIA AmgX library); here too, the convergence is reached when the absolute $L_2$-norm of the residual is $10^{-6}$.
+The pressure Poisson system is solved with a conjugate-gradient method with a classical algebraic multigrid technique (NVIDIA AmgX library); here too, the convergence is reached when the absolute $L_2$-norm of the residual is $10^{-6}$.
 
 To quantify aerodynamic performances, we compute the thrust, lift, and spanwise force coefficients:
 
@@ -569,7 +569,7 @@ We computed the three-dimensional flow around a circular flat plate ($AR = 1.27$
     1.2 & 24 & 25 & 31 & 28 \\
     \hline\hline
   \end{tabular}
-  \caption{Effect of the Strouhal number on the wake oblique angle ($\alpha$) and vortex ring orientation angle ($\beta$) at $Re = 200$ with $\psi = 90^o$. For comparison, we also report angles published in \citet{li_dong_2016}.}
+  \caption{Effect of the Strouhal number on the wake oblique angle ($\alpha$) and vortex ring orientation angle ($\beta$) at $Re = 200$ with $\psi = 90^o$. For comparison, we also report values published in \citet{li_dong_2016}.}
   \label{tab:strouhal_angles}
 \end{table}
 
@@ -775,7 +775,7 @@ We ran six additional simulations with phase-difference angle $\psi = 60^o$, $70
     120 & 24 & -6 & 27 & -7 \\
     \hline\hline
   \end{tabular}
-  \caption{Effect of the phase difference on the wake oblique angle ($\alpha$) and wake deflection angle ($\gamma$) at $St = 0.6$ and $Re = 200$. For comparison, we also report angles published in \citet{li_dong_2016}.}
+  \caption{Effect of the phase difference on the wake oblique angle ($\alpha$) and wake deflection angle ($\gamma$) at $St = 0.6$ and $Re = 200$. For comparison, we also report values published in \citet{li_dong_2016}.}
   \label{tab:phase_angles}
 \end{table}
 
