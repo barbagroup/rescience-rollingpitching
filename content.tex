@@ -196,7 +196,7 @@ Table \ref{tab:independence_grid_charateristics} reports characteristics of the 
 
 \begin{figure}
   \centering
-  \includegraphics[width=\textwidth]{../runs/independence/figures/force_coefficients_compare_dx.png}
+  \includegraphics[width=\textwidth]{runs/independence/figures/force_coefficients_compare_dx.png}
   \caption{History of the thrust ($C_T$), lift ($C_L$), and spanwise ($C_Z$) coefficients over two flapping cycles of a circular plate ($AR = 1.27$) at Reynolds number $Re = 200$ and Strouhal number $St = 0.6$. We compare the solution obtained with PetIBM on three spatial grids: coarse ($\Delta x = 0.03c$), nominal ($\Delta x = 0.01c$), and fine ($\Delta x = 0.005c$). We also report the force coefficients published in \citet{li_dong_2016}.}
   \label{fig:independence_force_coefficients_dx}
 \end{figure}
@@ -230,7 +230,7 @@ Note that we used the nominal spatial grid ($\Delta x = 0.01c$) to conduct a rep
 
 \begin{figure}
   \centering
-  \includegraphics[width=\textwidth]{../runs/independence/figures/force_coefficients_compare_disk.png}
+  \includegraphics[width=\textwidth]{runs/independence/figures/force_coefficients_compare_disk.png}
   \caption{History of the thrust ($C_T$), lift ($C_L$), and spanwise ($C_Z$) coefficients over two flapping cycles of a circular plate ($AR = 1.27$) at Reynolds number $Re = 200$ and Strouhal number $St = 0.6$. We compare solutions on the nominal grid where the wing is modeled as a flat plate and as a disk with a thickness of $3\%$ of the chord length (as done in the original study\supercite{li_dong_2016}).}
   \label{fig:independence_force_coefficients_disk}
 \end{figure}
@@ -244,7 +244,7 @@ Since using a disk does not really improve the solution, we decided to model the
 
 \begin{figure}
   \centering
-  \includegraphics[width=\textwidth]{../runs/independence/figures/force_coefficients_compare_dt.png}
+  \includegraphics[width=\textwidth]{runs/independence/figures/force_coefficients_compare_dt.png}
   \caption{History of the thrust ($C_T$), lift ($C_L$), and spanwise ($C_Z$) coefficients over two flapping cycles of a circular plate ($AR = 1.27$) at Reynolds number $Re = 200$ and Strouhal number $St = 0.6$. We compare the instantaneous force coefficients obtained with $n_t = 2000$ and $n_t = 1000$ time steps per flapping cycle obtained on the nominal grid. Markers show digitized data from \citet{li_dong_2016}.}
   \label{fig:independence_force_coefficients_dt}
 \end{figure}
@@ -261,25 +261,25 @@ Mean thrust coefficient, root-mean-square values of the lift and spanwise coeffi
   \centering
   \begin{subfigure}[c]{0.45\textwidth}
     \centering
-    \includegraphics[width=\linewidth]{../runs/independence/figures/ux_profiles_compare_dx_dt.png}
+    \includegraphics[width=\linewidth]{runs/independence/figures/ux_profiles_compare_dx_dt.png}
     \caption{}
   \end{subfigure}
   \hfill
   \begin{subfigure}[c]{0.45\textwidth}
     \centering
-    \includegraphics[width=\linewidth]{../runs/independence/figures/uy_profiles_compare_dx_dt.png}
+    \includegraphics[width=\linewidth]{runs/independence/figures/uy_profiles_compare_dx_dt.png}
     \caption{}
   \end{subfigure}
   \vspace{1cm}
   \begin{subfigure}[c]{0.45\textwidth}
     \centering
-    \includegraphics[width=\linewidth]{../runs/independence/figures/uz_profiles_compare_dx_dt.png}
+    \includegraphics[width=\linewidth]{runs/independence/figures/uz_profiles_compare_dx_dt.png}
     \caption{}
   \end{subfigure}
   \hfill
   \begin{subfigure}[c]{0.45\textwidth}
     \centering
-    \includegraphics[width=\linewidth]{../runs/independence/figures/kin_profiles_compare_dx_dt.png}
+    \includegraphics[width=\linewidth]{runs/independence/figures/kin_profiles_compare_dx_dt.png}
     \caption{}
   \end{subfigure}
   \caption{Comparison of the velocity profiles and profiles of the fluctuation of the kinetic energy in the wake of a flapping circular plate ($AR = 1.27$) at Reynolds number $Re = 200$ and Strouhal number $St = 0.6$. We report profiles at locations $x / c = 1$, $2$, $3$, $4$, and $5$. We compare the profiles obtained on the nominal grid, on the finer grid in space, and on the coarser grid in time. (a) Streamwise velocity ($\overline{u_1} - U_\infty$) profiles in the $x/y$ plane at $z = S / 2$; (b) transverse velocity ($\overline{u_2}$) profiles in the $x/y$ plane at $z = S / 2$; (c) spanwise velocity ($\overline{u_3}$) in the $x/z$ plane at $y = 0$; (d) fluctuation of the kinetic energy $( \overline{{u_1'}^2} + \overline{{u_2'}^2} + \overline{{u_3'}^2} ) / 2$ in the $x/y$ plane at $z = S / 2$. We also report digitized data from the original study.\supercite{li_dong_2016}}
@@ -294,13 +294,13 @@ We note that the profiles are visually similar when refining the spatial grid an
   \centering
   \begin{subfigure}[c]{0.45\textwidth}
     \centering
-    \includegraphics[width=\linewidth]{../runs/independence/figures/wx_slice_c_distances.png}
+    \includegraphics[width=\linewidth]{runs/independence/figures/wx_slice_c_distances.png}
     \caption{}
   \end{subfigure}
   \hfill
   \begin{subfigure}[c]{0.45\textwidth}
     \centering
-    \includegraphics[width=\linewidth]{../runs/independence/figures/wx_slice_f_distances.png}
+    \includegraphics[width=\linewidth]{runs/independence/figures/wx_slice_f_distances.png}
     \caption{}
   \end{subfigure}
   \caption{Two-dimensional contours of the streamwise vorticity ($-5 \leq w_x \leq 5$) in the $y/z$ plane at $t/T = 4.25$ in the near wake at $x / c = 0.3$ (a) and in the far wake at $x / c = 1.3$ (b). We compare the distances between vortical structures obtained on different grids to assess independence of the numerical solution. (To compare with Fig. 5 of \citet{li_dong_2016}.)}
@@ -332,55 +332,55 @@ As in the original study, we start by looking at the wake topology and aerodynam
   \centering
   \begin{subfigure}[b]{0.3\textwidth}
     \centering
-    \includegraphics[width=\linewidth]{../runs/Re200_St0.6_AR1.27_psi90/figures/qcrit_wx_perspective_zoom_view_0007750_post.png}
+    \includegraphics[width=\linewidth]{runs/Re200_St0.6_AR1.27_psi90/figures/qcrit_wx_perspective_zoom_view_0007750_post.png}
     \caption{$t / T = 3.875$}
   \end{subfigure}
   \hfill
   \begin{subfigure}[b]{0.3\textwidth}
     \centering
-    \includegraphics[width=\linewidth]{../runs/Re200_St0.6_AR1.27_psi90/figures/qcrit_wx_perspective_zoom_view_0007875_post.png}
+    \includegraphics[width=\linewidth]{runs/Re200_St0.6_AR1.27_psi90/figures/qcrit_wx_perspective_zoom_view_0007875_post.png}
     \caption{$t / T = 3.9375$}
   \end{subfigure}
   \hfill
   \begin{subfigure}[b]{0.3\textwidth}
     \centering
-    \includegraphics[width=\linewidth]{../runs/Re200_St0.6_AR1.27_psi90/figures/qcrit_wx_perspective_zoom_view_0008000_post.png}
+    \includegraphics[width=\linewidth]{runs/Re200_St0.6_AR1.27_psi90/figures/qcrit_wx_perspective_zoom_view_0008000_post.png}
     \caption{$t / T = 4.0$}
   \end{subfigure}
   \vspace{1cm}
   \begin{subfigure}[b]{0.3\textwidth}
     \centering
-    \includegraphics[width=\linewidth]{../runs/Re200_St0.6_AR1.27_psi90/figures/qcrit_wx_perspective_zoom_view_0008250_post.png}
+    \includegraphics[width=\linewidth]{runs/Re200_St0.6_AR1.27_psi90/figures/qcrit_wx_perspective_zoom_view_0008250_post.png}
     \caption{$t / T = 4.125$}
   \end{subfigure}
   \hfill
   \begin{subfigure}[b]{0.3\textwidth}
     \centering
-    \includegraphics[width=\linewidth]{../runs/Re200_St0.6_AR1.27_psi90/figures/qcrit_wx_perspective_zoom_view_0008375_post.png}
+    \includegraphics[width=\linewidth]{runs/Re200_St0.6_AR1.27_psi90/figures/qcrit_wx_perspective_zoom_view_0008375_post.png}
     \caption{$t / T = 4.1875$}
   \end{subfigure}
   \hfill
   \begin{subfigure}[b]{0.3\textwidth}
     \centering
-    \includegraphics[width=\linewidth]{../runs/Re200_St0.6_AR1.27_psi90/figures/qcrit_wx_perspective_zoom_view_0008500_post.png}
+    \includegraphics[width=\linewidth]{runs/Re200_St0.6_AR1.27_psi90/figures/qcrit_wx_perspective_zoom_view_0008500_post.png}
     \caption{$t / T = 4.25$}
   \end{subfigure}
   \vspace{1cm}
   \begin{subfigure}[b]{0.3\textwidth}
     \centering
-    \includegraphics[width=\linewidth]{../runs/Re200_St0.6_AR1.27_psi90/figures/qcrit_wx_perspective_zoom_view_0008625_post.png}
+    \includegraphics[width=\linewidth]{runs/Re200_St0.6_AR1.27_psi90/figures/qcrit_wx_perspective_zoom_view_0008625_post.png}
     \caption{$t / T = 4.3125$}
   \end{subfigure}
   \hfill
   \begin{subfigure}[b]{0.3\textwidth}
     \centering
-    \includegraphics[width=\linewidth]{../runs/Re200_St0.6_AR1.27_psi90/figures/qcrit_wx_perspective_zoom_view_0008750_post.png}
+    \includegraphics[width=\linewidth]{runs/Re200_St0.6_AR1.27_psi90/figures/qcrit_wx_perspective_zoom_view_0008750_post.png}
     \caption{$t / T = 4.375$}
   \end{subfigure}
   \hfill
   \begin{subfigure}[b]{0.3\textwidth}
     \centering
-    \includegraphics[width=\linewidth]{../runs/Re200_St0.6_AR1.27_psi90/figures/qcrit_wx_perspective_zoom_view_0008875_post.png}
+    \includegraphics[width=\linewidth]{runs/Re200_St0.6_AR1.27_psi90/figures/qcrit_wx_perspective_zoom_view_0008875_post.png}
     \caption{$t / T = 4.4375$}
   \end{subfigure}
   \caption{Wake topology for a flapping circular plate ($AR = 1.27$) with $St = 0.6$, $Re = 200$, and $\psi = 90^o$ at $t / T = 3.875$, $3.9375$, $4.0$, $4.125$, $4.1875$, $4.25$, $4.3125$, $4.375$, $4.4375$. We show the contours of the $Q$-criterion for $Q = 1$ (gray) and $Q = 6$ (colored by the streamwise vorticity, $-5 \leq w_x \leq 5$). (To compare with Fig. 6 of \citet{li_dong_2016}.)}
@@ -391,18 +391,18 @@ As in the original study, we start by looking at the wake topology and aerodynam
   \centering
   \begin{minipage}{0.55\linewidth}
     \begin{subfigure}[t]{\linewidth}
-      \includegraphics[width=\textwidth]{../runs/Re200_St0.6_AR1.27_psi90/figures/qcrit_wx_perspective_view_0008500_post.png}
+      \includegraphics[width=\textwidth]{runs/Re200_St0.6_AR1.27_psi90/figures/qcrit_wx_perspective_view_0008500_post.png}
       \caption{}
     \end{subfigure}
   \end{minipage}
   \begin{minipage}{0.35\linewidth}
     \begin{subfigure}[t]{\linewidth}
-      \includegraphics[width=\textwidth]{../runs/Re200_St0.6_AR1.27_psi90/figures/qcrit_wx_lateral_view_0008500_post.png}
+      \includegraphics[width=\textwidth]{runs/Re200_St0.6_AR1.27_psi90/figures/qcrit_wx_lateral_view_0008500_post.png}
       \caption{}
     \end{subfigure}
     \vspace{1cm}
     \begin{subfigure}[b]{\linewidth}
-      \includegraphics[width=\textwidth]{../runs/Re200_St0.6_AR1.27_psi90/figures/qcrit_wx_top_view_0008500_post.png}
+      \includegraphics[width=\textwidth]{runs/Re200_St0.6_AR1.27_psi90/figures/qcrit_wx_top_view_0008500_post.png}
       \caption{}
     \end{subfigure}
   \end{minipage}
@@ -425,64 +425,64 @@ As noted in the original study, vortex rings shed in the wake gradually increase
   \centering
   \begin{subfigure}[t]{0.24\textwidth}
     \centering
-    \includegraphics[width=\linewidth]{../runs/Re200_St0.6_AR1.27_psi90/figures/wx_slice_a.png}
+    \includegraphics[width=\linewidth]{runs/Re200_St0.6_AR1.27_psi90/figures/wx_slice_a.png}
     \caption{}
   \end{subfigure}
   \begin{subfigure}[t]{0.24\textwidth}
     \centering
-    \includegraphics[width=\linewidth]{../runs/Re200_St0.6_AR1.27_psi90/figures/wx_slice_b.png}
+    \includegraphics[width=\linewidth]{runs/Re200_St0.6_AR1.27_psi90/figures/wx_slice_b.png}
     \caption{}
   \end{subfigure}
   \begin{subfigure}[t]{0.24\textwidth}
     \centering
-    \includegraphics[width=\linewidth]{../runs/Re200_St0.6_AR1.27_psi90/figures/wx_slice_c.png}
+    \includegraphics[width=\linewidth]{runs/Re200_St0.6_AR1.27_psi90/figures/wx_slice_c.png}
     \caption{}
   \end{subfigure}
   \begin{subfigure}[t]{0.24\textwidth}
     \centering
-    \includegraphics[width=\linewidth]{../runs/Re200_St0.6_AR1.27_psi90/figures/wx_slice_d.png}
-    \caption{}
-  \end{subfigure}
-  \vspace{0.5cm}
-  \begin{subfigure}[t]{0.24\textwidth}
-    \centering
-    \includegraphics[width=\linewidth]{../runs/Re200_St0.6_AR1.27_psi90/figures/wx_slice_e.png}
-    \caption{}
-  \end{subfigure}
-  \begin{subfigure}[t]{0.24\textwidth}
-    \centering
-    \includegraphics[width=\linewidth]{../runs/Re200_St0.6_AR1.27_psi90/figures/wx_slice_f.png}
-    \caption{}
-  \end{subfigure}
-  \begin{subfigure}[t]{0.24\textwidth}
-    \centering
-    \includegraphics[width=\linewidth]{../runs/Re200_St0.6_AR1.27_psi90/figures/wx_slice_g.png}
-    \caption{}
-  \end{subfigure}
-  \begin{subfigure}[t]{0.24\textwidth}
-    \centering
-    \includegraphics[width=\linewidth]{../runs/Re200_St0.6_AR1.27_psi90/figures/wx_slice_h.png}
+    \includegraphics[width=\linewidth]{runs/Re200_St0.6_AR1.27_psi90/figures/wx_slice_d.png}
     \caption{}
   \end{subfigure}
   \vspace{0.5cm}
   \begin{subfigure}[t]{0.24\textwidth}
     \centering
-    \includegraphics[width=\linewidth]{../runs/Re200_St0.6_AR1.27_psi90/figures/wx_slice_i.png}
+    \includegraphics[width=\linewidth]{runs/Re200_St0.6_AR1.27_psi90/figures/wx_slice_e.png}
     \caption{}
   \end{subfigure}
   \begin{subfigure}[t]{0.24\textwidth}
     \centering
-    \includegraphics[width=\linewidth]{../runs/Re200_St0.6_AR1.27_psi90/figures/wx_slice_j.png}
+    \includegraphics[width=\linewidth]{runs/Re200_St0.6_AR1.27_psi90/figures/wx_slice_f.png}
     \caption{}
   \end{subfigure}
   \begin{subfigure}[t]{0.24\textwidth}
     \centering
-    \includegraphics[width=\linewidth]{../runs/Re200_St0.6_AR1.27_psi90/figures/wx_slice_k.png}
+    \includegraphics[width=\linewidth]{runs/Re200_St0.6_AR1.27_psi90/figures/wx_slice_g.png}
     \caption{}
   \end{subfigure}
   \begin{subfigure}[t]{0.24\textwidth}
     \centering
-    \includegraphics[width=\linewidth]{../runs/Re200_St0.6_AR1.27_psi90/figures/wx_slice_l.png}
+    \includegraphics[width=\linewidth]{runs/Re200_St0.6_AR1.27_psi90/figures/wx_slice_h.png}
+    \caption{}
+  \end{subfigure}
+  \vspace{0.5cm}
+  \begin{subfigure}[t]{0.24\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{runs/Re200_St0.6_AR1.27_psi90/figures/wx_slice_i.png}
+    \caption{}
+  \end{subfigure}
+  \begin{subfigure}[t]{0.24\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{runs/Re200_St0.6_AR1.27_psi90/figures/wx_slice_j.png}
+    \caption{}
+  \end{subfigure}
+  \begin{subfigure}[t]{0.24\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{runs/Re200_St0.6_AR1.27_psi90/figures/wx_slice_k.png}
+    \caption{}
+  \end{subfigure}
+  \begin{subfigure}[t]{0.24\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{runs/Re200_St0.6_AR1.27_psi90/figures/wx_slice_l.png}
     \caption{}
   \end{subfigure}
   \caption{Two-dimensional slices of the streamwise vorticity ($-5 \leq w_x \leq 5$) at $t / T = 4.25$ in the $y/z$ plane at different $x$ locations in the wake of a flapping circular plate ($AR = 1.27$) with $St = 0.6$, $Re = 200$, and $\psi = 90^o$. (a-l)Wake locations: $x / c = 0$, $0.2$, $0.3$, $0.75$, $1.1$, $1.3$, $1.85$, $2.0$, $2.7$, $3.8$, $4.5$, and $5.25$. (To compare with Fig. 8 of \citet{li_dong_2016}.)}
@@ -493,7 +493,7 @@ Figure \ref{fig:baseline_wx_slices} shows two-dimensional slices of the streamwi
 
 \begin{figure}
   \centering
-  \includegraphics[width=\linewidth]{../runs/Re200_St0.6_AR1.27_psi90/figures/force_coefficients.png}
+  \includegraphics[width=\linewidth]{runs/Re200_St0.6_AR1.27_psi90/figures/force_coefficients.png}
   \caption{History of the thrust ($C_T$), lift ($C_L$), and spanwise ($C_Z$) coefficients during the fourth and fifth flapping cycles of a circular plate ($AR = 1.27$) with $St = 0.6$, $Re = 200$, and $\psi = 90^o$. We also report the digitized coefficients from \cite{li_dong_2016} and the instantaneous values of the instantaneous rolling and pitching angles (dashed blue line and dotted green line, respectively).}
   \label{fig:baseline_force_coefficients}
 \end{figure}
@@ -528,25 +528,25 @@ We computed the three-dimensional flow around a circular flat plate ($AR = 1.27$
   \centering
   \begin{subfigure}[]{0.45\textwidth}
     \centering
-    \includegraphics[width=\linewidth]{../runs/Re200_St0.4_AR1.27_psi90/figures/qcrit_wx_lateral_view_0008500_post.png}
+    \includegraphics[width=\linewidth]{runs/Re200_St0.4_AR1.27_psi90/figures/qcrit_wx_lateral_view_0008500_post.png}
     \caption{}
   \end{subfigure}
   \hfill
   \begin{subfigure}[]{0.45\textwidth}
     \centering
-    \includegraphics[width=\linewidth]{../runs/Re200_St0.4_AR1.27_psi90/figures/qcrit_wx_top_view_0008500_post.png}
+    \includegraphics[width=\linewidth]{runs/Re200_St0.4_AR1.27_psi90/figures/qcrit_wx_top_view_0008500_post.png}
     \caption{}
   \end{subfigure}
   \vspace{1cm}
   \begin{subfigure}[]{0.45\textwidth}
     \centering
-    \includegraphics[width=\linewidth]{../runs/Re200_St0.8_AR1.27_psi90/figures/qcrit_wx_lateral_view_0008500_post.png}
+    \includegraphics[width=\linewidth]{runs/Re200_St0.8_AR1.27_psi90/figures/qcrit_wx_lateral_view_0008500_post.png}
     \caption{}
   \end{subfigure}
   \hfill
   \begin{subfigure}[]{0.45\textwidth}
     \centering
-    \includegraphics[width=\linewidth]{../runs/Re200_St0.8_AR1.27_psi90/figures/qcrit_wx_top_view_0008500_post.png}
+    \includegraphics[width=\linewidth]{runs/Re200_St0.8_AR1.27_psi90/figures/qcrit_wx_top_view_0008500_post.png}
     \caption{}
   \end{subfigure}
   \caption{Wake topology captured at $t / T = 4.25$ (when the plate is at middle point during the upstroke) for a circular plate ($AR = 1.27$) at Reynolds number $200$ and Strouhal numbers $0.4$ (top) and $0.8$ (bottom). Wake structures are represented with the Q-criterion for $Q = 1$ (gray) and $Q = 6$ (colored with the streamwise vorticity, $-5 \leq w_x \leq 5$). (a,c) lateral view of the wake; (b,d) top view. (To compare with Fig. 10 \citet{li_dong_2016}.)}
@@ -589,7 +589,7 @@ We do not observe the back deflection in our simulation at Strouhal number $St =
 
 \begin{figure}
   \centering
-  \includegraphics[width=0.5\textwidth]{../runs/figures/efficiency_compare_St.png}
+  \includegraphics[width=0.5\textwidth]{runs/figures/efficiency_compare_St.png}
   \caption{Cycle-averaged thrust coefficient ($\overline{C_T}$) and propulsive efficiency ($\eta$) for the baseline case as functions of the Strouhal number. Data were computed and averaged during the fifth flapping cycle. (To compare with Fig. 11 of \citet{li_dong_2016}.)}
   \label{fig:strouhal_propulsive_efficiency}
 \end{figure}
@@ -602,13 +602,13 @@ We also computed the three-dimensional flow at additional Reynolds numbers $100$
   \centering
   \begin{subfigure}[c]{0.45\textwidth}
     \centering
-    \includegraphics[width=\linewidth]{../runs/Re100_St0.6_AR1.27_psi90/figures/qcrit_wx_perspective_zoom_view_0008500_post.png}
+    \includegraphics[width=\linewidth]{runs/Re100_St0.6_AR1.27_psi90/figures/qcrit_wx_perspective_zoom_view_0008500_post.png}
     \caption{}
   \end{subfigure}
   \hfill
   \begin{subfigure}[c]{0.45\textwidth}
     \centering
-    \includegraphics[width=\linewidth]{../runs/Re400_St0.6_AR1.27_psi90/figures/qcrit_wx_perspective_zoom_view_0008500_post.png}
+    \includegraphics[width=\linewidth]{runs/Re400_St0.6_AR1.27_psi90/figures/qcrit_wx_perspective_zoom_view_0008500_post.png}
     \caption{}
   \end{subfigure}
   \caption{Vortex topology at $t / T = 4.25$ for a circular plate ($AR = 1.27$) with $St = 0.6$ and $\psi = 90^o$ at Reynolds numbers $Re = 100$ (a) and $Re = 400$ (b). We visualized vortical structures using the $Q$-criterion with $Q = 1$ (in gray) and $Q = 6$ (colored by the streamwise vorticity, $-5 \leq w_x \leq 5$). (To compare with Fig. 12 of \citet{li_dong_2016}.)}
@@ -623,7 +623,7 @@ Overall, we observe similar trends between our results and the one from the orig
 
 \begin{figure}
   \centering
-  \includegraphics[width=\linewidth]{../runs/figures/force_coefficients_compare_Re.png}
+  \includegraphics[width=\linewidth]{runs/figures/force_coefficients_compare_Re.png}
   \caption{History of the thrust ($C_T$), lift ($C_L$), and spanwise ($C_Z$) coefficients over two flapping cycles for a circular flat plate ($AR = 1.27$) at Reynolds numbers $100$, $200$, and $400$. Strouhal number is $0.6$ with a phase difference of $90^o$ for all these cases. (To compare with Fig. 13 of \citet{li_dong_2016}.)}
   \label{fig:reynolds_force_coefficients}
 \end{figure}
@@ -645,13 +645,13 @@ We ran two additional simulations, with $AR = 1.91$ and $AR = 2.55$ to look at t
   \centering
   \begin{subfigure}[c]{0.45\textwidth}
     \centering
-    \includegraphics[width=\linewidth]{../runs/Re200_St0.6_AR1.91_psi90/figures/qcrit_wx_perspective_zoom_view_0008500_post.png}
+    \includegraphics[width=\linewidth]{runs/Re200_St0.6_AR1.91_psi90/figures/qcrit_wx_perspective_zoom_view_0008500_post.png}
     \caption{}
   \end{subfigure}
   \hfill
   \begin{subfigure}[c]{0.45\textwidth}
     \centering
-    \includegraphics[width=\linewidth]{../runs/Re200_St0.6_AR2.55_psi90/figures/qcrit_wx_perspective_zoom_view_0008500_post.png}
+    \includegraphics[width=\linewidth]{runs/Re200_St0.6_AR2.55_psi90/figures/qcrit_wx_perspective_zoom_view_0008500_post.png}
     \caption{}
   \end{subfigure}
   \caption{Vortex topology at $t / T = 4.25$ for an elliptical plate with $AR = 1.91$ (a) and $AR = 2.55$ (b) for $Re = 200$, $St = 0.6$, and $\psi = 90^o$. We visualized vortical structures using the $Q$-criterion with $Q = 1$ (in gray) and $Q = 6$ (colored by the streamwise vorticity, $-5 \leq w_x \leq 5$). (To compare with Fig. 14 of \citet{li_dong_2016}.)}
@@ -662,33 +662,33 @@ We ran two additional simulations, with $AR = 1.91$ and $AR = 2.55$ to look at t
   \centering
   \begin{subfigure}[c]{0.3\textwidth}
     \centering
-    \includegraphics[width=\linewidth]{../runs/Re200_St0.6_AR1.27_psi90/figures/wx_slice_yz_0008500.png}
+    \includegraphics[width=\linewidth]{runs/Re200_St0.6_AR1.27_psi90/figures/wx_slice_yz_0008500.png}
     \caption{}
   \end{subfigure}
   \begin{subfigure}[c]{0.3\textwidth}
     \centering
-    \includegraphics[width=\linewidth]{../runs/Re200_St0.6_AR1.91_psi90/figures/wx_slice_yz_0008500.png}
+    \includegraphics[width=\linewidth]{runs/Re200_St0.6_AR1.91_psi90/figures/wx_slice_yz_0008500.png}
     \caption{}
   \end{subfigure}
   \begin{subfigure}[c]{0.34\textwidth}
     \centering
-    \includegraphics[width=\linewidth]{../runs/Re200_St0.6_AR2.55_psi90/figures/wx_slice_yz_0008500.png}
+    \includegraphics[width=\linewidth]{runs/Re200_St0.6_AR2.55_psi90/figures/wx_slice_yz_0008500.png}
     \caption{}
   \end{subfigure}
   \vspace{0.5cm}
   \begin{subfigure}[c]{0.32\textwidth}
     \centering
-    \includegraphics[width=\linewidth]{../runs/Re200_St0.6_AR1.27_psi90/figures/wz_slice_xy_0008500.png}
+    \includegraphics[width=\linewidth]{runs/Re200_St0.6_AR1.27_psi90/figures/wz_slice_xy_0008500.png}
     \caption{}
   \end{subfigure}
   \begin{subfigure}[c]{0.32\textwidth}
     \centering
-    \includegraphics[width=\linewidth]{../runs/Re200_St0.6_AR1.91_psi90/figures/wz_slice_xy_0008500.png}
+    \includegraphics[width=\linewidth]{runs/Re200_St0.6_AR1.91_psi90/figures/wz_slice_xy_0008500.png}
     \caption{}
   \end{subfigure}
   \begin{subfigure}[c]{0.32\textwidth}
     \centering
-    \includegraphics[width=\linewidth]{../runs/Re200_St0.6_AR2.55_psi90/figures/wz_slice_xy_0008500.png}
+    \includegraphics[width=\linewidth]{runs/Re200_St0.6_AR2.55_psi90/figures/wz_slice_xy_0008500.png}
     \caption{}
   \end{subfigure}
   \caption{Comparison of the two-dimensional contours of the vorticity at $t/T = 4.25$ for elliptical plates with $AR = 1.27$ (a, d), $AR = 1.91$ (b, e), and $AR = 2.55$ (c, f). (a-c): streamwise vorticity ($-5 \leq w_x \leq 5$) in the $y/z$ plane at $x/c = 0.3$ (near wake). (d-f): spanwise vorticity ($-5 \leq w_z \leq 5$) in the $x/y$ plane at $z = S/2$ (mid-span). (To compare with Fig. 15 of \citet{li_dong_2016}.)}
@@ -701,7 +701,7 @@ As reported in the original study, we too observe an increase in the size of the
 
 \begin{figure}
   \centering
-  \includegraphics[width=\textwidth]{../runs/figures/force_coefficients_compare_AR.png}
+  \includegraphics[width=\textwidth]{runs/figures/force_coefficients_compare_AR.png}
   \caption{History of the thrust ($C_T$), lift ($C_L$), and spanwise ($C_Z$) coefficients over two flapping cycles for plates with different aspect ratios ($AR$) and with $St = 0.6$, $Re = 200$, and $\psi = 90^o$. (To compare with Fig. 16 of \citet{li_dong_2016}.)}
   \label{fig:ratio_force_coefficients}
 \end{figure}
@@ -723,37 +723,37 @@ We ran six additional simulations with phase-difference angle $\psi = 60^o$, $70
   \centering
   \begin{subfigure}[]{0.45\textwidth}
     \centering
-    \includegraphics[width=\linewidth]{../runs/Re200_St0.6_AR1.27_psi100/figures/qcrit_wx_lateral_view_0008500_post.png}
+    \includegraphics[width=\linewidth]{runs/Re200_St0.6_AR1.27_psi100/figures/qcrit_wx_lateral_view_0008500_post.png}
     \caption{}
   \end{subfigure}
   \hfill
   \begin{subfigure}[]{0.45\textwidth}
     \centering
-    \includegraphics[width=\linewidth]{../runs/Re200_St0.6_AR1.27_psi100/figures/qcrit_wx_top_view_0008500_post.png}
+    \includegraphics[width=\linewidth]{runs/Re200_St0.6_AR1.27_psi100/figures/qcrit_wx_top_view_0008500_post.png}
     \caption{}
   \end{subfigure}
   \vspace{1cm}
   \begin{subfigure}[]{0.45\textwidth}
     \centering
-    \includegraphics[width=\linewidth]{../runs/Re200_St0.6_AR1.27_psi110/figures/qcrit_wx_lateral_view_0008500_post.png}
+    \includegraphics[width=\linewidth]{runs/Re200_St0.6_AR1.27_psi110/figures/qcrit_wx_lateral_view_0008500_post.png}
     \caption{}
   \end{subfigure}
   \hfill
   \begin{subfigure}[]{0.45\textwidth}
     \centering
-    \includegraphics[width=\linewidth]{../runs/Re200_St0.6_AR1.27_psi110/figures/qcrit_wx_top_view_0008500_post.png}
+    \includegraphics[width=\linewidth]{runs/Re200_St0.6_AR1.27_psi110/figures/qcrit_wx_top_view_0008500_post.png}
     \caption{}
   \end{subfigure}
   \vspace{1cm}
   \begin{subfigure}[]{0.45\textwidth}
     \centering
-    \includegraphics[width=\linewidth]{../runs/Re200_St0.6_AR1.27_psi120/figures/qcrit_wx_lateral_view_0008500_post.png}
+    \includegraphics[width=\linewidth]{runs/Re200_St0.6_AR1.27_psi120/figures/qcrit_wx_lateral_view_0008500_post.png}
     \caption{}
   \end{subfigure}
   \hfill
   \begin{subfigure}[]{0.45\textwidth}
     \centering
-    \includegraphics[width=\linewidth]{../runs/Re200_St0.6_AR1.27_psi120/figures/qcrit_wx_top_view_0008500_post.png}
+    \includegraphics[width=\linewidth]{runs/Re200_St0.6_AR1.27_psi120/figures/qcrit_wx_top_view_0008500_post.png}
     \caption{}
   \end{subfigure}
   \caption{Wake topology captured at $t / T = 4.25$ (when the plate is at middle point during the upstroke) for a circular plate ($AR = 1.27$) at Reynolds number $200$, Strouhal number $0.6$, and phase differences $\psi = 100^o$ (top), $110^o$ (center), and $120^o$ (bottom). Wake structures are represented with the $Q$-criterion for $Q = 1$ (gray) and $Q = 6$ (colored with the streamwise vorticity, $-5 \leq w_x \leq 5$). (a,c,e) Lateral view of the wake; (b,d,f) top view. (To compare with Fig. 17 of \citet{li_dong_2016}.)}
@@ -788,14 +788,14 @@ Table \ref{tab:phase_angles} reports the wake oblique angles and wake deflection
 
 \begin{figure}
   \centering
-  \includegraphics[width=\textwidth]{../runs/figures/force_coefficients_compare_psi.png}
+  \includegraphics[width=\textwidth]{runs/figures/force_coefficients_compare_psi.png}
   \caption{History of the thrust ($C_T$), lift ($C_L$), and spanwise ($C_Z$) coefficients over two flapping cycles for a circular plate ($AR = 1.27$) for various phase-difference angles ($\psi$) between the pitching and rolling motions. Strouhal number is $0.6$ and Reynolds number is $200$ for all these cases. (To compare with Fig. 18 of \citet{li_dong_2016}.)}
   \label{fig:phase_force_coefficients}
 \end{figure}
 
 \begin{figure}
   \centering
-  \includegraphics[width=0.5\textwidth]{../runs/figures/efficiency_compare_psi.png}
+  \includegraphics[width=0.5\textwidth]{runs/figures/efficiency_compare_psi.png}
   \caption{Cycle-averaged thrust coefficient ($\overline{C_T}$) and propulsive efficiency ($\eta$) for the baseline case as functions of the phase difference between the rolling and pitching motions. Data were computed and averaged during the fifth flapping cycle. (To compare with Fig. 19 of \citet{li_dong_2016}.)}
   \label{fig:phase_efficiency}
 \end{figure}
