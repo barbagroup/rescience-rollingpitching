@@ -160,21 +160,23 @@ Researchers interested in reproducing our results can pull our Singularity image
 
 \subsection{Grid-independence study}
 
-In the original study, the authors reported the results of a grid-independence study to justify the spatial and temporal grid sizes used in the parametric study.
-Force coefficients, profiles of the velocity components, profiles of the fluctuations of the kinetic energy, and distances between vortical structures in the near wake of the wing, were compared between the different grids to assess numerical independence in the results.
-Here, we also report the results of our grid-independence study.
+In the original study, the authors reported the results of a grid-independence study to justify the spatial and temporal grid resolutions used for the parametric study.
+They compared force coefficients, profiles of the velocity components, profiles of the fluctuating kinetic energy, and distances between vortical structures in the near wake, obtained with different grid resolutions.
+Here, we also report the results of our grid-independence study before moving on to the results of the parametric study.
 
 We use the same domain size as in the original study: $30c \times 25c \times 25c$.
-The root of the wing (around which the plate undergoes the rolling and pitching motions) is located at the center of the computational domain.
-The spatial grid is kept uniform with highest resolution in the region that covers the motion of the wing.
-Outside this area, we also add a uniform layer in the sub-domain $\left[ -2c, 6c \right] \times \left[ -3c, 3c \right] \times \left[ -c, 2c \right]$, that covers the near-wake region, with grid-spacing size $\Delta x = 0.05c$.
+The root of the wing (around which the plate undergoes the rolling/pitching motion) is located at the center of the computational domain.
+We keep the spatial grid uniform (with highest resolution) in the sub-area of the domain that covers the motion of the wing.
+Outside this area, we also add an extra uniform layer with grid-spacing size $\Delta x = 0.05c$, in the sub-domain $\left[ -2c, 6c \right] \times \left[ -3c, 3c \right] \times \left[ -1c, 2c \right]$, which covers the near-wake region.
 (We opted for a smooth transition between the two uniform regions, in which the grid-cell widths are stretched with a constant ratio of $1.1$ in all directions, except in the streamwise direction behind the wing where we used a ratio of $1.03$.)
-Finally, the grid-cell width is stretched to the external boundaries with a constant ration of $1.2$.
-The wing is modeled as a flat ellipse with Lagrangian markers uniformly distributed on the surface (with a similar resolution as the grid-cell width of the background Eulerian grid).
+Finally, the grid-cell width is stretched to the external boundaries with a constant ratio of $1.2$.
 
-For the present grid-independence study, we computed the flow with Reynolds number $Re = 200$, Strouhal number $St = 0.6$, and phase-difference angle $\psi = 90^o$.
-We investigated the effect of the grid-cell width, the time-step size, and the exit criterion of the iterative solvers, on the numerical solution.
-Moreover, since the original study modeled the wing with an elliptical disk (with a thickness equal to $3\%$ of the chord length), we also compared the results obtained with the flat plate to those using a similar disk.
+In the present study, we model the wing with a flat elliptical surface, discretized with Lagrangian markers uniformly distributed on its surface (with a similar resolution as the grid-spacing size of the background Eulerian grid).
+
+As in the original study, we consider the case of a circular wing ($AR = 1.27$) with Reynolds number $Re = 200$, Strouhal number $St = 0.6$, and phase-difference angle $\psi = 90^o$, to assess independence in the numerical results.
+We investigated the effect of the grid-spacing size, the time-step size, and the convergence criterion of the iterative solvers, on the numerical solution.
+Note that the original study did not use a flat surface for the wing; the authors used an elliptical disk with a thickness equal to $3\%$ of the chord length.
+In that regards, we also compared the results obtained with a similar disk to those using a flat plate.
 
 \begin{table}
   \centering
@@ -191,7 +193,7 @@ Moreover, since the original study modeled the wing with an elliptical disk (wit
   \label{tab:independence_grid_charateristics}
 \end{table}
 
-To assess the effect of the grid-cell width on the solution, we computed five flapping cycles on three grids: coarse ($\Delta x = 0.03c$), nominal ($\Delta x = 0.01c$) and fine ($\Delta x = 0.005c$).
+To assess the effect of the grid-spacing size $\Delta x$ in the vicinity of the wing on the solution, we computed five flapping cycles on three grids: coarse ($\Delta x = 0.03c$), nominal ($\Delta x = 0.01c$) and fine ($\Delta x = 0.005c$).
 Table \ref{tab:independence_grid_charateristics} reports characteristics of the spatial grids used for the independence study.
 
 \begin{figure}
@@ -220,13 +222,15 @@ Table \ref{tab:independence_grid_charateristics} reports characteristics of the 
   \label{tab:independence_results}
 \end{table}
 
-Figure \ref{fig:independence_force_coefficients_dx} displays the history of the thrust, lift, and spanwise coefficients over two flapping cycles ($2000$ time steps per cycle), obtained on the coarse, nominal, finer spatial grids.
-When using a similar grid resolution as in the original study ($\Delta x = 0.03c$), the instantaneous force components are noisy and we cannot distinguish two peaks in the lift coefficient, each half cycle.
-Force productions are visually similar for the nominal and fine grids, with the presence of two peaks in the thrust and lift coefficients each half cycle (as reported in the original study).
-Table \ref{tab:independence_results} reports hydrodynamic quantities and propulsive efficiency obtained from the simulations performed during the independence study.
+Figure \ref{fig:independence_force_coefficients_dx} shows the history of the thrust, lift, and spanwise coefficients over two flapping cycles ($2000$ time steps per cycle), obtained on the coarse, nominal, finer spatial grids.
+When using a similar grid resolution as in the original study ($\Delta x = 0.03c$), the instantaneous force components are noisy and we do not clearly distinguish two peaks in the lift force each half cycle.
+(Authors of the original study reported two peaks in both the thrust and lift forces, every half cycle.)
+Spurious noise can be reduced by refining the spatial grid.
+The history of the forces is visually similar for the nominal and fine grids, with the presence of two peaks in the thrust and lift.
+Table \ref{tab:independence_results} reports hydrodynamic quantities and propulsive efficiency obtained from the simulations computed during the independence study.
 Refining to computational grid leads to a relative difference of $7.8\%$ in the mean thrust coefficient, $1.2\%$ in the r.m.s. value for the lift coefficient, and $3\%$ in the r.m.s. value of spanwise coefficients.
 Compared to \citet{li_dong_2016}, we obtain lower magnitude in the peaks of the force coefficients.
-Note that we used the nominal spatial grid ($\Delta x = 0.01c$) to conduct a replication of the parametric study.
+Note that we used the nominal spatial grid ($\Delta x = 0.01c$) for the replication of the parametric study.
 
 \begin{figure}
   \centering
@@ -237,10 +241,13 @@ Note that we used the nominal spatial grid ($\Delta x = 0.01c$) to conduct a rep
 
 The original study modeled the wing with a disk (with a thickness equal to $3\%$ of the chord length).
 Here, we use a different immersed boundary method which allows us to model thin volumes with flat surfaces.
-Thus, we decided to employ a flat plate to model the wing, requiring fewer Lagrangian markers to discretize the immersed boundary.
-Still, we wanted to compute the solution obtained with a disk (with same thickness as in the original study) to compare with the flat-plate-bases solution.
+Using a flat surface requires fewer Lagrangian markers to represent the wing, making the simulation computationally cheaper.
+(Runtime for the flat-wing simulation was about $8.4$ hours to compute 5 flapping cycles; with a disk, the runtime was approximately $10.8$ hours.)
+The history of the thrust coefficient (Figure \ref{fig:independence_force_coefficients_disk}) is similar whether we use a disk or a flat plate.
+We note slightly larger magnitude in the first peak of the lift and in the peaks of the spanwise force when using a disk.
 We obtained very similar history for the force coefficients (Figure \ref{fig:independence_force_coefficients_disk}), whether we used a disk or a flat plate.
-Since using a disk does not really improve the solution, we decided to model the wing with a flat plate for the parametric study.
+Overall, the disk-based simulation does not really improve the solution.
+Thus, we decided to model the wing with a flat plate for the parametric study.
 
 \begin{figure}
   \centering
@@ -249,13 +256,14 @@ Since using a disk does not really improve the solution, we decided to model the
   \label{fig:independence_force_coefficients_dt}
 \end{figure}
 
-Although the authors of the original reported results to assess independence in the results when refining the temporal, they forgot to mention how may time steps per flapping cycle were computed.
-(We know that force statistics and profiles of the velocity components remained unchanged when the time-step size was halved.)
+Although the authors of the original study reported results to assess independence in the results when refining the temporal, they did not mention how many time steps per flapping cycle were computed.
+(We know that force statistics and profiles of the velocity components did not significantly change when the time-step size was halved.)
 Figure \ref{fig:independence_force_coefficients_dt} shows the history of the force coefficients obtained on two temporal grids ($2000$ and $1000$ time steps per flapping cycle), using the nominal spatial grid.
-We note that the force production remain unchanged when doubling the time-step size.
+The force signals are visually identical when doubling the time-step size, and the maximum relative difference in the aerodynamic quantities is less than $0.5\%$.
+For all simulations of the parametric study, we computed $2000$ time steps per flapping cycle.
 
-Finally, we also checked that aerodynamic statistics do not change significantly when setting tighter convergence criterion for the iterative solvers.
-Mean thrust coefficient, root-mean-square values of the lift and spanwise coefficients, and propulsive efficiency remain identical when decreasing the convergence criterion of the iterative solvers by 3 orders of magnitude (reported in Table \ref{tab:independence_results}).
+Finally, we also checked that aerodynamic statistics do not change significantly when setting a tighter convergence criterion ($atol$) for the iterative solvers (based on the absolute size of the residual in the $L_2$-norm).
+Mean thrust coefficient, root-mean-square values of the lift and spanwise coefficients, and propulsive efficiency remain identical when reducing the convergence criterion of the iterative solvers by 3 orders of magnitude (reported in Table \ref{tab:independence_results}).
 
 \begin{figure}
   \centering
@@ -263,42 +271,49 @@ Mean thrust coefficient, root-mean-square values of the lift and spanwise coeffi
     \centering
     \includegraphics[width=\linewidth]{runs/independence/figures/ux_profiles_compare_dx_dt.png}
     \caption{}
+    \label{fig:independence_profiles:streamwise}
   \end{subfigure}
   \hfill
   \begin{subfigure}[c]{0.45\textwidth}
     \centering
     \includegraphics[width=\linewidth]{runs/independence/figures/uy_profiles_compare_dx_dt.png}
     \caption{}
+    \label{fig:independence_profiles:transverse}
   \end{subfigure}
   \vspace{1cm}
   \begin{subfigure}[c]{0.45\textwidth}
     \centering
     \includegraphics[width=\linewidth]{runs/independence/figures/uz_profiles_compare_dx_dt.png}
     \caption{}
+    \label{fig:independence_profiles:spanwise}
   \end{subfigure}
   \hfill
   \begin{subfigure}[c]{0.45\textwidth}
     \centering
     \includegraphics[width=\linewidth]{runs/independence/figures/kin_profiles_compare_dx_dt.png}
     \caption{}
+    \label{fig:independence_profiles:kinetic}
   \end{subfigure}
   \caption{Comparison of the velocity profiles and profiles of the fluctuation of the kinetic energy in the wake of a flapping circular plate ($AR = 1.27$) at Reynolds number $Re = 200$ and Strouhal number $St = 0.6$. We report profiles at locations $x / c = 1$, $2$, $3$, $4$, and $5$. We compare the profiles obtained on the nominal grid, on the finer grid in space, and on the coarser grid in time. (a) Streamwise velocity ($\overline{u_1} - U_\infty$) profiles in the $x/y$ plane at $z = S / 2$; (b) transverse velocity ($\overline{u_2}$) profiles in the $x/y$ plane at $z = S / 2$; (c) spanwise velocity ($\overline{u_3}$) in the $x/z$ plane at $y = 0$; (d) fluctuation of the kinetic energy $( \overline{{u_1'}^2} + \overline{{u_2'}^2} + \overline{{u_3'}^2} ) / 2$ in the $x/y$ plane at $z = S / 2$. We also report digitized data from the original study.\supercite{li_dong_2016}}
   \label{fig:independence_profiles}
 \end{figure}
 
-We also assess the effect of the numerical parameters (grid-spacing size and time-step size) on the flow features by comparing the profiles of the velocity components and of the fluctuations of the kinetic energy at several locations in the wake of the wing.
-Figure \ref{fig:independence_profiles} reports the profiles with a direct comparison to the digitized data from \citet{li_dong_2016}.
-We note that the profiles are visually similar when refining the spatial grid and when using fewer time steps per flapping cycle.
+We also assess the effect of the grid-spacing and time-step sizes on the flow dynamics by comparing the profiles of the mean velocity components and of the fluctuating kinetic energy at several locations in the wake of the wing.
+Figures \ref{fig:independence_profiles:streamwise} and \ref{fig:independence_profiles:transverse} show the mean streamwise ($\overline{u_1} - u_\infty$) and transverse ($\overline{u_2}$) velocity profiles in the $x/y$ plane at mid-span ($z = S / 2$).
+Figure \ref{fig:independence_profiles:spanwise} shows the mean spanwise ($\overline{u_3}$) velocity profiles at the center ($y = 0$) of the $x/z$ plane.
+Profiles of the fluctuating kinetic energy ($( \overline{{u_1'}^2} + \overline{{u_2'}^2} + \overline{{u_3'}^2} ) / 2$) at mid-span are reported in Figure \ref{fig:independence_profiles:kinetic}.
+We also report digitized data from \citet{li_dong_2016} for comparison.
+Although there exist some differences with the results of the original study, we note that the profiles of the present study are visually similar when refining the spatial grid and when using fewer time steps per flapping cycle.
 
 \begin{figure}
   \centering
-  \begin{subfigure}[c]{0.45\textwidth}
+  \begin{subfigure}[c]{0.35\textwidth}
     \centering
     \includegraphics[width=\linewidth]{runs/independence/figures/wx_slice_c_distances.png}
     \caption{}
   \end{subfigure}
-  \hfill
-  \begin{subfigure}[c]{0.45\textwidth}
+  \hspace{1em}
+  \begin{subfigure}[c]{0.35\textwidth}
     \centering
     \includegraphics[width=\linewidth]{runs/independence/figures/wx_slice_f_distances.png}
     \caption{}
@@ -322,7 +337,18 @@ We note that the profiles are visually similar when refining the spatial grid an
   \label{tab:independence_wx_distances}
 \end{table}
 
-Based on the results of our independence study, we decided to replicate the parametric study using our nominal grid (with smallest cell-width $\Delta x = 0.01c$), computing $2000$ time steps per flapping cycles of a wing modeled as a flat plate.
+Following the work of \citet{li_dong_2016}, we also tried to assess the effects of different grids on the instantaneous vortical structures.
+As in the original study, we quantified the size of the vortex loops at time $t/T = 4.25$ in the near ($x/c = 0.3$) and far ($x/c = 1.3$) wake.
+Figure \ref{fig:independence_wx_distances} shows slices of the streamwise vorticity field in the near and far wake, where we also report distances between between each pair of vortices.
+(Center of each vortex is chosen as the point with the maximum absolute value of the streamwise vorticity.)
+Table \ref{tab:independence_wx_distances} reports the distances between vortex centers.
+Compared to nominal grid, the maximum relative difference occurs for the distance $d_2$ (near wake) on the finer spatial grid and is about $9\%$.
+The relatively high difference could be caused by the diffuse-interface immersed boundary method used in the present replication study.
+We employ regularized delta kernels, to transfer information between the Eulerian grid and the Lagrangian surface mesh, which have a compact support that is proportional to the Eulerian grid-spacing size $\Delta x$.
+These kernels smear the solution near the immersed boundary.
+In other words, the solution is not physical over a thin shell around the wing.
+As we refine the spatial grid (and the Lagrangian mesh), the distance over which the solution is smeared is reduced.
+Nevertheless, results of the parametric study show that we were able to replicate the main scientific findings of the original study using our nominal grid (with resolution $\Delta x = 0.01c$ near the immersed boundary), computing $2000$ time steps per flapping cycles of a wing (modeled as a flat plate).
 
 \subsection{Baseline case}
 
@@ -335,49 +361,49 @@ As in the original study, we start by looking at the wake topology and aerodynam
     \includegraphics[width=\linewidth]{runs/Re200_St0.6_AR1.27_psi90/figures/qcrit_wx_perspective_zoom_view_0007750_post.png}
     \caption{$t / T = 3.875$}
   \end{subfigure}
-  \hfill
+  \hspace{0.5em}
   \begin{subfigure}[b]{0.3\textwidth}
     \centering
     \includegraphics[width=\linewidth]{runs/Re200_St0.6_AR1.27_psi90/figures/qcrit_wx_perspective_zoom_view_0007875_post.png}
     \caption{$t / T = 3.9375$}
   \end{subfigure}
-  \hfill
+  \hspace{0.5em}
   \begin{subfigure}[b]{0.3\textwidth}
     \centering
     \includegraphics[width=\linewidth]{runs/Re200_St0.6_AR1.27_psi90/figures/qcrit_wx_perspective_zoom_view_0008000_post.png}
     \caption{$t / T = 4.0$}
   \end{subfigure}
-  \vspace{1cm}
+  \vspace{0.5em}
   \begin{subfigure}[b]{0.3\textwidth}
     \centering
     \includegraphics[width=\linewidth]{runs/Re200_St0.6_AR1.27_psi90/figures/qcrit_wx_perspective_zoom_view_0008250_post.png}
     \caption{$t / T = 4.125$}
   \end{subfigure}
-  \hfill
+  \hspace{0.5em}
   \begin{subfigure}[b]{0.3\textwidth}
     \centering
     \includegraphics[width=\linewidth]{runs/Re200_St0.6_AR1.27_psi90/figures/qcrit_wx_perspective_zoom_view_0008375_post.png}
     \caption{$t / T = 4.1875$}
   \end{subfigure}
-  \hfill
+  \hspace{0.5em}
   \begin{subfigure}[b]{0.3\textwidth}
     \centering
     \includegraphics[width=\linewidth]{runs/Re200_St0.6_AR1.27_psi90/figures/qcrit_wx_perspective_zoom_view_0008500_post.png}
     \caption{$t / T = 4.25$}
   \end{subfigure}
-  \vspace{1cm}
+  \vspace{0.5em}
   \begin{subfigure}[b]{0.3\textwidth}
     \centering
     \includegraphics[width=\linewidth]{runs/Re200_St0.6_AR1.27_psi90/figures/qcrit_wx_perspective_zoom_view_0008625_post.png}
     \caption{$t / T = 4.3125$}
   \end{subfigure}
-  \hfill
+  \hspace{0.5em}
   \begin{subfigure}[b]{0.3\textwidth}
     \centering
     \includegraphics[width=\linewidth]{runs/Re200_St0.6_AR1.27_psi90/figures/qcrit_wx_perspective_zoom_view_0008750_post.png}
     \caption{$t / T = 4.375$}
   \end{subfigure}
-  \hfill
+  \hspace{0.5em}
   \begin{subfigure}[b]{0.3\textwidth}
     \centering
     \includegraphics[width=\linewidth]{runs/Re200_St0.6_AR1.27_psi90/figures/qcrit_wx_perspective_zoom_view_0008875_post.png}
