@@ -194,7 +194,7 @@ In that regards, we also compared the results obtained with a similar disk to th
 \end{table}
 
 To assess the effect of the grid-spacing size $\Delta x$ in the vicinity of the wing on the solution, we computed five flapping cycles on three grids: coarse ($\Delta x = 0.03c$), nominal ($\Delta x = 0.01c$) and fine ($\Delta x = 0.005c$).
-Table \ref{tab:independence_grid_charateristics} reports characteristics of the spatial grids used for the independence study.
+\cref{tab:independence_grid_charateristics} reports characteristics of the spatial grids used for the independence study.
 
 \begin{figure}
   \centering
@@ -222,12 +222,12 @@ Table \ref{tab:independence_grid_charateristics} reports characteristics of the 
   \label{tab:independence_results}
 \end{table}
 
-Figure \ref{fig:independence_force_coefficients_dx} shows the history of the thrust, lift, and spanwise coefficients over two flapping cycles ($2000$ time steps per cycle), obtained on the coarse, nominal, finer spatial grids.
+\cref{fig:independence_force_coefficients_dx} shows the history of the thrust, lift, and spanwise coefficients over two flapping cycles ($2000$ time steps per cycle), obtained on the coarse, nominal, finer spatial grids.
 When using a similar grid resolution as in the original study ($\Delta x = 0.03c$), the instantaneous force components are noisy and we do not clearly distinguish two peaks in the lift force each half cycle.
 (Authors of the original study reported two peaks in both the thrust and lift forces, every half cycle.)
 Spurious noise can be reduced by refining the spatial grid.
 The history of the forces is visually similar for the nominal and fine grids, with the presence of two peaks in the thrust and lift.
-Table \ref{tab:independence_results} reports hydrodynamic quantities and propulsive efficiency obtained from the simulations computed during the independence study.
+\cref{tab:independence_results} reports hydrodynamic quantities and propulsive efficiency obtained from the simulations computed during the independence study.
 Refining to computational grid leads to a relative difference of $7.8\%$ in the mean thrust coefficient, $1.2\%$ in the r.m.s. value for the lift coefficient, and $3\%$ in the r.m.s. value of spanwise coefficients.
 Compared to \citet{li_dong_2016}, we obtain lower magnitude in the peaks of the force coefficients.
 Note that we used the nominal spatial grid ($\Delta x = 0.01c$) for the replication of the parametric study.
@@ -243,9 +243,8 @@ The original study modeled the wing with a disk (with a thickness equal to $3\%$
 Here, we use a different immersed boundary method which allows us to model thin volumes with flat surfaces.
 Using a flat surface requires fewer Lagrangian markers to represent the wing, making the simulation computationally cheaper.
 (Runtime for the flat-wing simulation was about $8.4$ hours to compute 5 flapping cycles; with a disk, the runtime was approximately $10.8$ hours.)
-The history of the thrust coefficient (Figure \ref{fig:independence_force_coefficients_disk}) is similar whether we use a disk or a flat plate.
+The history of the thrust coefficient (\cref{fig:independence_force_coefficients_disk}) is similar whether we use a disk or a flat plate.
 We note slightly larger magnitude in the first peak of the lift and in the peaks of the spanwise force when using a disk.
-We obtained very similar history for the force coefficients (Figure \ref{fig:independence_force_coefficients_disk}), whether we used a disk or a flat plate.
 Overall, the disk-based simulation does not really improve the solution.
 Thus, we decided to model the wing with a flat plate for the parametric study.
 
@@ -258,12 +257,12 @@ Thus, we decided to model the wing with a flat plate for the parametric study.
 
 Although the authors of the original study reported results to assess independence in the results when refining the temporal, they did not mention how many time steps per flapping cycle were computed.
 (We know that force statistics and profiles of the velocity components did not significantly change when the time-step size was halved.)
-Figure \ref{fig:independence_force_coefficients_dt} shows the history of the force coefficients obtained on two temporal grids ($2000$ and $1000$ time steps per flapping cycle), using the nominal spatial grid.
+\cref{fig:independence_force_coefficients_dt} shows the history of the force coefficients obtained on two temporal grids ($2000$ and $1000$ time steps per flapping cycle), using the nominal spatial grid.
 The force signals are visually identical when doubling the time-step size, and the maximum relative difference in the aerodynamic quantities is less than $0.5\%$.
 For all simulations of the parametric study, we computed $2000$ time steps per flapping cycle.
 
 Finally, we also checked that aerodynamic statistics do not change significantly when setting a tighter convergence criterion ($atol$) for the iterative solvers (based on the absolute size of the residual in the $L_2$-norm).
-Mean thrust coefficient, root-mean-square values of the lift and spanwise coefficients, and propulsive efficiency remain identical when reducing the convergence criterion of the iterative solvers by 3 orders of magnitude (reported in Table \ref{tab:independence_results}).
+Mean thrust coefficient, root-mean-square values of the lift and spanwise coefficients, and propulsive efficiency remain identical when reducing the convergence criterion of the iterative solvers by 3 orders of magnitude (reported in \cref{tab:independence_results}).
 
 \begin{figure}
   \centering
@@ -299,9 +298,9 @@ Mean thrust coefficient, root-mean-square values of the lift and spanwise coeffi
 \end{figure}
 
 We also assess the effect of the grid-spacing and time-step sizes on the flow dynamics by comparing the profiles of the mean velocity components and of the fluctuating kinetic energy at several locations in the wake of the wing.
-Figures \ref{fig:independence_profiles:streamwise} and \ref{fig:independence_profiles:transverse} show the mean streamwise ($\overline{u_1} - u_\infty$) and transverse ($\overline{u_2}$) velocity profiles in the $x/y$ plane at mid-span ($z = S / 2$).
-Figure \ref{fig:independence_profiles:spanwise} shows the mean spanwise ($\overline{u_3}$) velocity profiles at the center ($y = 0$) of the $x/z$ plane.
-Profiles of the fluctuating kinetic energy ($( \overline{{u_1'}^2} + \overline{{u_2'}^2} + \overline{{u_3'}^2} ) / 2$) at mid-span are reported in Figure \ref{fig:independence_profiles:kinetic}.
+\cref{fig:independence_profiles:streamwise,fig:independence_profiles:transverse} show the mean streamwise ($\overline{u_1} - u_\infty$) and transverse ($\overline{u_2}$) velocity profiles in the $x/y$ plane at mid-span ($z = S / 2$).
+\cref{fig:independence_profiles:spanwise} shows the mean spanwise ($\overline{u_3}$) velocity profiles at the center ($y = 0$) of the $x/z$ plane.
+Profiles of the fluctuating kinetic energy ($( \overline{{u_1'}^2} + \overline{{u_2'}^2} + \overline{{u_3'}^2} ) / 2$) at mid-span are reported in \cref{fig:independence_profiles:kinetic}.
 We also report digitized data from \citet{li_dong_2016} for comparison.
 Although there exist some differences with the results of the original study, we note that the profiles of the present study are visually similar when refining the spatial grid and when using fewer time steps per flapping cycle.
 
@@ -339,9 +338,9 @@ Although there exist some differences with the results of the original study, we
 
 Following the work of \citet{li_dong_2016}, we also tried to assess the effects of different grids on the instantaneous vortical structures.
 As in the original study, we quantified the size of the vortex loops at time $t/T = 4.25$ in the near ($x/c = 0.3$) and far ($x/c = 1.3$) wake.
-Figure \ref{fig:independence_wx_distances} shows slices of the streamwise vorticity field in the near and far wake, where we also report distances between between each pair of vortices.
+\cref{fig:independence_wx_distances} shows slices of the streamwise vorticity field in the near and far wake, where we also report distances between between each pair of vortices.
 (Center of each vortex is chosen as the point with the maximum absolute value of the streamwise vorticity.)
-Table \ref{tab:independence_wx_distances} reports the distances between vortex centers.
+\cref{tab:independence_wx_distances} reports the distances between vortex centers.
 Compared to nominal grid, the maximum relative difference occurs for the distance $d_2$ (near wake) on the finer spatial grid and is about $9\%$.
 The relatively high difference could be caused by the diffuse-interface immersed boundary method used in the present replication study.
 We employ regularized delta kernels, to transfer information between the Eulerian grid and the Lagrangian surface mesh, which have a compact support that is proportional to the Eulerian grid-spacing size $\Delta x$.
@@ -352,7 +351,7 @@ Nevertheless, results of the parametric study show that we were able to replicat
 
 \subsection{Baseline case}
 
-As in the original study, we start by looking at the wake topology and aerodynamic forces generated by a flapping circular plate ($AR = 1.27$) at Reynolds number $Re = 200$, with Strouhal number $St = 0.6$ and a phase-difference angle of $\psi = 90^o$.
+As in the original study, we start by looking at the wake topology and aerodynamic forces produced by a rolling and pitching circular plate ($AR = 1.27$) at Reynolds number $Re = 200$, with Strouhal number $St = 0.6$ and phase-difference angle $\psi = 90^o$.
 
 \begin{figure}
   \centering
@@ -360,54 +359,63 @@ As in the original study, we start by looking at the wake topology and aerodynam
     \centering
     \includegraphics[width=\linewidth]{runs/Re200_St0.6_AR1.27_psi90/figures/qcrit_wx_perspective_zoom_view_0007750_post.png}
     \caption{$t / T = 3.875$}
+    \label{fig:baseline_qcrit_perspective:0007750}
   \end{subfigure}
   \hspace{0.5em}
   \begin{subfigure}[b]{0.3\textwidth}
     \centering
     \includegraphics[width=\linewidth]{runs/Re200_St0.6_AR1.27_psi90/figures/qcrit_wx_perspective_zoom_view_0007875_post.png}
     \caption{$t / T = 3.9375$}
+    \label{fig:baseline_qcrit_perspective:0007875}
   \end{subfigure}
   \hspace{0.5em}
   \begin{subfigure}[b]{0.3\textwidth}
     \centering
     \includegraphics[width=\linewidth]{runs/Re200_St0.6_AR1.27_psi90/figures/qcrit_wx_perspective_zoom_view_0008000_post.png}
     \caption{$t / T = 4.0$}
+    \label{fig:baseline_qcrit_perspective:0008000}
   \end{subfigure}
   \vspace{0.5em}
   \begin{subfigure}[b]{0.3\textwidth}
     \centering
     \includegraphics[width=\linewidth]{runs/Re200_St0.6_AR1.27_psi90/figures/qcrit_wx_perspective_zoom_view_0008250_post.png}
     \caption{$t / T = 4.125$}
+    \label{fig:baseline_qcrit_perspective:0008250}
   \end{subfigure}
   \hspace{0.5em}
   \begin{subfigure}[b]{0.3\textwidth}
     \centering
     \includegraphics[width=\linewidth]{runs/Re200_St0.6_AR1.27_psi90/figures/qcrit_wx_perspective_zoom_view_0008375_post.png}
     \caption{$t / T = 4.1875$}
+    \label{fig:baseline_qcrit_perspective:0008375}
   \end{subfigure}
   \hspace{0.5em}
   \begin{subfigure}[b]{0.3\textwidth}
     \centering
     \includegraphics[width=\linewidth]{runs/Re200_St0.6_AR1.27_psi90/figures/qcrit_wx_perspective_zoom_view_0008500_post.png}
     \caption{$t / T = 4.25$}
+    \label{fig:baseline_qcrit_perspective:0008500}
   \end{subfigure}
   \vspace{0.5em}
   \begin{subfigure}[b]{0.3\textwidth}
     \centering
     \includegraphics[width=\linewidth]{runs/Re200_St0.6_AR1.27_psi90/figures/qcrit_wx_perspective_zoom_view_0008625_post.png}
     \caption{$t / T = 4.3125$}
+    \label{fig:baseline_qcrit_perspective:0008625}
   \end{subfigure}
   \hspace{0.5em}
   \begin{subfigure}[b]{0.3\textwidth}
     \centering
     \includegraphics[width=\linewidth]{runs/Re200_St0.6_AR1.27_psi90/figures/qcrit_wx_perspective_zoom_view_0008750_post.png}
     \caption{$t / T = 4.375$}
+    \label{fig:baseline_qcrit_perspective:0008750}
   \end{subfigure}
   \hspace{0.5em}
   \begin{subfigure}[b]{0.3\textwidth}
     \centering
     \includegraphics[width=\linewidth]{runs/Re200_St0.6_AR1.27_psi90/figures/qcrit_wx_perspective_zoom_view_0008875_post.png}
     \caption{$t / T = 4.4375$}
+    \label{fig:baseline_qcrit_perspective:0008875}
   \end{subfigure}
   \caption{Wake topology for a flapping circular plate ($AR = 1.27$) with $St = 0.6$, $Re = 200$, and $\psi = 90^o$ at $t / T = 3.875$, $3.9375$, $4.0$, $4.125$, $4.1875$, $4.25$, $4.3125$, $4.375$, $4.4375$. We show the contours of the $Q$-criterion for $Q = 1$ (gray) and $Q = 6$ (colored by the streamwise vorticity, $-5 \leq w_x \leq 5$). (To compare with Fig. 6 of \citet{li_dong_2016}.)}
   \label{fig:baseline_qcrit_perspective}
@@ -419,31 +427,34 @@ As in the original study, we start by looking at the wake topology and aerodynam
     \begin{subfigure}[t]{\linewidth}
       \includegraphics[width=\textwidth]{runs/Re200_St0.6_AR1.27_psi90/figures/qcrit_wx_perspective_view_0008500_post.png}
       \caption{}
+      \label{fig:baseline_wake_topology:perspective}
     \end{subfigure}
   \end{minipage}
   \begin{minipage}{0.35\linewidth}
     \begin{subfigure}[t]{\linewidth}
       \includegraphics[width=\textwidth]{runs/Re200_St0.6_AR1.27_psi90/figures/qcrit_wx_lateral_view_0008500_post.png}
       \caption{}
+      \label{fig:baseline_wake_topology:lateral}
     \end{subfigure}
     \vspace{1cm}
     \begin{subfigure}[b]{\linewidth}
       \includegraphics[width=\textwidth]{runs/Re200_St0.6_AR1.27_psi90/figures/qcrit_wx_top_view_0008500_post.png}
       \caption{}
+      \label{fig:baseline_wake_topology:top}
     \end{subfigure}
   \end{minipage}
   \caption{Wake topology of a pitching-rolling circular plate after four flapping cycles. We show flow structures  using the $Q$-criterion for $Q = 1$ (gray) and $Q = 6$ (colored by the streamwise vorticity, $-5 \leq w_x \leq 5$). (a) Perspective view, (b) side view, and (c) top view. (To compare with Fig. 7 of \citet{li_dong_2016}.)}
   \label{fig:baseline_wake_topology}
 \end{figure}
 
-Figure \ref{fig:baseline_qcrit_perspective} shows the vortex shedding process in the vicinity of the wing at nine different time values.
-We visualize vortex structures using the $Q$-criterion at $Q = 1$ (in gray) and $Q = 6$ (colored by the streamwise vorticity).
-As the wing rolls downward (Figures \ref{fig:baseline_qcrit_perspective}(a-c)), we observe the formation of a ``C''-shaped vortex loop between the root vortex ($V_1$), the tip vortex ($V_2$), and the trailing-edge vortex (TEV).
-When the wing reaches its lowest point (Figure \ref{fig:baseline_qcrit_perspective}(c)), we also note a strength asymmetry between $V_1$ and $V_2$.
-As the plate starts rolling upward while pitching up (Figures \ref{fig:baseline_qcrit_perspective}(d-f)), we note the formation of new vortices from the trailing edge ($V_3$) and from the leading-edge vortex ($V_4$).
+\cref{fig:baseline_qcrit_perspective} shows the vortex shedding dynamics in the vicinity of the wing at nine different time values.
+We visualize vortices using the $Q$-criterion at $Q = 1$ (in gray) and $Q = 6$ (colored by the streamwise vorticity).
+As the wing rolls downward (\crefrange{fig:baseline_qcrit_perspective:0007750}{fig:baseline_qcrit_perspective:0008000}), we observe the formation of a ``C''-shaped vortex loop between the root vortex ($V_1$), the tip vortex ($V_2$), and the trailing-edge vortex (TEV).
+When the wing reaches its lowest point (\cref{fig:baseline_qcrit_perspective:0008000}), we also note a strength asymmetry between $V_1$ and $V_2$.
+As the plate starts rolling upward while pitching up (\crefrange{fig:baseline_qcrit_perspective:0008250}{fig:baseline_qcrit_perspective:0008500}), we note the formation of new vortices from the trailing edge ($V_3$) and from the leading-edge vortex ($V_4$).
 These vortices interact with each other to form a new ``C''-shaped vortex loop with opposite direction.
 As the vortex loops move further downstream from the wing, they form a ``double-C''-shaped vortex structures, which was reported in the original study.
-Each flapping cycle produces a pair of ``double-C''-shaped vortex structures (in opposite direction), leading to a bifurcated wake pattern (Figures \ref{fig:baseline_wake_topology}(a,b)).
+Each flapping cycle produces a pair of ``double-C''-shaped vortex structures (in opposite direction), leading to a bifurcated wake pattern (\cref{fig:baseline_wake_topology:perspective,fig:baseline_wake_topology:lateral}).
 The ``double-C''-shaped vortex structures evolve into single-loop vortex as they are convected downstream.
 As noted in the original study, vortex rings shed in the wake gradually increase in size as they move further downstream, with a slight deflection in the spanwise $z$-direction towards the tip of the wing.
 
@@ -453,69 +464,81 @@ As noted in the original study, vortex rings shed in the wake gradually increase
     \centering
     \includegraphics[width=\linewidth]{runs/Re200_St0.6_AR1.27_psi90/figures/wx_slice_a.png}
     \caption{}
+    \label{fig:baseline_wx_slices:a}
   \end{subfigure}
   \begin{subfigure}[t]{0.24\textwidth}
     \centering
     \includegraphics[width=\linewidth]{runs/Re200_St0.6_AR1.27_psi90/figures/wx_slice_b.png}
     \caption{}
+    \label{fig:baseline_wx_slices:b}
   \end{subfigure}
   \begin{subfigure}[t]{0.24\textwidth}
     \centering
     \includegraphics[width=\linewidth]{runs/Re200_St0.6_AR1.27_psi90/figures/wx_slice_c.png}
     \caption{}
+    \label{fig:baseline_wx_slices:c}
   \end{subfigure}
   \begin{subfigure}[t]{0.24\textwidth}
     \centering
     \includegraphics[width=\linewidth]{runs/Re200_St0.6_AR1.27_psi90/figures/wx_slice_d.png}
     \caption{}
+    \label{fig:baseline_wx_slices:d}
   \end{subfigure}
   \vspace{0.5cm}
   \begin{subfigure}[t]{0.24\textwidth}
     \centering
     \includegraphics[width=\linewidth]{runs/Re200_St0.6_AR1.27_psi90/figures/wx_slice_e.png}
     \caption{}
+    \label{fig:baseline_wx_slices:e}
   \end{subfigure}
   \begin{subfigure}[t]{0.24\textwidth}
     \centering
     \includegraphics[width=\linewidth]{runs/Re200_St0.6_AR1.27_psi90/figures/wx_slice_f.png}
     \caption{}
+    \label{fig:baseline_wx_slices:f}
   \end{subfigure}
   \begin{subfigure}[t]{0.24\textwidth}
     \centering
     \includegraphics[width=\linewidth]{runs/Re200_St0.6_AR1.27_psi90/figures/wx_slice_g.png}
     \caption{}
+    \label{fig:baseline_wx_slices:g}
   \end{subfigure}
   \begin{subfigure}[t]{0.24\textwidth}
     \centering
     \includegraphics[width=\linewidth]{runs/Re200_St0.6_AR1.27_psi90/figures/wx_slice_h.png}
     \caption{}
+    \label{fig:baseline_wx_slices:h}
   \end{subfigure}
   \vspace{0.5cm}
   \begin{subfigure}[t]{0.24\textwidth}
     \centering
     \includegraphics[width=\linewidth]{runs/Re200_St0.6_AR1.27_psi90/figures/wx_slice_i.png}
     \caption{}
+    \label{fig:baseline_wx_slices:i}
   \end{subfigure}
   \begin{subfigure}[t]{0.24\textwidth}
     \centering
     \includegraphics[width=\linewidth]{runs/Re200_St0.6_AR1.27_psi90/figures/wx_slice_j.png}
     \caption{}
+    \label{fig:baseline_wx_slices:j}
   \end{subfigure}
   \begin{subfigure}[t]{0.24\textwidth}
     \centering
     \includegraphics[width=\linewidth]{runs/Re200_St0.6_AR1.27_psi90/figures/wx_slice_k.png}
     \caption{}
+    \label{fig:baseline_wx_slices:k}
   \end{subfigure}
   \begin{subfigure}[t]{0.24\textwidth}
     \centering
     \includegraphics[width=\linewidth]{runs/Re200_St0.6_AR1.27_psi90/figures/wx_slice_l.png}
     \caption{}
+    \label{fig:baseline_wx_slices:l}
   \end{subfigure}
   \caption{Two-dimensional slices of the streamwise vorticity ($-5 \leq w_x \leq 5$) at $t / T = 4.25$ in the $y/z$ plane at different $x$ locations in the wake of a flapping circular plate ($AR = 1.27$) with $St = 0.6$, $Re = 200$, and $\psi = 90^o$. (a-l)Wake locations: $x / c = 0$, $0.2$, $0.3$, $0.75$, $1.1$, $1.3$, $1.85$, $2.0$, $2.7$, $3.8$, $4.5$, and $5.25$. (To compare with Fig. 8 of \citet{li_dong_2016}.)}
   \label{fig:baseline_wx_slices}
 \end{figure}
 
-Figure \ref{fig:baseline_wx_slices} shows two-dimensional slices of the streamwise vorticity component, in the $y/z$ plane at various locations along the $x$-axis, at the middle of the upstroke ($t/T = 4.25$)
+\cref{fig:baseline_wx_slices} shows two-dimensional slices of the streamwise vorticity component, in the $y/z$ plane at various locations along the $x$-axis, at the middle of the upstroke ($t/T = 4.25$)
 
 \begin{figure}
   \centering
@@ -538,8 +561,8 @@ Figure \ref{fig:baseline_wx_slices} shows two-dimensional slices of the streamwi
   \label{tab:baseline_force_coefficients}
 \end{table}
 
-Figure \ref{fig:baseline_force_coefficients} shows the history of the thrust, lift, and spanwise coefficients over two flapping cycles.
-Table \ref{tab:baseline_force_coefficients} reports statistics about the force coefficients with comparison to the values reported in the original study.
+\cref{fig:baseline_force_coefficients} shows the history of the thrust, lift, and spanwise coefficients over two flapping cycles.
+\cref{tab:baseline_force_coefficients} reports statistics about the force coefficients with comparison to the values reported in the original study.
 Although we obtained smaller values in the peaks for the force coefficients as well as for the mean thrust coefficient, we still observe similar trends between our results and the one reported in \citet{li_dong_2016}.
 Thrust peaks occur twice during each cycle, when the plate is near the center of its trajectory, with production of small drag when the plate starts to reverse its rolling direction.
 Peak values of the lift and spanwise coefficients are in a similar range than the peak of the thrust coefficient.
@@ -556,24 +579,28 @@ We computed the three-dimensional flow around a circular flat plate ($AR = 1.27$
     \centering
     \includegraphics[width=\linewidth]{runs/Re200_St0.4_AR1.27_psi90/figures/qcrit_wx_lateral_view_0008500_post.png}
     \caption{}
+    \label{fig:strouhal_wake_topology:0.4_lateral}
   \end{subfigure}
   \hfill
   \begin{subfigure}[]{0.45\textwidth}
     \centering
     \includegraphics[width=\linewidth]{runs/Re200_St0.4_AR1.27_psi90/figures/qcrit_wx_top_view_0008500_post.png}
     \caption{}
+    \label{fig:strouhal_wake_topology:0.4_top}
   \end{subfigure}
   \vspace{1cm}
   \begin{subfigure}[]{0.45\textwidth}
     \centering
     \includegraphics[width=\linewidth]{runs/Re200_St0.8_AR1.27_psi90/figures/qcrit_wx_lateral_view_0008500_post.png}
     \caption{}
+    \label{fig:strouhal_wake_topology:0.8_lateral}
   \end{subfigure}
   \hfill
   \begin{subfigure}[]{0.45\textwidth}
     \centering
     \includegraphics[width=\linewidth]{runs/Re200_St0.8_AR1.27_psi90/figures/qcrit_wx_top_view_0008500_post.png}
     \caption{}
+    \label{fig:strouhal_wake_topology:0.8_top}
   \end{subfigure}
   \caption{Wake topology captured at $t / T = 4.25$ (when the plate is at middle point during the upstroke) for a circular plate ($AR = 1.27$) at Reynolds number $200$ and Strouhal numbers $0.4$ (top) and $0.8$ (bottom). Wake structures are represented with the Q-criterion for $Q = 1$ (gray) and $Q = 6$ (colored with the streamwise vorticity, $-5 \leq w_x \leq 5$). (a,c) lateral view of the wake; (b,d) top view. (To compare with Fig. 10 \citet{li_dong_2016}.)}
   \label{fig:strouhal_wake_topology}
@@ -599,19 +626,19 @@ We computed the three-dimensional flow around a circular flat plate ($AR = 1.27$
   \label{tab:strouhal_angles}
 \end{table}
 
-Figure \ref{fig:strouhal_wake_topology} shows lateral and top views of the shedding vortex pattern, at $t/T = 4.25$, obtained at Strouhal numbers $St = 0.4$ and $0.8$.
-(Figure \ref{fig:baseline_wake_topology} shows the wake topology for $St = 0.6$.)
+\cref{fig:strouhal_wake_topology} shows lateral and top views of the shedding vortex pattern, at $t/T = 4.25$, obtained at Strouhal numbers $St = 0.4$ and $0.8$.
+(\cref{fig:baseline_wake_topology} shows the wake topology for $St = 0.6$.)
 As reported in the original study, we note a decrease in the vorticity strength as the Strouhal number is lower, and a rapid evolution of the ``double-C''-shaped vortex structures into single vortex rings.
 At higher Strouhal number ($St = 0.8$), we observe an enhancement of the mutual induction between two adjacent vortex rings.
 \citet{li_dong_2016} reported values of the oblique angle ($\alpha$), defined as the angle between the horizontal $x$-axis and the line passing through the first two shed vortex rings adjacent to the trailing-edge of the plate.
 They also evaluated the inclination angle ($\beta$) of a near vortex ring with respect to the wake centerline.
-Table \ref{tab:strouhal_angles} reports the oblique and inclination angles obtained with our simulations.
+\cref{tab:strouhal_angles} reports the oblique and inclination angles obtained with our simulations.
 Our angles are different from the ones reported in the original study.
 The authors observed a monotonic increase in the oblique angle with respect to the Strouhal number and a peak in the orientation angle at Strouhal number $St = 1.0$ (followed by a sudden decrease).
 Here, we observe an increase in the oblique angle but we a peak for Strouhal number $St = 1.0$, while the inclination peaks at Strouhal number $St = 0.8$.
-Matching the observations reported in the original study, we also note the wake deflection along the mid-span axis (Figures \ref{fig:strouhal_wake_topology}(b, d) and Figure \ref{fig:baseline_wake_topology}(c)).
+Matching the observations reported in the original study, we also note the wake deflection along the mid-span axis (\cref{fig:strouhal_wake_topology:0.4_top,fig:strouhal_wake_topology:0.8_top,fig:baseline_wake_topology:top}).
 The main difference is that the authors reported that for the higher Strouhal number case, the wake starts deflecting towards the tip of the wing and then gradually deflects back in the far wake.
-We do not observe the back deflection in our simulation at Strouhal number $St = 0.8$ (Figure \ref{fig:strouhal_wake_topology}(d)), which is probably due to the fact that we stopped the computation at $t/T = 5$, while it looks like the simulation in the original study was computed for a longer time (and therefore, more rings present in the wake).
+We do not observe the back deflection in our simulation at Strouhal number $St = 0.8$ (\cref{fig:strouhal_wake_topology:0.8_top}), which is probably due to the fact that we stopped the computation at $t/T = 5$, while it looks like the simulation in the original study was computed for a longer time (and therefore, more rings present in the wake).
 
 \begin{figure}
   \centering
@@ -630,18 +657,20 @@ We also computed the three-dimensional flow at additional Reynolds numbers $100$
     \centering
     \includegraphics[width=\linewidth]{runs/Re100_St0.6_AR1.27_psi90/figures/qcrit_wx_perspective_zoom_view_0008500_post.png}
     \caption{}
+    \label{fig:reynolds_wake_topology:100_perspective}
   \end{subfigure}
   \hfill
   \begin{subfigure}[c]{0.45\textwidth}
     \centering
     \includegraphics[width=\linewidth]{runs/Re400_St0.6_AR1.27_psi90/figures/qcrit_wx_perspective_zoom_view_0008500_post.png}
     \caption{}
+    \label{fig:reynolds_wake_topology:400_perspective}
   \end{subfigure}
   \caption{Vortex topology at $t / T = 4.25$ for a circular plate ($AR = 1.27$) with $St = 0.6$ and $\psi = 90^o$ at Reynolds numbers $Re = 100$ (a) and $Re = 400$ (b). We visualized vortical structures using the $Q$-criterion with $Q = 1$ (in gray) and $Q = 6$ (colored by the streamwise vorticity, $-5 \leq w_x \leq 5$). (To compare with Fig. 12 of \citet{li_dong_2016}.)}
   \label{fig:reynolds_wake_topology}
 \end{figure}
 
-Figure \ref{fig:reynolds_wake_topology} shows a perspective view of the near-wake topology at $t/T = 4.25$ at Reynolds numbers $100$ and $400$, which can be compared to Figure \ref{fig:baseline_wake_topology}(f) for the case at $Re = 200$.
+\cref{fig:reynolds_wake_topology} shows a perspective view of the near-wake topology at $t/T = 4.25$ at Reynolds numbers $100$ and $400$, which can be compared to \cref{fig:baseline_qcrit_perspective:0008500} for the case at $Re = 200$.
 For all Reynolds numbers investigated, we note the formation of a double-loop vortex around the trailing edge of the plate.
 As expected, vortex structures dissipate more rapidly for low Reynolds numbers.
 At Reynolds number $Re = 400$, ``double-C''-shaped vortex rings propagate downstream.
@@ -654,7 +683,7 @@ Overall, we observe similar trends between our results and the one from the orig
   \label{fig:reynolds_force_coefficients}
 \end{figure}
 
-Figure \ref{fig:reynolds_force_coefficients} compares the history of the force coefficients over two flapping cycles for Reynolds numbers $Re = 100$, $200$, and $400$.
+\cref{fig:reynolds_force_coefficients} compares the history of the force coefficients over two flapping cycles for Reynolds numbers $Re = 100$, $200$, and $400$.
 Although we obtained different statistics in the force coefficients (mean and peak values), we observe similar features as in the original study.
 First, the absolute peak value and mean value for the thrust coefficient increase with the Reynolds number.
 Second, we note the presence of two peaks in the lift coefficient every half cycle, for all Reynolds numbers.
@@ -673,12 +702,14 @@ We ran two additional simulations, with $AR = 1.91$ and $AR = 2.55$ to look at t
     \centering
     \includegraphics[width=\linewidth]{runs/Re200_St0.6_AR1.91_psi90/figures/qcrit_wx_perspective_zoom_view_0008500_post.png}
     \caption{}
+    \label{fig:ratio_wake_topology:1.91_perspective}
   \end{subfigure}
   \hfill
   \begin{subfigure}[c]{0.45\textwidth}
     \centering
     \includegraphics[width=\linewidth]{runs/Re200_St0.6_AR2.55_psi90/figures/qcrit_wx_perspective_zoom_view_0008500_post.png}
     \caption{}
+    \label{fig:ratio_wake_topology:2.55_perspective}
   \end{subfigure}
   \caption{Vortex topology at $t / T = 4.25$ for an elliptical plate with $AR = 1.91$ (a) and $AR = 2.55$ (b) for $Re = 200$, $St = 0.6$, and $\psi = 90^o$. We visualized vortical structures using the $Q$-criterion with $Q = 1$ (in gray) and $Q = 6$ (colored by the streamwise vorticity, $-5 \leq w_x \leq 5$). (To compare with Fig. 14 of \citet{li_dong_2016}.)}
   \label{fig:ratio_wake_topology}
@@ -690,39 +721,45 @@ We ran two additional simulations, with $AR = 1.91$ and $AR = 2.55$ to look at t
     \centering
     \includegraphics[width=\linewidth]{runs/Re200_St0.6_AR1.27_psi90/figures/wx_slice_yz_0008500.png}
     \caption{}
+    \label{fig:ratio_vorticity_slices:1.27_wx}
   \end{subfigure}
   \begin{subfigure}[c]{0.3\textwidth}
     \centering
     \includegraphics[width=\linewidth]{runs/Re200_St0.6_AR1.91_psi90/figures/wx_slice_yz_0008500.png}
     \caption{}
+    \label{fig:ratio_vorticity_slices:1.91_wx}
   \end{subfigure}
   \begin{subfigure}[c]{0.34\textwidth}
     \centering
     \includegraphics[width=\linewidth]{runs/Re200_St0.6_AR2.55_psi90/figures/wx_slice_yz_0008500.png}
     \caption{}
+    \label{fig:ratio_vorticity_slices:2.55_wx}
   \end{subfigure}
   \vspace{0.5cm}
   \begin{subfigure}[c]{0.32\textwidth}
     \centering
     \includegraphics[width=\linewidth]{runs/Re200_St0.6_AR1.27_psi90/figures/wz_slice_xy_0008500.png}
     \caption{}
+    \label{fig:ratio_vorticity_slices:1.27_wz}
   \end{subfigure}
   \begin{subfigure}[c]{0.32\textwidth}
     \centering
     \includegraphics[width=\linewidth]{runs/Re200_St0.6_AR1.91_psi90/figures/wz_slice_xy_0008500.png}
     \caption{}
+    \label{fig:ratio_vorticity_slices:1.91_wz}
   \end{subfigure}
   \begin{subfigure}[c]{0.32\textwidth}
     \centering
     \includegraphics[width=\linewidth]{runs/Re200_St0.6_AR2.55_psi90/figures/wz_slice_xy_0008500.png}
     \caption{}
+    \label{fig:ratio_vorticity_slices:2.55_wz}
   \end{subfigure}
   \caption{Comparison of the two-dimensional contours of the vorticity at $t/T = 4.25$ for elliptical plates with $AR = 1.27$ (a, d), $AR = 1.91$ (b, e), and $AR = 2.55$ (c, f). (a-c): streamwise vorticity ($-5 \leq w_x \leq 5$) in the $y/z$ plane at $x/c = 0.3$ (near wake). (d-f): spanwise vorticity ($-5 \leq w_z \leq 5$) in the $x/y$ plane at $z = S/2$ (mid-span). (To compare with Fig. 15 of \citet{li_dong_2016}.)}
   \label{fig:ratio_vorticity_slices}
 \end{figure}
 
-Figure \ref{fig:ratio_wake_topology} shows snapshots of the vortical structures at $t/T = 4.25$ generated by elliptical plates with aspect ratios $AR = 1.91$ and $2.55$.
-Figures \ref{fig:ratio_vorticity_slices} shows two-dimensional contours of the streamwise (a-c) and spanwise (d-f) vorticity components for different wing aspect ratios at the same time unit.
+\cref{fig:ratio_wake_topology} shows snapshots of the vortical structures at $t/T = 4.25$ generated by elliptical plates with aspect ratios $AR = 1.91$ and $2.55$.
+\cref{fig:ratio_vorticity_slices} shows two-dimensional contours of the streamwise (a-c) and spanwise (d-f) vorticity components for different wing aspect ratios at the same time unit.
 As reported in the original study, we too observe an increase in the size of the inner loop in streamwise direction (formed by vortices $V_3$ and $V_4$) along with the plate aspect ratio, and a decrease in the magnitude of the spanwise vorticity of the inner loop.
 
 \begin{figure}
@@ -732,7 +769,7 @@ As reported in the original study, we too observe an increase in the size of the
   \label{fig:ratio_force_coefficients}
 \end{figure}
 
-Figure \ref{fig:ratio_force_coefficients} displays the history of the force coefficients over two flapping cycles, obtained with aspect ratios $AR = 1.27$, $1.91$, and $2.55$.
+\cref{fig:ratio_force_coefficients} displays the history of the force coefficients over two flapping cycles, obtained with aspect ratios $AR = 1.27$, $1.91$, and $2.55$.
 The mean thrust coefficient increases with the wing aspect ratio ($\overline{C_T} = 1.17$ for $AR = 1.91$ and $1.37$ for $AR = 2.55$).
 We note a slight increase in the magnitude of the thrust peak as we increase the aspect ratio.
 The authors of the original study reported a decrease in magnitude of the peak for the lift and spanwise coefficients.
@@ -751,36 +788,42 @@ We ran six additional simulations with phase-difference angle $\psi = 60^o$, $70
     \centering
     \includegraphics[width=\linewidth]{runs/Re200_St0.6_AR1.27_psi100/figures/qcrit_wx_lateral_view_0008500_post.png}
     \caption{}
+    \label{fig:phase_wake_topology:100_lateral}
   \end{subfigure}
   \hfill
   \begin{subfigure}[]{0.45\textwidth}
     \centering
     \includegraphics[width=\linewidth]{runs/Re200_St0.6_AR1.27_psi100/figures/qcrit_wx_top_view_0008500_post.png}
     \caption{}
+    \label{fig:phase_wake_topology:100_top}
   \end{subfigure}
   \vspace{1cm}
   \begin{subfigure}[]{0.45\textwidth}
     \centering
     \includegraphics[width=\linewidth]{runs/Re200_St0.6_AR1.27_psi110/figures/qcrit_wx_lateral_view_0008500_post.png}
     \caption{}
+    \label{fig:phase_wake_topology:110_lateral}
   \end{subfigure}
   \hfill
   \begin{subfigure}[]{0.45\textwidth}
     \centering
     \includegraphics[width=\linewidth]{runs/Re200_St0.6_AR1.27_psi110/figures/qcrit_wx_top_view_0008500_post.png}
     \caption{}
+    \label{fig:phase_wake_topology:110_top}
   \end{subfigure}
   \vspace{1cm}
   \begin{subfigure}[]{0.45\textwidth}
     \centering
     \includegraphics[width=\linewidth]{runs/Re200_St0.6_AR1.27_psi120/figures/qcrit_wx_lateral_view_0008500_post.png}
     \caption{}
+    \label{fig:phase_wake_topology:120_lateral}
   \end{subfigure}
   \hfill
   \begin{subfigure}[]{0.45\textwidth}
     \centering
     \includegraphics[width=\linewidth]{runs/Re200_St0.6_AR1.27_psi120/figures/qcrit_wx_top_view_0008500_post.png}
     \caption{}
+    \label{fig:phase_wake_topology:120_top}
   \end{subfigure}
   \caption{Wake topology captured at $t / T = 4.25$ (when the plate is at middle point during the upstroke) for a circular plate ($AR = 1.27$) at Reynolds number $200$, Strouhal number $0.6$, and phase differences $\psi = 100^o$ (top), $110^o$ (center), and $120^o$ (bottom). Wake structures are represented with the $Q$-criterion for $Q = 1$ (gray) and $Q = 6$ (colored with the streamwise vorticity, $-5 \leq w_x \leq 5$). (a,c,e) Lateral view of the wake; (b,d,f) top view. (To compare with Fig. 17 of \citet{li_dong_2016}.)}
   \label{fig:phase_wake_topology}
@@ -805,12 +848,12 @@ We ran six additional simulations with phase-difference angle $\psi = 60^o$, $70
   \label{tab:phase_angles}
 \end{table}
 
-Figure \ref{fig:phase_wake_topology} shows snapshots (lateral and side views) of the wake topology at time $t/T = 4.25$ for phase-difference angles $\psi = 100^o$, $110^o$, and $120^o$.
-(Figure \ref{fig:baseline_wake_topology} shows similar snapshots for the the baseline case with $\psi = 90^o$.)
+\cref{fig:phase_wake_topology} shows snapshots (lateral and side views) of the wake topology at time $t/T = 4.25$ for phase-difference angles $\psi = 100^o$, $110^o$, and $120^o$.
+(\cref{fig:baseline_wake_topology:lateral,fig:baseline_wake_topology:top} shows similar snapshots for the the baseline case with $\psi = 90^o$.)
 Looking at the top views, we note an increase in the deflection angle $\gamma$ as the phase-difference angle increases.
 In other words, larger phase-difference angles lead to larger deflection of the wake from the tip towards the root.
 We also note the wake oblique angle $\alpha$ increases with the phase-difference angles.
-Table \ref{tab:phase_angles} reports the wake oblique angles and wake deflection angles computed at time $t/T = 4.25$ for solutions obtained with various phase-difference angles.
+\cref{tab:phase_angles} reports the wake oblique angles and wake deflection angles computed at time $t/T = 4.25$ for solutions obtained with various phase-difference angles.
 
 \begin{figure}
   \centering
@@ -826,10 +869,10 @@ Table \ref{tab:phase_angles} reports the wake oblique angles and wake deflection
   \label{fig:phase_efficiency}
 \end{figure}
 
-Figure \ref{fig:phase_force_coefficients} shows the history of the force coefficients over two flapping cycles for a circular wing with phase-difference angles between $90^o$ and $120^o$.
+\cref{fig:phase_force_coefficients} shows the history of the force coefficients over two flapping cycles for a circular wing with phase-difference angles between $90^o$ and $120^o$.
 We note that peak magnitudes for all three force components increase with the phase-difference angle.
 This increase coincides with the disappearance of the second peak in the thrust and lift forces, that was reported for the baseline case ($\psi = 90^o$).
-Figure \ref{fig:phase_efficiency} reports the computed mean thrust coefficients and propulsive performance obtained for phase-difference angles between $60^o$ and $120^o$.
+\cref{fig:phase_efficiency} reports the computed mean thrust coefficients and propulsive performance obtained for phase-difference angles between $60^o$ and $120^o$.
 The mean thrust coefficient increases as we increase the phase-difference angle.
 As reported in the original study, we obtained a maximum propulsive efficiency for the case with $\psi = 100^o$.
 
