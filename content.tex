@@ -447,16 +447,18 @@ As in the original study, we start by looking at the wake topology and aerodynam
   \label{fig:baseline_wake_topology}
 \end{figure}
 
+We were able to observe the same flow features as the ones reported in the original study for the baseline case.
 \cref{fig:baseline_qcrit_perspective} shows the vortex shedding dynamics in the vicinity of the wing at nine different time values.
 We visualize vortices using the $Q$-criterion at $Q = 1$ (in gray) and $Q = 6$ (colored by the streamwise vorticity).
 As the wing rolls downward (\crefrange{fig:baseline_qcrit_perspective:0007750}{fig:baseline_qcrit_perspective:0008000}), we observe the formation of a ``C''-shaped vortex loop between the root vortex ($V_1$), the tip vortex ($V_2$), and the trailing-edge vortex (TEV).
-When the wing reaches its lowest point (\cref{fig:baseline_qcrit_perspective:0008000}), we also note a strength asymmetry between $V_1$ and $V_2$.
+The rolling motion induces a strength asymmetry between $V_1$ and $V_2$.
 As the plate starts rolling upward while pitching up (\crefrange{fig:baseline_qcrit_perspective:0008250}{fig:baseline_qcrit_perspective:0008500}), we note the formation of new vortices from the trailing edge ($V_3$) and from the leading-edge vortex ($V_4$).
-These vortices interact with each other to form a new ``C''-shaped vortex loop with opposite direction.
-As the vortex loops move further downstream from the wing, they form a ``double-C''-shaped vortex structures, which was reported in the original study.
-Each flapping cycle produces a pair of ``double-C''-shaped vortex structures (in opposite direction), leading to a bifurcated wake pattern (\cref{fig:baseline_wake_topology:perspective,fig:baseline_wake_topology:lateral}).
-The ``double-C''-shaped vortex structures evolve into single-loop vortex as they are convected downstream.
-As noted in the original study, vortex rings shed in the wake gradually increase in size as they move further downstream, with a slight deflection in the spanwise $z$-direction towards the tip of the wing.
+These vortices interact with each other to form an additional ``C''-shaped vortex loop in opposite direction.
+As the two vortex loops propagates downstream, they form a ``double-C''-shaped vortex structure, which was reported in the original study.
+Each flapping cycle produces a pair of ``double-C''-shaped vortex structures (with opposite direction), leading to a bifurcated wake pattern (\cref{fig:baseline_wake_topology:perspective,fig:baseline_wake_topology:lateral}).
+The ``double-C''-shaped vortex structures evolve into single-loop vortex when convected downstream.
+As noted in the original study, vortex rings shed in the wake gradually increase in size as they move further downstream, with a slight deflection in the spanwise $z$-direction towards the tip of the wing (\cref{fig:baseline_wake_topology:top}).
+Also observable on \cref{fig:baseline_wake_topology:lateral} are the set of ``contrails'' connecting adjacent rings.
 
 \begin{figure}
   \centering
@@ -557,20 +559,21 @@ As noted in the original study, vortex rings shed in the wake gradually increase
     \citet{li_dong_2016} & $3.98$ & $1.46$ & $5.35$ & $0.0$ & $3.19$ & $0.1$ \\
     \hline\hline
   \end{tabular}
-  \caption{Statistics about force coefficients for the baseline case. We also report the values from \citet{li_dong_2016}.}
+  \caption{Force coefficient statistics for the baseline case. We also report the values from \citet{li_dong_2016}.}
   \label{tab:baseline_force_coefficients}
 \end{table}
 
 \cref{fig:baseline_force_coefficients} shows the history of the thrust, lift, and spanwise coefficients over two flapping cycles.
-\cref{tab:baseline_force_coefficients} reports statistics about the force coefficients with comparison to the values reported in the original study.
-Although we obtained smaller values in the peaks for the force coefficients as well as for the mean thrust coefficient, we still observe similar trends between our results and the one reported in \citet{li_dong_2016}.
-Thrust peaks occur twice during each cycle, when the plate is near the center of its trajectory, with production of small drag when the plate starts to reverse its rolling direction.
-Peak values of the lift and spanwise coefficients are in a similar range than the peak of the thrust coefficient.
-Each half cycle, we also note the presence of two peaks in the thrust and lift coefficients, with the first peak having a smaller absolute value than the second one.
+\cref{tab:baseline_force_coefficients} reports statistics about the force coefficients, with comparison to the values reported in the original study.
+Although peak values for all force components and mean thrust coefficient are smaller than the values reported in \citet{li_dong_2016}, we observe similar features in the force signals.
+Mean lift and spanwise forces are approximately zero.
+Peak magnitudes in the lift and spanwise forces are in similar range to the peak thrust.
+Each half cycle, we observe two peaks in the thrust and lift forces, when the plate is near the center of its trajectory, with a smaller value for the first peak.
+There is also a small production of drag when the plate starts to reverse its rolling direction (e.g., at $t/T = 3.5$ when the wing starts rolling downwards).
 
 \subsection{Effect of the Strouhal number}
 
-We now look at the effect of the Strouhal number on the wake topology and aerodynamic performances.
+Next, we look at the effect of the Strouhal number on the wake topology and aerodynamic performances.
 We computed the three-dimensional flow around a circular flat plate ($AR = 1.27$) at Reynolds number $200$ with a fixed phase-difference angle $\psi = 90^o$, while varying the Strouhal number $St$.
 
 \begin{figure}
@@ -602,7 +605,7 @@ We computed the three-dimensional flow around a circular flat plate ($AR = 1.27$
     \caption{}
     \label{fig:strouhal_wake_topology:0.8_top}
   \end{subfigure}
-  \caption{Wake topology captured at $t / T = 4.25$ (when the plate is at middle point during the upstroke) for a circular plate ($AR = 1.27$) at Reynolds number $200$ and Strouhal numbers $0.4$ (top) and $0.8$ (bottom). Wake structures are represented with the Q-criterion for $Q = 1$ (gray) and $Q = 6$ (colored with the streamwise vorticity, $-5 \leq w_x \leq 5$). (a,c) lateral view of the wake; (b,d) top view. (To compare with Fig. 10 \citet{li_dong_2016}.)}
+  \caption{Wake topology captured at $t / T = 4.25$ (when the plate is at middle point during the upstroke) for a circular plate ($AR = 1.27$) at Reynolds number $200$ and Strouhal numbers $St = 0.4$ (top) and $St = 0.8$ (bottom). Wake structures are represented with the Q-criterion for $Q = 1$ (gray) and $Q = 6$ (colored with the streamwise vorticity, $-5 \leq w_x \leq 5$). (a,c) lateral view of the wake; (b,d) top view. (To compare with Fig. 10 \citet{li_dong_2016}.)}
   \label{fig:strouhal_wake_topology}
 \end{figure}
 
@@ -627,18 +630,18 @@ We computed the three-dimensional flow around a circular flat plate ($AR = 1.27$
 \end{table}
 
 \cref{fig:strouhal_wake_topology} shows lateral and top views of the shedding vortex pattern, at $t/T = 4.25$, obtained at Strouhal numbers $St = 0.4$ and $0.8$.
-(\cref{fig:baseline_wake_topology} shows the wake topology for $St = 0.6$.)
-As reported in the original study, we note a decrease in the vorticity strength as the Strouhal number is lower, and a rapid evolution of the ``double-C''-shaped vortex structures into single vortex rings.
-At higher Strouhal number ($St = 0.8$), we observe an enhancement of the mutual induction between two adjacent vortex rings.
+(\cref{fig:baseline_wake_topology} shows the wake topology for $St = 0.6$ at the same time value.)
+As reported in the original study, we note a decrease in the vorticity strength for the lower Strouhal number ($St = 0.4$), and a rapid evolution of the ``double-C''-shaped vortex structures into single vortex rings.
+At higher Strouhal number ($St = 0.8$), we observe more interaction between adjacent vortex rings.
 \citet{li_dong_2016} reported values of the oblique angle ($\alpha$), defined as the angle between the horizontal $x$-axis and the line passing through the first two shed vortex rings adjacent to the trailing-edge of the plate.
 They also evaluated the inclination angle ($\beta$) of a near vortex ring with respect to the wake centerline.
 \cref{tab:strouhal_angles} reports the oblique and inclination angles obtained with our simulations.
-Our angles are different from the ones reported in the original study.
-The authors observed a monotonic increase in the oblique angle with respect to the Strouhal number and a peak in the orientation angle at Strouhal number $St = 1.0$ (followed by a sudden decrease).
-Here, we observe an increase in the oblique angle but we a peak for Strouhal number $St = 1.0$, while the inclination peaks at Strouhal number $St = 0.8$.
+Our angles are different from the values reported in the original study.
+The authors observed a monotonic increase in the oblique angle with respect to the Strouhal number and a peak in the inclination angle at Strouhal number $St = 1.0$ (followed by a sudden decrease).
+Here, we observe an increase in the oblique angle but until $St = 1.0$, and the inclination angle peaks at $St = 0.8$.
 Matching the observations reported in the original study, we also note the wake deflection along the mid-span axis (\cref{fig:strouhal_wake_topology:0.4_top,fig:strouhal_wake_topology:0.8_top,fig:baseline_wake_topology:top}).
 The main difference is that the authors reported that for the higher Strouhal number case, the wake starts deflecting towards the tip of the wing and then gradually deflects back in the far wake.
-We do not observe the back deflection in our simulation at Strouhal number $St = 0.8$ (\cref{fig:strouhal_wake_topology:0.8_top}), which is probably due to the fact that we stopped the computation at $t/T = 5$, while it looks like the simulation in the original study was computed for a longer time (and therefore, more rings present in the wake).
+We do not observe the back deflection in our simulation at Strouhal number $St = 0.8$ (\cref{fig:strouhal_wake_topology:0.8_top}), probably because we only computed five flapping cycles, while it looks like the simulation reported the original study was computed for a longer time (additional vortex rings are present in the wake).
 
 \begin{figure}
   \centering
@@ -646,6 +649,12 @@ We do not observe the back deflection in our simulation at Strouhal number $St =
   \caption{Cycle-averaged thrust coefficient ($\overline{C_T}$) and propulsive efficiency ($\eta$) for the baseline case as functions of the Strouhal number. Data were computed and averaged during the fifth flapping cycle. (To compare with Fig. 11 of \citet{li_dong_2016}.)}
   \label{fig:strouhal_propulsive_efficiency}
 \end{figure}
+
+\cref{fig:strouhal_propulsive_efficiency} shows the mean thrust coefficient and propulsive efficiency for a range of Strouhal numbers.
+The thrust coefficient monotonically increases with the Strouhal number.
+We note a rapid increase in the propulsive efficiency, with a peak for $St = 0.8$, followed by a slow decrease.
+The original study reported a maximum propulsive efficiency for $St = 0.6$, however their curve-fitting line shows that the optimal Strouhal lies between $0.6$ and $0.8$.
+Here, we only report the values at the Strouhal numbers run as we do not know what interpolation procedure was done in the original study to generate the fitted line.
 
 \subsection{Effect of the Reynolds number}
 
