@@ -210,12 +210,12 @@ To assess the effect of the grid-spacing size $\Delta x$ in the vicinity of the 
     Case & $\overline{C_T}$ & $\left( C_L \right)_\text{r.m.s.}$ & $\left( C_Z \right)_\text{r.m.s.}$ & $\eta$ \\
     \hline
     Li \& Dong (2016) & $1.462$ & $3.417$ & $1.912$ & $0.1927$ \\
-    Coarse grid ($\Delta x = 0.03c$) & $0.443$ & $3.324$ & $2.098$ & $0.1002$ \\
-    Nominal grid ($\Delta x = 0.01c$) & $0.914$ & $2.852$ & $1.651$ & $0.1635$ \\
-    Fine grid ($\Delta x = 0.005c$) & $0.986$ & $2.817$ & $1.601$ & $0.1727$ \\
-    Disk ($3\%$ thickness) & $0.762$ & $3.014$ & $1.886$ & $-$ \\
-    $1000$ steps/cycle & $0.918$ & $2.853$ & $1.644$ & $0.1636$ \\
-    Tighter solvers ($atol = 10^{-9}$) & $0.914$ & $2.852$ & $1.651$ & $0.1635$ \\
+    Coarse grid ($\Delta x = 0.03c$) & $0.442$ & $3.323$ & $2.097$ & $0.1002$ \\
+    Nominal grid ($\Delta x = 0.01c$) & $0.914$ & $2.852$ & $1.650$ & $0.1635$ \\
+    Fine grid ($\Delta x = 0.005c$) & $0.986$ & $2.817$ & $1.600$ & $0.1727$ \\
+    Disk ($3\%$ thickness) & $0.762$ & $3.014$ & $1.885$ & $-$ \\
+    $1000$ steps/cycle & $0.919$ & $2.853$ & $1.643$ & $0.1636$ \\
+    Tighter solvers ($atol = 10^{-9}$) & $0.914$ & $2.852$ & $1.650$ & $0.1635$ \\
     \hline\hline
   \end{tabular}
   \caption{Results of the grid-independence study for a flapping wing with $AR = 1.27$, $St = 0.6$, $Re = 200$, and $\psi = 90^o$. We also report the results from \citet{li_dong_2016}.}
@@ -228,7 +228,7 @@ When using a similar grid resolution as in the original study ($\Delta x = 0.03c
 Spurious noise can be reduced by refining the spatial grid.
 The history of the forces is visually similar for the nominal and fine grids, with the presence of two peaks in the thrust and lift.
 \cref{tab:independence_results} reports hydrodynamic quantities and propulsive efficiency obtained from the simulations computed during the independence study.
-Refining to computational grid leads to a relative difference of $7.8\%$ in the mean thrust coefficient, $1.2\%$ in the r.m.s. value for the lift coefficient, and $3\%$ in the r.m.s. value of spanwise coefficients.
+Refining to computational grid leads to a relative difference of $7.9\%$ in the mean thrust coefficient, $1.2\%$ in the r.m.s. value for the lift coefficient, and $3\%$ in the r.m.s. value of spanwise coefficients.
 Compared to \citet{li_dong_2016}, we obtain lower magnitude in the peaks of the force coefficients.
 Note that we used the nominal spatial grid ($\Delta x = 0.01c$) for the replication of the parametric study.
 
@@ -258,7 +258,7 @@ Thus, we decided to model the wing with a flat plate for the parametric study.
 Although the authors of the original study reported results to assess independence in the results when refining the temporal, they did not mention how many time steps per flapping cycle were computed.
 (We know that force statistics and profiles of the velocity components did not significantly change when the time-step size was halved.)
 \cref{fig:independence_force_coefficients_dt} shows the history of the force coefficients obtained on two temporal grids ($2000$ and $1000$ time steps per flapping cycle), using the nominal spatial grid.
-The force signals are visually identical when doubling the time-step size, and the maximum relative difference in the aerodynamic quantities is less than $0.5\%$.
+The force signals are visually identical when doubling the time-step size, and the maximum relative difference in the aerodynamic quantities is less than $1\%$.
 For all simulations of the parametric study, we computed $2000$ time steps per flapping cycle.
 
 Finally, we also checked that aerodynamic statistics do not change significantly when setting a tighter convergence criterion ($atol$) for the iterative solvers (based on the absolute size of the residual in the $L_2$-norm).
@@ -555,7 +555,7 @@ Also observable on \cref{fig:baseline_wake_topology:lateral} are the set of ``co
     \hline\hline
     Case & $\left| C_T \right|_\text{max}$ & $\overline{C_T}$ & $\left| C_L \right|_\text{max}$ & $\overline{C_L}$ & $\left| C_Z \right|_\text{max}$ & $\overline{C_Z}$ \\
     \hline
-    Present & $2.66$ & $0.91$ & $3.96$ & $0.0$ & $2.56$ & $0.1$ \\
+    Present & $2.65$ & $0.91$ & $3.96$ & $0.0$ & $2.56$ & $0.1$ \\
     \citet{li_dong_2016} & $3.98$ & $1.46$ & $5.35$ & $0.0$ & $3.19$ & $0.1$ \\
     \hline\hline
   \end{tabular}
@@ -679,11 +679,14 @@ We also computed the three-dimensional flow at additional Reynolds numbers $100$
   \label{fig:reynolds_wake_topology}
 \end{figure}
 
-\cref{fig:reynolds_wake_topology} shows a perspective view of the near-wake topology at $t/T = 4.25$ at Reynolds numbers $100$ and $400$, which can be compared to \cref{fig:baseline_qcrit_perspective:0008500} for the case at $Re = 200$.
+\cref{fig:reynolds_wake_topology} shows a perspective view of the near-wake topology at $t/T = 4.25$ at Reynolds numbers $100$ and $400$.
+(\cref{fig:baseline_qcrit_perspective:0008500} shows the same view for $Re = 200$.)
 For all Reynolds numbers investigated, we note the formation of a double-loop vortex around the trailing edge of the plate.
+At lower Reynolds number ($Re = 200$), vortical structures dissipate more rapidly (due to increased viscous effects).
+At the higher  Reynolds number ($Re = 400$), ``double-C''-shaped vortex rings are convected downstream.
 As expected, vortex structures dissipate more rapidly for low Reynolds numbers.
 At Reynolds number $Re = 400$, ``double-C''-shaped vortex rings propagate downstream.
-Overall, we observe similar trends between our results and the one from the original study and note that the vortex dynamics remain unchanged for the range of Reynolds numbers investigated here.
+Overall, we observe similar features as those published in \citet{li_dong_2016} and confirm that the flow dynamics of the low-aspect-ratio flapping wing is insensitive to the Reynolds number, at least, for the range investigated here.
 
 \begin{figure}
   \centering
@@ -692,18 +695,37 @@ Overall, we observe similar trends between our results and the one from the orig
   \label{fig:reynolds_force_coefficients}
 \end{figure}
 
-\cref{fig:reynolds_force_coefficients} compares the history of the force coefficients over two flapping cycles for Reynolds numbers $Re = 100$, $200$, and $400$.
-Although we obtained different statistics in the force coefficients (mean and peak values), we observe similar features as in the original study.
+\begin{table}
+  \centering
+  \begin{tabular}{cllll}
+    \hline\hline
+    \multirow{2}{*}{$Re$} &
+      \multicolumn{2}{c}{Present} &
+      \multicolumn{2}{c}{\citet{li_dong_2016}} \\
+    & $\max \left( |C_T| \right)$ & $\overline{C_T}$ & $\max \left( |C_T| \right)$ & $\overline{C_T}$ \\
+    \hline
+    $100$ & $2.12$ & $0.58$ & $3.45$ & $1.17$ \\
+    $200$ & $2.65$ ($+25\%$) & $0.91$ ($+57\%$) & $3.98$ ($+15\%$) & $1.46$ ($+25\%$) \\
+    $400$ & $3.01$ ($+42\%$) & $1.14$ ($+97\%$) & $4.35$ ($+26\%$) & $1.65$ ($+41\%$) \\
+    \hline\hline
+  \end{tabular}
+  \caption{Effect of the Reynolds number on the mean and peak thrust coefficient at $St = 0.6$ with $\psi = 90^o$ for a circular plate ($AR = 1.27$). Relative differences with respect to the case at $Re = 100$ are shown between parenthesis. For comparison, we also report values published in \citet{li_dong_2016}.}
+  \label{tab:reynolds_thrust_stats}
+\end{table}
+
+\cref{fig:reynolds_force_coefficients} displays the history of the force coefficients over two flapping cycles for Reynolds numbers $100$, $200$, and $400$.
+\cref{tab:reynolds_thrust_stats} reports the mean and peak thrust coefficients over with a comparison to the data published in \citet{li_dong_2016}.
+Although we obtained different statistics in the force coefficients (mean and peak values), we report similar trends as in the original study.
 First, the absolute peak value and mean value for the thrust coefficient increase with the Reynolds number.
-Second, we note the presence of two peaks in the lift coefficient every half cycle, for all Reynolds numbers.
-Third, the negative peak in the spanwise coefficient becomes smaller as the Reynolds number decreases.
-Finally, the mean lift and spanwise coefficients are approximately zero in all cases.
+Second, the lift force peaks twice every half cycle, for all Reynolds numbers.
+Third, the negative peak in the spanwise force decreases with the Reynolds number.
+Finally, the mean lift and spanwise coefficients remain approximately zero for all cases.
 
 \subsection{Effect of the wing aspect ratio}
 
-In the baseline simulation, the wing surface is circular with $AR = 1.27$.
-We ran two additional simulations, with $AR = 1.91$ and $AR = 2.55$ to look at the effect of the wing aspect ratio on the wake topology and aerodynamic force coefficients.
-(Other parameters remained identical compared to the baseline case.)
+The baseline case investigated the flow dynamics produced by a circular wing ($AR = 1.27$).
+Following the original study, we ran two additional simulations, for $AR = 1.91$ and $2.55$, to look at the effect of the wing aspect ratio on the wake topology and aerodynamic forces.
+(Other parameters remained identical to the baseline case.)
 
 \begin{figure}
   \centering
@@ -726,37 +748,41 @@ We ran two additional simulations, with $AR = 1.91$ and $AR = 2.55$ to look at t
 
 \begin{figure}
   \centering
-  \begin{subfigure}[c]{0.3\textwidth}
+  \begin{subfigure}[c]{0.2\textwidth}
     \centering
     \includegraphics[width=\linewidth]{runs/Re200_St0.6_AR1.27_psi90/figures/wx_slice_yz_0008500.png}
     \caption{}
     \label{fig:ratio_vorticity_slices:1.27_wx}
   \end{subfigure}
-  \begin{subfigure}[c]{0.3\textwidth}
+  \hspace{3em}
+  \begin{subfigure}[c]{0.2\textwidth}
     \centering
     \includegraphics[width=\linewidth]{runs/Re200_St0.6_AR1.91_psi90/figures/wx_slice_yz_0008500.png}
     \caption{}
     \label{fig:ratio_vorticity_slices:1.91_wx}
   \end{subfigure}
-  \begin{subfigure}[c]{0.34\textwidth}
+  \hspace{3em}
+  \begin{subfigure}[c]{0.23\textwidth}
     \centering
     \includegraphics[width=\linewidth]{runs/Re200_St0.6_AR2.55_psi90/figures/wx_slice_yz_0008500.png}
     \caption{}
     \label{fig:ratio_vorticity_slices:2.55_wx}
   \end{subfigure}
-  \vspace{0.5cm}
+  \vspace{0.5em}
   \begin{subfigure}[c]{0.32\textwidth}
     \centering
     \includegraphics[width=\linewidth]{runs/Re200_St0.6_AR1.27_psi90/figures/wz_slice_xy_0008500.png}
     \caption{}
     \label{fig:ratio_vorticity_slices:1.27_wz}
   \end{subfigure}
+  \hspace{0.2em}
   \begin{subfigure}[c]{0.32\textwidth}
     \centering
     \includegraphics[width=\linewidth]{runs/Re200_St0.6_AR1.91_psi90/figures/wz_slice_xy_0008500.png}
     \caption{}
     \label{fig:ratio_vorticity_slices:1.91_wz}
   \end{subfigure}
+  \hspace{0.2em}
   \begin{subfigure}[c]{0.32\textwidth}
     \centering
     \includegraphics[width=\linewidth]{runs/Re200_St0.6_AR2.55_psi90/figures/wz_slice_xy_0008500.png}
@@ -768,8 +794,9 @@ We ran two additional simulations, with $AR = 1.91$ and $AR = 2.55$ to look at t
 \end{figure}
 
 \cref{fig:ratio_wake_topology} shows snapshots of the vortical structures at $t/T = 4.25$ generated by elliptical plates with aspect ratios $AR = 1.91$ and $2.55$.
-\cref{fig:ratio_vorticity_slices} shows two-dimensional contours of the streamwise (a-c) and spanwise (d-f) vorticity components for different wing aspect ratios at the same time unit.
-As reported in the original study, we too observe an increase in the size of the inner loop in streamwise direction (formed by vortices $V_3$ and $V_4$) along with the plate aspect ratio, and a decrease in the magnitude of the spanwise vorticity of the inner loop.
+\crefrange{fig:ratio_vorticity_slices:1.27_wx}{fig:ratio_vorticity_slices:2.55_wx} are two-dimensional slices of the streamwise vorticity in the near wake ($x/c = 0.3$) at the same instant in time.
+\crefrange{fig:ratio_vorticity_slices:1.27_wz}{fig:ratio_vorticity_slices:2.55_wz} are slices of the spanwise vorticity at mid-span ($z = S/2$).
+We stand by the observations made in the original study: as the aspect ratio increases, the size of the inner vortex loop (formed by vortices $V_3$ and $V_4$) increases in streamwise direction, while the magnitude of the spanwise vorticity decreases.
 
 \begin{figure}
   \centering
@@ -779,10 +806,11 @@ As reported in the original study, we too observe an increase in the size of the
 \end{figure}
 
 \cref{fig:ratio_force_coefficients} displays the history of the force coefficients over two flapping cycles, obtained with aspect ratios $AR = 1.27$, $1.91$, and $2.55$.
-The mean thrust coefficient increases with the wing aspect ratio ($\overline{C_T} = 1.17$ for $AR = 1.91$ and $1.37$ for $AR = 2.55$).
-We note a slight increase in the magnitude of the thrust peak as we increase the aspect ratio.
+The mean thrust coefficient increases with the wing aspect ratio ($1.17$ for $AR = 1.91$ and $1.37$ for $AR = 2.55$).
+As mentioned in \citet{li_dong_2016}, this increase in the mean thrust coincides with the fact that larger aspect-ratio plates tend to have higher propulsive efficiency.
+We also note a slight increase in the magnitude of the thrust peak as we increase the aspect ratio.
 The authors of the original study reported a decrease in magnitude of the peak for the lift and spanwise coefficients.
-However, our results show an increase in magnitude of the peak for the lift coefficient as the ratio increases.
+However, our results show a slight increase in magnitude of the second peak (each half cycle) for the lift coefficient as the ratio increases.
 Furthermore, the maximum value for the spanwise coefficient remains the same, while we note a decrease in the minimum value (as the ratio increases).
 
 \subsection{Effect of the phase difference between pitching and rolling}
