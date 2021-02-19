@@ -2,10 +2,10 @@
 # -------------------------------------------------------
 
 # Title of the article:
-#  - For a successful replication, it shoudl be prefixed with "[Re]"
+#  - For a successful replication, it should be prefixed with "[Re]"
 #  - For a failed replication, it should be prefixed with "[¬Re]"
 #  - For other article types, no instruction (but please, not too long)
-title: "[Re] Three-dimensional wake topology and propulsive performance of low-aspect-ration pitching-rolling plates"
+title: "[Re] Three-dimensional wake topology and propulsive performance of low-aspect-ratio pitching-rolling plates"
 
 # List of authors with name, orcid number, email and affiliation
 # Affiliation "*" means contact author (required even for single-authored papers)
@@ -18,7 +18,7 @@ authors:
   - name: Lorena A. Barba
     orcid: 0000-0001-5812-2711
     email: labarba@gwu.edu
-    affiliations: 1,*      # * is for contact author
+    affiliations: 1,*  # * is for contact author
 
 # List of affiliations with code (corresponding to author affiliations), name
 # and address. You can also use these affiliations to add text such as "Equal
@@ -48,17 +48,17 @@ data:
 
 # Information about the original article that has been replicated
 replication:
- - cite: # Full textual citation
- - bib:  # Bibtex key (if any) in your bibliography file
- - url:  # URL to the PDF, try to link to a non-paywall version
- - doi:  # Regular digital object identifier
+ - cite: Li, C., & Dong, H. (2016). Three-dimensional wake topology and propulsive performance of low-aspect-ratio pitching-rolling plates. Physics of Fluids, 28(7), 071901.  # Full textual citation
+ - bib: li_dong_2016  # Bibtex key (if any) in your bibliography file
+ - url: https://doi.org/10.1063/1.4954505  # URL to the PDF, try to link to a non-paywall version
+ - doi: 10.1063/1.4954505  # Regular digital object identifier
 
 # Don't forget to surround abstract with double quotes
 abstract: "Abstract for this replication study."
 
 # Bibliography file (yours)
 bibliography: bibliography.bib
-  
+
 # Type of the article
 # Type can be:
 #  * Editorial
@@ -77,7 +77,7 @@ language: C++
 # To be filled by the author(s) after acceptance
 # -----------------------------------------------------------------------------
 
-# For example, the URL of the GitHub issue where review actually occured
+# For example, the URL of the GitHub issue where review actually occurred
 review: 
   - url: 
 
