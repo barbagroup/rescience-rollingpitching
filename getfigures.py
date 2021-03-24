@@ -45,7 +45,9 @@ def main(args):
         print(f'Downloading {figure} ...')
         figdir = pathlib.Path(args.outdir) / pathlib.Path(figure).parent
         figdir.mkdir(parents=True, exist_ok=True)
-        urlpath = '/'.join([args.repo_url, 'raw', args.branch, figure])
+        parts = figure.split('/')
+        urlpath = '/'.join([args.repo_url, 'raw', args.branch,
+                            'runs', *parts[:-1], 'figures', parts[-1]])
         dest = pathlib.Path(args.outdir) / figure
         urllib.request.urlretrieve(urlpath, dest)
 
