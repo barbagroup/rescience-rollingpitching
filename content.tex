@@ -1,7 +1,7 @@
 \section{Introduction}
 
 Reproducibility and replicability are essential for the progress of science.
-Few years ago, the US Congress directed the National Science Foundation to contract with the National Academies of Sciences, Engineering, and Medicine (NASEM) to assess reproducibility and replicability in scientific and engineering research.
+In 2017, the US Congress directed the National Science Foundation to contract with the National Academies of Sciences, Engineering, and Medicine (NASEM) to assess reproducibility and replicability in scientific and engineering research.
 NASEM published a consensus report\supercite{nasem_2019} in May 2019, containing findings and recommendations to improve rigor and transparency in research.
 The report also provides clear definitions of ``reproducibility'' and ``replicability'', intended to apply across all fields of science:
 
@@ -15,7 +15,7 @@ The minimum requirement for computational research to be reproducible is to make
 The two extremes on the reproducibility spectrum are ``not reproducible'' (when the product of the study is only a published manuscript) and ``fully replicated'' (the gold standard for a study).
 
 In the past, we have undertaken a replication of our own results\supercite{krishnan_et_al_2014} and published the outputs and lessons learned from this exercise.\supercite{mesnard_barba_2017}
-We here aim to assess the effort needed to replicate the computational results from another research group and shifted our sights on a computational fluid dynamics study from Li and Dong,\supercite{li_dong_2016}, that investigated the dynamics of pitching and rolling wings.
+We here aim to assess the effort needed to replicate the computational results from another research group and set our sights on a computational fluid dynamics study from Li and Dong,\supercite{li_dong_2016} that investigated the dynamics of pitching and rolling wings.
 While many prior studies have focused on the pitching and/or heaving motion of three-dimensional wings, only few studies have looked at the combined rolling and pitching motion.
 As mentioned by the authors of the original study, the pitching-rolling kinematics has the potential to serve as a better canonical model for the hydrodynamics of bio-inspired flapping propulsors.
 The authors used their own research code to conduct a parametric study and quantify the effects of the Reynolds number, Strouhal number, aspect ratio, and phase-difference angle (between the rolling and pitching motions) on the wake topology and the propulsive performance of flapping wings.
@@ -114,24 +114,24 @@ In other words, the hydrodynamic power is defined as the integral over an expand
 
 \section{Reproducible computational workflow}
 
-The final product of the original study consists in a published manuscript in the journal Physics of Fluids.
+The final product of the original study is a published manuscript in the journal Physics of Fluids.
 Although the manuscript is well detailed, the code and input data used to produce the results were not made publicly available by the authors.
 In that regard, we consider the study to not be computationally reproducible.
 Thus, we aim to replicate the scientific findings claimed in the original study with our own research software stack, to deliver reproducible results.
 
 PetIBM\supercite{chuang_et_al_2018} is developed in the open under the permissive (non-copyleft) 3-Clause BSD license, version-controlled with Git, and hosted on a public GitHub repository.
-Each release of the software is archived on the data repository Zenodo.
+Each major release of the software is archived on the data repository Zenodo.
 
 Our implementation of the three-dimensional rolling and pitching wing, which relies on PetIBM, is also open source and available on GitHub (\url{github.com/barbagroup/petibm-rollingpitching}) under the same license.
 This allows anyone to inspect the code, to verify the steps that were taken to produce computational results, and to modify and re-use it for other applications.
 In addition, the version-controlled repository contains all input data and processing scripts that were used to produce the computational results presented in the next section.
 The repository also contains \textsc{README} files to guide readers that may be interested in re-running the analysis.
-Upon acceptation of the present article, the application repository, as well as secondary data needed to reproduce the figures, have been archived on Zenodo with a digital-object identifier associated to it.
+Upon acceptance of the present article, the application repository, as well as secondary data needed to reproduce the figures, have been archived on Zenodo with a digital-object identifier associated to it.
 
 All simulations reported in the present article ran on our University-managed high-performance-computing (HPC) cluster called Pegasus.
 (We used computational nodes with Dual 20-Core 3.70GHz Intel Xeon Gold 6148 processors and NVIDIA P100 GPU devices.)
-To avoid the burden of building PetIBM and its applications on the cluster, we used the container technology from Docker and Singularity (citations needed).
-Containers allow us the capture the conditions of analysis in a formatted image that can be shared to others.
+To reduce the burden of building PetIBM and its applications on the cluster, we used the container technology from Docker and Singularity (citations needed).
+Containers allow us to capture the conditions of analysis in a formatted image that can be shared with others.
 We have already used Docker containers in the past to create a reproducible workflow for scientific applications on the public cloud provider Microsoft Azure.\supercite{mesnard_barba_2020}
 Here, we aim to adopt a similar workflow on our local HPC cluster.
 Early in this replication study, we hit a snag: Docker is not available to users on Pegasus.
@@ -155,7 +155,7 @@ In the original study, the authors reported the results of a grid-independence s
 They compared force coefficients, profiles of the velocity components, profiles of the fluctuating kinetic energy, and distances between vortical structures in the near wake, obtained with different grid resolutions.
 Here, we also report the results of our grid-independence study before moving on to the results of the parametric study.
 
-We use the same domain size as in the original study: $30c \times 25c \times 25c$.
+We use the same domain size as in the original study: $30c \times 25c \times 25c$ (where $c$ is the chord length of the wing).
 The root of the wing (around which the plate undergoes the rolling/pitching motion) is located at the center of the computational domain.
 We keep the spatial grid uniform (with highest resolution) in the sub-area of the domain that covers the motion of the wing.
 Outside this area, we also add an extra uniform layer with grid-spacing size $\Delta x = 0.05c$, in the sub-domain $\left[ -2c, 6c \right] \times \left[ -3c, 3c \right] \times \left[ -1c, 2c \right]$, which covers the near-wake region.
@@ -166,8 +166,6 @@ In the present study, we model the wing with a flat elliptical surface, discreti
 
 As in the original study, we consider the case of a circular wing ($AR = 1.27$) with Reynolds number $Re = 200$, Strouhal number $St = 0.6$, and phase-difference angle $\psi = 90^o$, to assess independence in the numerical results.
 We investigated the effect of the grid-spacing size, the time-step size, and the convergence criterion of the iterative solvers, on the numerical solution.
-Note that the original study did not use a flat surface for the wing; the authors used an elliptical disk with a thickness equal to $3\%$ of the chord length.
-In that regards, we also compared the results obtained with a similar disk to those using a flat plate.
 
 \begin{table}[!h]
   \centering
@@ -186,6 +184,11 @@ In that regards, we also compared the results obtained with a similar disk to th
 
 To assess the effect of the grid-spacing size $\Delta x$ in the vicinity of the wing on the solution, we computed five flapping cycles on three grids: coarse ($\Delta x = 0.03c$), nominal ($\Delta x = 0.01c$) and fine ($\Delta x = 0.005c$).
 \cref{tab:independence_grid_charateristics} reports characteristics of the spatial grids used for the independence study.
+Note that the ``nominal'' grid in the original study contains $\sim 6.2 \times 10^6$ cells with smallest grid spacing $\Delta x = 0.03c$ near the wing.
+This is significantly coarse than our nominal grid, which contains $\sim 21.1 \times 10^6$ cells with $\Delta x = 0.01c$ in the vicinity of the wing.
+As seen in \cref{fig:independence_force_coefficients_dx}, the computed aerodynamic forces on our coarse mesh (similar resolution as their nominal grid) contains spurious artifacts.
+Spurious force oscillations exist in almost all immersed-boundary method, although their magnitudes depend on the approach used.
+We reduced the noise by increasing the grid resolution near the wing.
 
 \begin{figure}[!h]
   \centering
@@ -209,17 +212,17 @@ To assess the effect of the grid-spacing size $\Delta x$ in the vicinity of the 
     Tighter solvers ($atol = 10^{-9}$) & $0.914$ & $2.852$ & $1.650$ & $0.1635$ \\
     \hline\hline
   \end{tabular}
-  \caption{Results of the grid-independence study for a flapping wing with $AR = 1.27$, $St = 0.6$, $Re = 200$, and $\psi = 90^o$. We also report the results from \citet{li_dong_2016}.}
+  \caption{Results of the grid-independence study for a flapping wing with $AR = 1.27$, $St = 0.6$, $Re = 200$, and $\psi = 90^o$. We also report the results from \citet{li_dong_2016} (data digitized from figures of the original publication).}
   \label{tab:independence_results}
 \end{table}
 
-\cref{fig:independence_force_coefficients_dx} shows the history of the thrust, lift, and spanwise coefficients over two flapping cycles ($2000$ time steps per cycle), obtained on the coarse, nominal, finer spatial grids.
+\cref{fig:independence_force_coefficients_dx} shows the history of the thrust, lift, and spanwise coefficients over two flapping cycles ($2000$ time steps per cycle), obtained on the coarse, nominal, and fine spatial grids.
 When using a similar grid resolution as in the original study ($\Delta x = 0.03c$), the instantaneous force components are noisy and we do not clearly distinguish two peaks in the lift force each half cycle.
 (Authors of the original study reported two peaks in both the thrust and lift forces, every half cycle.)
 Spurious noise can be reduced by refining the spatial grid.
 The history of the forces is visually similar for the nominal and fine grids, with the presence of two peaks in the thrust and lift.
 \cref{tab:independence_results} reports hydrodynamic quantities and propulsive efficiency obtained from the simulations computed during the independence study.
-Refining to computational grid leads to a relative difference of $7.9\%$ in the mean thrust coefficient, $1.2\%$ in the r.m.s. value for the lift coefficient, and $3\%$ in the r.m.s. value of spanwise coefficients.
+Refining the computational grid leads to a relative difference of $7.9\%$ in the mean thrust coefficient, $1.2\%$ in the r.m.s. value for the lift coefficient, and $3\%$ in the r.m.s. value of spanwise coefficients.
 Compared to \citet{li_dong_2016}, we obtain lower magnitude in the peaks of the force coefficients.
 Note that we used the nominal spatial grid ($\Delta x = 0.01c$) for the replication of the parametric study.
 
@@ -230,14 +233,14 @@ Note that we used the nominal spatial grid ($\Delta x = 0.01c$) for the replicat
   \label{fig:independence_force_coefficients_disk}
 \end{figure}
 
-The original study modeled the wing with a disk (with a thickness equal to $3\%$ of the chord length).
-Here, we use a different immersed boundary method which allows us to model thin volumes with flat surfaces.
-Using a flat surface requires fewer Lagrangian markers to represent the wing, making the simulation computationally cheaper.
-(Runtime for the flat-wing simulation was about $8.4$ hours to compute 5 flapping cycles; with a disk, the runtime was approximately $10.8$ hours.)
+In the original study modeled the wing with an elliptical disk with a thickness equal to $3\%$ of the chord length.
+However, the immersed boundary method used for the present replication allows us to model thin volumes with flat surfaces.
+We compared the aerodynamic forces obtained on a disk to those on a flat plate.
 The history of the thrust coefficient (\cref{fig:independence_force_coefficients_disk}) is similar whether we use a disk or a flat plate.
 We note slightly larger magnitude in the first peak of the lift and in the peaks of the spanwise force when using a disk.
-Overall, the disk-based simulation does not really improve the solution.
-Thus, we decided to model the wing with a flat plate for the parametric study.
+Overall, the disk-based simulation does not really improve the solution and we decided to model the wing with a flat plate for the parametric study.
+Also, fewer Lagrangian markers are needed to discretized a flat-plate wing, making simulations computationally cheaper.
+(Runtime for the flat-wing simulation was about $8.4$ hours to compute 5 flapping cycles on 2 nodes of our Pegasus cluster; with a disk, the runtime was approximately $10.8$ hours.)
 
 \begin{figure}[!h]
   \centering
@@ -246,7 +249,7 @@ Thus, we decided to model the wing with a flat plate for the parametric study.
   \label{fig:independence_force_coefficients_dt}
 \end{figure}
 
-Although the authors of the original study reported results to assess independence in the results when refining the temporal, they did not mention how many time steps per flapping cycle were computed.
+Although the authors of the original study reported results to assess independence in the results when refining the temporal grid, they did not mention how many time steps per flapping cycle were computed.
 (We know that force statistics and profiles of the velocity components did not significantly change when the time-step size was halved.)
 \cref{fig:independence_force_coefficients_dt} shows the history of the force coefficients obtained on two temporal grids ($2000$ and $1000$ time steps per flapping cycle), using the nominal spatial grid.
 The force signals are visually identical when doubling the time-step size, and the maximum relative difference in the aerodynamic quantities is less than $1\%$.
@@ -911,7 +914,7 @@ Thus, we consider this replication attempt to be successful.
 
 The final product of the original study consists in a published manuscript.
 Thus, we consider the study to be not reproducible.
-We made our best efforts to make our replication study to be reproducible.
+We made our best efforts to make our replication study reproducible.
 Our computational application for the three-dimensional pitching-rolling motion of a wing makes use of open-source tools.
 We created a GitHub repository for this study (\url{github.com/barbagroup/petibm-rollingpitching}).
 The repository contains the source code of the PetIBM applications, as well as all input files of the simulations reported here and pre- and post-processing Python scripts.
