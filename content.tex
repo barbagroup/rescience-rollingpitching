@@ -169,6 +169,7 @@ We keep the spatial grid uniform (with highest resolution) in the sub-area of th
 Outside this area, we also add an extra uniform layer with grid-spacing size $\Delta x = 0.05c$, in the sub-domain $\left[ -2c, 6c \right] \times \left[ -3c, 3c \right] \times \left[ -1c, 2c \right]$, which covers the near-wake region.
 (We opted for a smooth transition between the two uniform regions, in which the grid-cell widths are stretched with a constant ratio of $1.1$ in all directions, except in the streamwise direction behind the wing where we used a ratio of $1.03$.)
 Finally, the grid-cell width is stretched to the external boundaries with a constant ratio of $1.2$.
+To the readers interested in further inspecting the geometric characteristics of the grids used in present study, we used Python scripts to codify the grid parameters and saved them into PetIBM-readable \texttt{yaml} files (available on the GitHub repository).
 
 In the present study, we model the wing with a flat elliptical surface, discretized with Lagrangian markers uniformly distributed on its surface (with a similar resolution as the grid-spacing size of the background Eulerian grid).
 
