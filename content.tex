@@ -254,7 +254,7 @@ Also, fewer Lagrangian markers are needed to discretized a flat-plate wing, maki
 \begin{figure}[!h]
   \centering
   \includegraphics[width=\textwidth]{independence/force_coefficients_compare_dt.png}
-  \caption{History of the thrust ($C_T$), lift ($C_L$), and spanwise ($C_Z$) coefficients over two flapping cycles of a circular plate ($AR = 1.27$) at Reynolds number $Re = 200$ and Strouhal number $St = 0.6$. We compare the instantaneous force coefficients obtained with $n_t = 2000$ and $n_t = 1000$ time steps per flapping cycle obtained on the nominal grid. Markers show digitized data from \citet{li_dong_2016}.}
+  \caption{History of the thrust ($C_T$), lift ($C_L$), and spanwise ($C_Z$) coefficients over two flapping cycles of a circular plate ($AR = 1.27$) at Reynolds number $Re = 200$ and Strouhal number $St = 0.6$. We compare the instantaneous force coefficients obtained with $n_t = 2000$ and $n_t = 1000$ time steps per flapping cycle obtained on the nominal grid. Markers show digitized data from Fig. 9 of \citet{li_dong_2016}.}
   \label{fig:independence_force_coefficients_dt}
 \end{figure}
 
@@ -293,7 +293,7 @@ Mean thrust coefficient, root-mean-square values of the lift and spanwise coeffi
     \caption{}
     \label{fig:independence_profiles:kinetic}
   \end{subfigure}
-  \caption{Comparison of the velocity profiles and profiles of the fluctuation of the kinetic energy in the wake of a flapping circular plate ($AR = 1.27$) at Reynolds number $Re = 200$ and Strouhal number $St = 0.6$. We report profiles at locations $x / c = 1$, $2$, $3$, $4$, and $5$. We compare the profiles obtained on the nominal grid, on the finer grid in space, and on the coarser grid in time. (a) Streamwise velocity ($\overline{u_1} - U_\infty$) profiles in the $x/y$ plane at $z = S / 2$; (b) transverse velocity ($\overline{u_2}$) profiles in the $x/y$ plane at $z = S / 2$; (c) spanwise velocity ($\overline{u_3}$) in the $x/z$ plane at $y = 0$; (d) fluctuation of the kinetic energy $( \overline{{u_1'}^2} + \overline{{u_2'}^2} + \overline{{u_3'}^2} ) / 2$ in the $x/y$ plane at $z = S / 2$. We also report digitized data from the original study.\supercite{li_dong_2016}}
+  \caption{Comparison of the velocity profiles and profiles of the fluctuation of the kinetic energy in the wake of a flapping circular plate ($AR = 1.27$) at Reynolds number $Re = 200$ and Strouhal number $St = 0.6$. We report profiles at locations $x / c = 1$, $2$, $3$, $4$, and $5$. We compare the profiles obtained on the nominal grid, on the finer grid in space, and on the coarser grid in time. (a) Streamwise velocity ($\overline{u_1} - U_\infty$) profiles in the $x/y$ plane at $z = S / 2$; (b) transverse velocity ($\overline{u_2}$) profiles in the $x/y$ plane at $z = S / 2$; (c) spanwise velocity ($\overline{u_3}$) in the $x/z$ plane at $y = 0$; (d) fluctuation of the kinetic energy $( \overline{{u_1'}^2} + \overline{{u_2'}^2} + \overline{{u_3'}^2} ) / 2$ in the $x/y$ plane at $z = S / 2$. We also report digitized data from Fig. 4 of \citet{li_dong_2016}.}
   \label{fig:independence_profiles}
 \end{figure}
 
@@ -545,7 +545,7 @@ Also observable on \cref{fig:baseline_wake_topology:lateral} are the set of ``co
 \begin{figure}[!h]
   \centering
   \includegraphics[width=\linewidth]{Re200_St0.6_AR1.27_psi90/force_coefficients.png}
-  \caption{History of the thrust ($C_T$), lift ($C_L$), and spanwise ($C_Z$) coefficients during the fourth and fifth flapping cycles of a circular plate ($AR = 1.27$) with $St = 0.6$, $Re = 200$, and $\psi = 90^o$. We also report the digitized coefficients from \cite{li_dong_2016} and the instantaneous values of the instantaneous rolling and pitching angles (dashed blue line and dotted green line, respectively).}
+  \caption{History of the thrust ($C_T$), lift ($C_L$), and spanwise ($C_Z$) coefficients during the fourth and fifth flapping cycles of a circular plate ($AR = 1.27$) with $St = 0.6$, $Re = 200$, and $\psi = 90^o$. We also report the digitized coefficients from Fig. 9 of \cite{li_dong_2016} and the instantaneous values of the instantaneous rolling and pitching angles (dashed blue line and dotted green line, respectively).}
   \label{fig:baseline_force_coefficients}
 \end{figure}
 
@@ -918,7 +918,7 @@ As in the original study, we obtained a maximum propulsive efficiency for the ca
 \section{Conclusion}
 
 In this study, we attempt to replicate the scientific findings published in \citet{li_dong_2016} with our own research software PetIBM\supercite{chuang_et_al_2018}.
-Although we used a different immersed boundary method than the one in the original study, we observe similar features in the force production, wake topology, and propulsive performances of a pitching and rolling wing.
+Using a different immersed boundary method than the one in the original study, we observe similar features in the force production, wake topology, and propulsive performances of a pitching and rolling wing.
 Thus, we consider this replication attempt to be successful.
 
 The final product of the original study consists in a published manuscript.
