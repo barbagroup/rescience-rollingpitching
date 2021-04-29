@@ -12,18 +12,20 @@ The report also provides clear definitions of ``reproducibility'' and ``replicab
 
 The minimum requirement for computational research to be reproducible is to make code and data available to others.
 \citet{peng_2011} introduced the concept of a reproducibility spectrum, in which reproducible research is a ``minimum standard for judging scientific claims when full independent replication of a study is not possible'' or not available.
-The two extremes on the reproducibility spectrum are ``not reproducible'' (when the product of the study is only a published manuscript) and ``fully replicated'' (the gold standard for a study).
+The two extremes on the reproducibility spectrum are ``not reproducible'' (when a published manuscript is the sole deliverable from a study) and ``fully replicated'' (the gold standard for a study).
 
 In the past, we have undertaken a replication of our own results\supercite{krishnan_et_al_2014} and published the outputs and lessons learned from this exercise.\supercite{mesnard_barba_2017}
 We here aim to assess the effort needed to replicate the computational results from another research group and set our sights on a computational fluid dynamics study from Li and Dong,\supercite{li_dong_2016} that investigated the dynamics of pitching and rolling wings.
+
 While many prior studies have focused on the pitching and/or heaving motion of three-dimensional wings, only few studies have looked at the combined rolling and pitching motion.
-As mentioned by the authors of the original study, the pitching-rolling kinematics has the potential to serve as a better canonical model for the hydrodynamics of bio-inspired flapping propulsors.
-The authors used their own research code to conduct a parametric study and quantify the effects of the Reynolds number, Strouhal number, aspect ratio, and phase-difference angle (between the rolling and pitching motions) on the wake topology and the propulsive performance of flapping wings.
-\cref{tab:parameters} reports the list of parameters investigated in the parametric study.
+As explained in \citet{li_dong_2016}, the pitching-rolling kinematics has the potential to serve as a better canonical model for the hydrodynamics of bio-inspired flapping propulsors.
+The authors carried on a parametric study, using their own research code, to quantify the effects of the Reynolds number, Strouhal number, aspect ratio, and rolling/pitching phase difference on the wake topology and the propulsive performance of flapping wings.
+\cref{tab:parameters} lists the parameters and values considered in the original study.
+
 The deliverable from this study is the journal publication itself; the computational code, input data, and conditions of analysis used to produce the numerical results were not made available.
 Thus, referring back to Peng's reproducibility spectrum, we consider the study to be not reproducible.
 Our objective was to replicate the scientific findings claimed in the original study and to do it in a reproducible way.
-We have implemented the three-dimensional rolling and pitching kinematics in an open-source code shared on GitHub (\url{github.com/barbagroup/petibm-rollingpitching}) and prepared extensive reproducibility packages for all results.
+We have re-implemented the three-dimensional rolling and pitching kinematics in an open-source code shared on GitHub (\url{github.com/barbagroup/petibm-rollingpitching}) and prepared extensive reproducibility packages for all results.
 
 \begin{table}%[!h]
   \centering
@@ -46,8 +48,8 @@ We have implemented the three-dimensional rolling and pitching kinematics in an 
 \section{Numerical methods and implementation}
 
 The original study modeled the wing kinematics with an elliptical disk that undergoes a rolling motion around the streamwise $x$-axis and a pitching motion around its spanwise axis.
-The wing is characterized by its chord length $c$ and its spanwise length $S$.
-The aspect ratio $AR$ of the wing is given by $AR = S^2 / A_\text{plan}$, where $A_\text{plan}$ is the planform area of the plate ($A_\text{plan} = \pi c S / 4$).
+The wing is characterized by the chord length $c$ and the spanwise length $S$.
+The aspect ratio of the wing is given by $AR = S^2 / A_\text{plan}$, where $A_\text{plan}$ is the planform area of the plate ($A_\text{plan} = \pi c S / 4$).
 
 The rolling motion is defined by the instantaneous rolling position:
 
@@ -55,7 +57,7 @@ The rolling motion is defined by the instantaneous rolling position:
   \phi (t) = -A_\phi \cos \left( 2 \pi f t \right)
 \end{equation}
 
-where $t$ is time, $f$ is the flapping frequency, and $A_\phi$ is the rolling amplitude.
+where $t$ is the time, $f$ is the flapping frequency, and $A_\phi$ is the rolling amplitude.
 
 The pitching motion along the spanwise axis is governed by the instantaneous pitching position:
 
@@ -65,16 +67,15 @@ The pitching motion along the spanwise axis is governed by the instantaneous pit
 
 where $A_\theta$ is the pitching amplitude and $\psi$ is the phase-difference angle between the pitching and rolling motions.
 
-For the present replication study, we use the same wing kinematics and we numerically solve the three-dimensional Navier-Stokes equations (velocity/pressure formulation) for an incompressible viscous flow.
+For the present replication study, we use the same wing kinematics and numerically solve the three-dimensional Navier-Stokes equations (velocity/pressure formulation) for an incompressible viscous flow.
 The Reynolds number is defined as $Re = \frac{U_\infty c}{\nu}$, where $U_\infty$ is the incoming freestream speed and $\nu$ is the kinematic viscosity.
-The convective and diffusion terms are time-integrated using second-order accurate Adams-Bashforth and Crank-Nicolson methods, respectively.
-We imposed a Dirichlet condition (streamwise velocity set to the freestream speed $U_\infty$) on all boundaries, except at the outlet where we used a convective boundary condition (to carry vortical structures outside the computational domain).
+The convective and diffusion terms of the partial differential equations are time-integrated using second-order accurate Adams-Bashforth and Crank-Nicolson methods, respectively.
+We enforce a Dirichlet condition (streamwise velocity set to the freestream speed $U_\infty$) on all boundaries, except at the outlet where we use a convective boundary condition (to carry vortical structures outside the computational domain).
 
 Our code base, PetIBM, solves the incompressible Navier-Stokes equations using a projection method, seen as an approximate block-LU decomposition of the fully discretized equations.\supercite{perot_1993}
-
-To compute the flow around a moving object (such as a pitching-rolling wing), we use an immersed boundary technique.
+To compute the flow around a moving object (e.g., a pitching-rolling wing), we use an immersed boundary technique.
 The fluid equations are solved over an extended domain that includes the interior of the immersed object.
-The boundary of the immersed body is represented by a collection of Lagrangian markers that moves with the rigid kinematics prescribed above and on which we enforce a no-slip condition.
+The boundary of the object is represented by a collection of Lagrangian markers that moves with a prescribed rigid kinematics and on which we enforce a no-slip condition.
 The presence of the body in the domain is taken into account by modifying the fluid equations in the vicinity of its boundary.
 This approach enables us to solve the equations on a simple fixed structured Cartesian grid.
 
@@ -84,8 +85,8 @@ PetIBM employs regularized delta functions to transfer data between the Lagrangi
 Our code base includes several implementations of the immersed-boundary projection method\supercite{taira_colonius_2007}; we use the formulation of \citet{li_et_al_2016} for all computations of the present study.
 These methods fall into the category of diffuse-interface methods, as the discrete delta function smears the solution over few grid cells around the boundary.
 
-Each time step, we solve three linear systems to sequentially compute an intermediate velocity field, the Lagrangian forces, and the pressure.
-The system for the velocity is solved using a stabilized bi-conjugate gradient method (via the PETSc library) with a Jacobi preconditioner and a convergence criterion based on the absolute $L_2$-norm of the residual set to $atol = 10^{-6}$.
+Each time step, we successively solve three linear systems to an intermediate velocity field, the Lagrangian forces, and the pressure field.
+The system for the velocity is solved using a stabilized bi-conjugate gradient method (from the PETSc library) with a Jacobi preconditioner and a convergence criterion based on the absolute $L_2$-norm of the residual set to $atol = 10^{-6}$.
 We solve the system for the Lagrangian forces with a direct solver (SuperLU\_dist library).
 The pressure Poisson system is solved with a conjugate-gradient method using a classical algebraic multigrid technique (via the NVIDIA AmgX library); here, too, convergence is reached when the absolute $L_2$-norm of the residual is $10^{-6}$.
 
@@ -104,9 +105,9 @@ Following the original study, we also define the propulsive efficiency of the wi
 \end{equation}
 
 where $P$ is the hydrodynamic power, and the overline symbol represents a cycle-averaged quantity.
-(Inline with the original study, we only consider positive power to compute the average.)
+(Inline with the original study, we only consider the positive power to compute the average.)
 
-While \citet{li_dong_2016} do not report explicitly how the hydrodynamic power was computed, we feel the need to elaborate on it in the context of a diffuse-interface immersed boundary.
+While \citet{li_dong_2016} do not report explicitly how they computed the hydrodynamic power, we feel the need to elaborate on it in the context of a diffuse-interface immersed boundary.
 The regularized delta kernel smears the solution near the body.
 It means that the solution within the support of the kernel may contain spurious artifacts.
 To avoid this problem, the surface pressure is defined as the fluid pressure interpolated at a distance of $3\%$ of the chord length along the wing normal on each side of the flat surface.
@@ -115,37 +116,36 @@ In other words, the hydrodynamic power is defined as the integral over an expand
 \section{Reproducible computational workflow}
 
 The final product of the original study is a published manuscript in the journal Physics of Fluids.
-Although the manuscript is well detailed, the code and input data used to produce the results were not made publicly available by the authors.
-In that regard, we consider the study to not be computationally reproducible.
-Thus, we aim to replicate the scientific findings claimed in the original study with our own research software stack, to deliver reproducible results.
+Although the manuscript is well detailed, the code and input data used to produce the computational results were not made publicly available by the authors.
+In that regard, we consider the study to not be reproducible.
+Thus, we aim to replicate the scientific findings claimed in the original study with our own research software stack and deliver reproducible results.
 
-PetIBM\supercite{chuang_et_al_2018} is developed in the open under the permissive (non-copyleft) 3-Clause BSD license, version-controlled with Git, and hosted on a public GitHub repository.
+PetIBM\supercite{chuang_et_al_2018} is developed in the open under the permissive (non-copyleft) 3-Clause BSD license, version-controlled with Git, and hosted on a public GitHub repository.\footnote{PetIBM: \url{github.com/barbagroup/petibm}}.
 Each major release of the software is archived on the data repository Zenodo.
 
-Our implementation of the three-dimensional rolling and pitching wing, which relies on PetIBM, is also open source and available on GitHub (\url{github.com/barbagroup/petibm-rollingpitching}) under the same license.
+Our implementation of the three-dimensional rolling and pitching wing, which relies on PetIBM, is also open source and available on GitHub\footnote{PetIBM-rollingpitching: \url{github.com/barbagroup/petibm-rollingpitching}} under the same license.
+The repository contains all input data and processing scripts that were used to produce the computational results reported in the next section.
 This allows anyone to inspect the code, to verify the steps that were taken to produce computational results, and to modify and re-use it for other applications.
-In addition, the version-controlled repository contains all input data and processing scripts that were used to produce the computational results presented in the next section.
-The repository also contains \textsc{README} files to guide readers that may be interested in re-running the analysis.
-Upon acceptance of the present article, the application repository, as well as secondary data needed to reproduce the figures, have been archived on Zenodo with a digital-object identifier associated to it.
+The repository also includes \textsc{README} files to guide readers that may be interested in re-running the analysis.
+Upon acceptance of the present manuscript, the application repository, as well as the data needed to reproduce the figures, have been archived on Zenodo.
 
-All simulations reported in the present article ran on our University-managed high-performance-computing (HPC) cluster called Pegasus.
+We leveraged our University high-performance-computing (HPC) cluster, called Pegasus, to run all simulations reported here.
 (We used computational nodes with Dual 20-Core 3.70GHz Intel Xeon Gold 6148 processors and NVIDIA P100 GPU devices.)
-To reduce the burden of building PetIBM and its applications on the cluster, we used the container technology from Docker and Singularity (citations needed).
+To reduce the burden of building PetIBM and its applications on the cluster, we used the container technology from Docker\supercite{merkel_2014} and Singularity.\supercite{kurtzer_et_al_2017}
 Containers allow us to capture the conditions of analysis in a formatted image that can be shared with others.
 We have already used Docker containers in the past to create a reproducible workflow for scientific applications on the public cloud provider Microsoft Azure.\supercite{mesnard_barba_2020}
 Here, we aim to adopt a similar workflow on our local HPC cluster.
 Early in this replication study, we hit a snag: Docker is not available to users on Pegasus.
 Indeed, Docker is not available at most HPC centers for security reasons.
 Submitting container-based jobs with Docker implies running a Docker daemon (a background process) that requires root privileges that users do not and should not have on shared production clusters.
-Thus, we decided to leverage another container technology, Singularity, to conduct the replication study on Pegasus (citation needed).
-Singularity is more recent than Docker and was designed from the ground up to prevent escalation of user privileges.
-The technology has also the capability to convert Docker images into Singularity images.
+Thus, we decided to leverage the Singularity container technology to conduct the replication study on Pegasus.
+Singularity is more recent than Docker, was designed from the ground up to prevent escalation of user privileges, and is compatible with Docker images.
 
-Our reproducible workflow starts with creating a Docker image that installed PetIBM and its applications, as well as all their dependencies.
-We then push the image to a public registry on DockerHub.
+Our reproducible workflow starts with creating a Docker image that installs PetIBM and its applications, as well as all their dependencies.
+We then push the image to a public registry on DockerHub.\footnote{DockerHub registry: \url{hub.docker.com/repository/docker/mesnardo/petibm-rollingpitching}}
 Anyone interested in using the application code can now pull the image from the registry and spin up a Docker container to get a faithfully reproduced computational environment.
-Next, we use the cloud service Singularity Hub to build a Singularity image out of the Docker image.
-We finally pull the Singularity image on the cluster to be able to run container-based jobs.
+Next, we use the cloud service Singularity Hub to build a Singularity image\footnote{Singularity Hub registry: \url{singularity-hub.org/collections/2855}} out of the Docker image.
+We finally pull the Singularity image on the cluster where we run container-based jobs.
 
 \section{Results}
 
