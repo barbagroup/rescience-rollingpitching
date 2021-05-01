@@ -14,15 +14,18 @@ The minimum requirement for computational research to be reproducible is to make
 \citet{peng_2011} introduced the concept of a reproducibility spectrum, in which reproducible research is a ``minimum standard for judging scientific claims when full independent replication of a study is not possible'' or not available.
 The two extremes on the reproducibility spectrum are ``not reproducible'' (when a published manuscript is the sole deliverable from a study) and ``fully replicated'' (the gold standard for a study).
 
-In the past, we have undertaken a replication of our own results\supercite{krishnan_et_al_2014} and published the outputs and lessons learned from this exercise.\supercite{mesnard_barba_2017}
-We here aim to assess the effort needed to replicate the computational results from another research group and set our sights on a computational fluid dynamics study from Li and Dong,\supercite{li_dong_2016} that investigated the dynamics of pitching and rolling wings.
+This paper addresses reproducibility and replicability in computational fluid dynamics, a mature field and one of the oldest branches of computational science. 
+At the center of this field are the Navier-Stokes equations, which are notoriously difficult to solve numerically, with computational experiments often taking a long time, even on parallel compute clusters.
+Both this difficulty and the history of the field (with early progress done in secret defense laboratories) contribute to rather poor standards of reproducibility.
+Research results are regularly communicated via published articles without accompanying software or data.
 
+In the past, we have undertaken a replication of results from our own research group on unsteady fluid dynamics\supercite{krishnan_et_al_2014} and published the outputs and lessons learned from this exercise.\supercite{mesnard_barba_2017}
+We aim here to assess the effort needed to replicate the computational results from another research group and set our sights on a computational fluid dynamics study from Li and Dong\supercite{li_dong_2016} that investigated the dynamics of pitching and rolling wings.
 While many prior studies have focused on the pitching and/or heaving motion of three-dimensional wings, only few studies have looked at the combined rolling and pitching motion.
-As explained in \citet{li_dong_2016}, the pitching-rolling kinematics has the potential to serve as a better canonical model for the hydrodynamics of bio-inspired flapping propulsors.
-The authors carried on a parametric study, using their own research code, to quantify the effects of the Reynolds number, Strouhal number, aspect ratio, and rolling/pitching phase difference on the wake topology and the propulsive performance of flapping wings.
+As explained by \citet{li_dong_2016}, the pitching-rolling kinematics has the potential to serve as a better canonical model for the hydrodynamics of bio-inspired flapping propulsors.
+The authors carried out a parametric study, using their own research code, to quantify the effects of the Reynolds number, Strouhal number, aspect ratio, and rolling/pitching phase difference on the wake topology and the propulsive performance of flapping wings.
 \cref{tab:parameters} lists the parameters and values considered in the original study.
-
-The deliverable from this study is the journal publication itself; the computational code, input data, and conditions of analysis used to produce the numerical results were not made available.
+The deliverable from this study was the journal publication itself; the computational code, input data, and conditions of analysis used to produce the numerical results were not made available.
 Thus, referring back to Peng's reproducibility spectrum, we consider the study to be not reproducible.
 Our objective was to replicate the scientific findings claimed in the original study and to do it in a reproducible way.
 We have re-implemented the three-dimensional rolling and pitching kinematics in an open-source code shared on GitHub (\url{github.com/barbagroup/petibm-rollingpitching}) and prepared extensive reproducibility packages for all results.
