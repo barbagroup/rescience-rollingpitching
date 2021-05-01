@@ -920,8 +920,8 @@ As in the original study, we obtained a maximum propulsive efficiency for the ca
 
 \section{Conclusion}
 
-In this study, we attempt to replicate the scientific findings published in \citet{li_dong_2016} with our own research software PetIBM\supercite{chuang_et_al_2018}.
-Using a different immersed boundary method than the one in the original study, we observe similar features in the force production, wake topology, and propulsive performances of a pitching and rolling wing.
+In this study, we replicate the scientific findings published by \citet{li_dong_2016} using our own research software PetIBM,\supercite{chuang_et_al_2018}
+which implements a different immersed boundary method than the one in the original study. We observe similar features in the force production, wake topology, and propulsive performance of a pitching and rolling wing.
 Although our numerical values do not fully match those from the original study \citet{li_dong_2016}, we obtain the same trends and thus consider this replication attempt to be successful.
 
 A CFD solver typically outputs the solution of primary variables.
@@ -934,7 +934,7 @@ As Donoho and coworkers \citet{donoho_et_al_2008} once said: ``The only way we'd
 We made our best efforts to ensure that our replication study is reproducible.
 Our computational application makes use of fully open-source tools, and
 we created a GitHub repository for this study (\url{github.com/barbagroup/petibm-rollingpitching}).
-The repository contains the source code of the PetIBM application, as well as all input files of the simulations reported here and pre- and post-processing Python scripts.
+The repository contains the source code of the PetIBM application, as well as all input files of the simulations reported here, and pre- and post-processing Python scripts.
 We adopted a reproducible workflow to run computational simulations; it makes use of Docker images and Singularity recipes to capture the computational environment.
 With Singularity, we ran container-based jobs on our university-managed HPC cluster.
 The GitHub repository also contains the job-submission scripts that were use to run the simulations on our cluster; they can be adapted to run on other platforms if readers are interested in reproducing our results.
