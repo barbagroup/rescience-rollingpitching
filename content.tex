@@ -169,7 +169,7 @@ We keep the spatial grid uniform (with highest resolution) in the sub-area of th
 Outside this area, we also add an extra uniform layer with grid-spacing size $\Delta x = 0.05c$, in the sub-domain $\left[ -2c, 6c \right] \times \left[ -3c, 3c \right] \times \left[ -1c, 2c \right]$, which covers the near-wake region.
 (We opted for a smooth transition between the two uniform regions, in which the grid-cell widths are stretched with a constant ratio of $1.1$ in all directions, except in the streamwise direction behind the wing where we used a ratio of $1.03$.)
 Finally, the grid-cell width is stretched to the external boundaries with a constant ratio of $1.2$.
-To the readers interested in further inspecting the geometric characteristics of the grids used in present study, we used Python scripts to codify the grid parameters and saved them into PetIBM-readable \texttt{yaml} files (available on the GitHub repository).
+To the readers interested in further inspecting the geometric characteristics of the grids used in the present study: we used Python scripts to codify the grid parameters and saved them into PetIBM-readable \texttt{yaml} files (available on the GitHub repository).
 
 In the present study, we model the wing with a flat elliptical surface, discretized with Lagrangian markers uniformly distributed on its surface (with a similar resolution as the grid-spacing size of the background Eulerian grid).
 
@@ -919,27 +919,28 @@ As in the original study, we obtained a maximum propulsive efficiency for the ca
 
 In this study, we attempt to replicate the scientific findings published in \citet{li_dong_2016} with our own research software PetIBM\supercite{chuang_et_al_2018}.
 Using a different immersed boundary method than the one in the original study, we observe similar features in the force production, wake topology, and propulsive performances of a pitching and rolling wing.
-Although our numerical values do not fully match those from \citet{li_dong_2016}, we observe the same trends and thus consider this replication attempt to be successful.
+Although our numerical values do not fully match those from the original study \citet{li_dong_2016}, we obtain the same trends and thus consider this replication attempt to be successful.
 
 A CFD solver typically outputs the solution of primary variables.
 For example, PetIBM outputs the pressure and velocity fields, as well as the body forces.
-From there, we often use multiple post-processing scripts to generate the final data and figures reported and analyzed in the manuscript; it involves computing secondary data, such as the vorticity field, the aerodynamic power and forces.
-If the code is not made available, readers cannot inspect what has been done to produce these data; there could bugs introduced in these post-processing steps.
-If no code is available, we cannot for sure explain discrepancies observed between our replication and the original study.
-As \citet{donoho_et_al_2008} once said: ``The only way we'd ever get to the bottom of such a discrepancy is if we both worked reproducibly and studied detailed differences between code and data.''
+We often use multiple post-processing scripts to generate the final data and figures reported and analyzed in the manuscript; it involves computing secondary data, such as the vorticity field, the aerodynamic power and forces.
+If the code is not made available, readers cannot inspect what has been done to produce these data; bugs introduced in these post-processing steps would go undetected.
+If no code is available, we cannot explain discrepancies observed between our replication and the original study.
+As Donoho and coworkers \citet{donoho_et_al_2008} once said: ``The only way we'd ever get to the bottom of such a discrepancy is if we both worked reproducibly and studied detailed differences between code and data.''
 
-We made our best efforts to make our replication study reproducible.
-Our computational application makes use of open-source tools.
-We created a GitHub repository for this study (\url{github.com/barbagroup/petibm-rollingpitching}).
-The repository contains the source code of the PetIBM applications, as well as all input files of the simulations reported here and pre- and post-processing Python scripts.
+We made our best efforts to ensure that our replication study is reproducible.
+Our computational application makes use of fully open-source tools, and
+we created a GitHub repository for this study (\url{github.com/barbagroup/petibm-rollingpitching}).
+The repository contains the source code of the PetIBM application, as well as all input files of the simulations reported here and pre- and post-processing Python scripts.
 We adopted a reproducible workflow to run computational simulations; it makes use of Docker images and Singularity recipes to capture the computational environment.
-With Singularity, we ran container-based jobs on our University-managed HPC cluster.
+With Singularity, we ran container-based jobs on our university-managed HPC cluster.
 The GitHub repository also contains the job-submission scripts that were use to run the simulations on our cluster; they can be adapted to run on other platforms if readers are interested in reproducing our results.
 
-Admittedly, not everyone has access to a HPC cluster with GPU nodes and with Singularity installed.
-Without those features, it becomes difficult to fully reproduce our workflow.
+Admittedly, not everyone has access to an HPC cluster with GPU nodes and with Singularity installed.
+Lacking those resources, it becomes difficult to fully reproduce our workflow.
 However, we made the effort to deposit on Zenodo (DOI GOES HERE) the primary data (directly output from our CFD solver) and post-processing scripts needed to reproduce the figures of the present manuscript.
-Once the Zenodo repository downloaded, readers should be able to spin up a Docker container and run a Bash script to compute the secondary data and generate the figures.
+Once the Zenodo repository is downloaded, readers should be able to spin up a Docker container and run a Bash script to compute the secondary data and generate the figures,
+or generate different figures to explore the data in new ways.
 The Docker images produced and used for this study are stored on DockerHub (\url{hub.docker.com/repository/docker/mesnardo/petibm-rollingpitching}), under a basic free subscription.
 In the event Docker adopts a policy to automatically purge inactive images (those who have not been recently downloaded) from the Hub, the Dockerfiles are version-controlled on the GitHub repository and can be used to re-build the images.
 
