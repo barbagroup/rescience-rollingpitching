@@ -197,9 +197,9 @@ We investigated the effect of the grid-spacing size, the time-step size, and the
 To assess the effect of the grid-spacing size $\Delta x$ in the vicinity of the wing on the solution, we computed five flapping cycles on three grids: coarse ($\Delta x = 0.03c$), nominal ($\Delta x = 0.01c$) and fine ($\Delta x = 0.005c$).
 \cref{tab:independence_grid_charateristics} reports characteristics of the spatial grids used for the independence study.
 Note that the ``nominal'' grid in the original study contains $\sim 6.2 \times 10^6$ cells with smallest grid spacing $\Delta x = 0.03c$ near the wing.
-This is significantly coarse than our nominal grid, which contains $\sim 21.1 \times 10^6$ cells with $\Delta x = 0.01c$ in the vicinity of the wing.
+This is significantly coarser than our nominal grid, which contains $\sim 21.1 \times 10^6$ cells with $\Delta x = 0.01c$ in the vicinity of the wing.
 As seen in \cref{fig:independence_force_coefficients_dx}, the computed aerodynamic forces on our coarse mesh (similar resolution as their nominal grid) contains spurious artifacts.
-Spurious force oscillations exist in almost all immersed-boundary method, although their magnitudes depend on the approach used.
+Spurious force oscillations exist in almost all immersed-boundary methods, although their magnitudes depend on the approach used.
 We reduced the noise by increasing the grid resolution near the wing.
 
 \begin{figure}[!h]
@@ -245,9 +245,9 @@ Note that we used the nominal spatial grid ($\Delta x = 0.01c$) for the replicat
   \label{fig:independence_force_coefficients_disk}
 \end{figure}
 
-In the original study modeled the wing with an elliptical disk with a thickness equal to $3\%$ of the chord length.
-However, the immersed boundary method used for the present replication allows us to model thin volumes with flat surfaces.
-We compared the aerodynamic forces obtained on a disk to those on a flat plate.
+The original study modeled the wing with an elliptical disk of thickness equal to $3\%$ of the chord length.
+Since the immersed boundary method used for the present replication allows us to model thin volumes with flat surfaces,
+we compared the aerodynamic forces obtained on a disk to those on a flat plate.
 The history of the thrust coefficient (\cref{fig:independence_force_coefficients_disk}) is similar whether we use a disk or a flat plate.
 We note slightly larger magnitude in the first peak of the lift and in the peaks of the spanwise force when using a disk.
 Overall, the disk-based simulation does not really improve the solution and we decided to model the wing with a flat plate for the parametric study.
@@ -548,7 +548,7 @@ Also observable on \cref{fig:baseline_wake_topology:lateral} are the set of ``co
 \begin{figure}[!h]
   \centering
   \includegraphics[width=\linewidth]{Re200_St0.6_AR1.27_psi90/force_coefficients.png}
-  \caption{History of the thrust ($C_T$), lift ($C_L$), and spanwise ($C_Z$) coefficients during the fourth and fifth flapping cycles of a circular plate ($AR = 1.27$) with $St = 0.6$, $Re = 200$, and $\psi = 90^o$. We also report the digitized coefficients from Fig. 9 of \cite{li_dong_2016} and the instantaneous values of the instantaneous rolling and pitching angles (dashed blue line and dotted green line, respectively).}
+  \caption{History of the thrust ($C_T$), lift ($C_L$), and spanwise ($C_Z$) coefficients during the fourth and fifth flapping cycles of a circular plate ($AR = 1.27$) with $St = 0.6$, $Re = 200$, and $\psi = 90^o$. We also report the digitized coefficients from Fig.\ 9 of \cite{li_dong_2016} and the instantaneous values of the rolling and pitching angles (dashed blue line and dotted green line, respectively).}
   \label{fig:baseline_force_coefficients}
 \end{figure}
 
@@ -576,7 +576,7 @@ There is also a small production of drag when the plate starts to reverse its ro
 
 \subsection{Effect of the Strouhal number}
 
-Next, we look at the effect of the Strouhal number on the wake topology and aerodynamic performances.
+Next, we look at the effect of the Strouhal number on the wake topology and aerodynamic performance.
 We computed the three-dimensional flow around a circular flat plate ($AR = 1.27$) at Reynolds number $200$ with a fixed phase-difference angle $\psi = 90^o$, while varying the Strouhal number $St$.
 
 \begin{figure}[!h]
@@ -633,7 +633,7 @@ We computed the three-dimensional flow around a circular flat plate ($AR = 1.27$
 \end{table}
 
 \cref{fig:strouhal_wake_topology} shows lateral and top views of the shedding vortex pattern, at $t/T = 4.25$, obtained at Strouhal numbers $St = 0.4$ and $0.8$.
-(\cref{fig:baseline_wake_topology} shows the wake topology for $St = 0.6$ at the same time value.)
+(\cref{fig:baseline_wake_topology} shows the wake topology for $St = 0.6$ at the same time instant.)
 As reported in the original study, we note a decrease in the vorticity strength for the lower Strouhal number ($St = 0.4$), and a rapid evolution of the ``double-C''-shaped vortex structures into single vortex rings.
 At higher Strouhal number ($St = 0.8$), we observe more interaction between adjacent vortex rings.
 \citet{li_dong_2016} reported values of the oblique angle ($\alpha$), defined as the angle between the horizontal $x$-axis and the line passing through the first two shed vortex rings adjacent to the trailing-edge of the plate.
@@ -644,7 +644,7 @@ The authors observed a monotonic increase in the oblique angle with respect to t
 Here, we observe an increase in the oblique angle but until $St = 1.0$, and the inclination angle peaks at $St = 0.8$.
 Matching the observations reported in the original study, we also note the wake deflection along the mid-span axis (\cref{fig:strouhal_wake_topology:0.4_top,fig:strouhal_wake_topology:0.8_top,fig:baseline_wake_topology:top}).
 The main difference is that the authors reported that for the higher Strouhal number case, the wake starts deflecting towards the tip of the wing and then gradually deflects back in the far wake.
-We do not observe the back deflection in our simulation at Strouhal number $St = 0.8$ (\cref{fig:strouhal_wake_topology:0.8_top}), probably because we only computed five flapping cycles, while it looks like the simulation reported the original study was computed for a longer time (additional vortex rings are present in the wake).
+We do not observe the back deflection in our simulation at Strouhal number $St = 0.8$ (\cref{fig:strouhal_wake_topology:0.8_top}), probably because we only computed five flapping cycles, while it looks like the simulation reported in the original study was computed for a longer time (additional vortex rings are present in the wake).
 
 \begin{figure}[!h]
   \centering
@@ -716,8 +716,8 @@ Overall, we observe similar features as those published in \citet{li_dong_2016} 
   \label{tab:reynolds_thrust_stats}
 \end{table}
 
-\cref{fig:reynolds_force_coefficients} displays the history of the force coefficients over two flapping cycles for Reynolds numbers $100$, $200$, and $400$.
-\cref{tab:reynolds_thrust_stats} reports the mean and peak thrust coefficients over with a comparison to the data published in \citet{li_dong_2016}.
+\cref{fig:reynolds_force_coefficients} displays the history of the force coefficients over two flapping cycles for  $Re =100$, $200$, and $400$.
+\cref{tab:reynolds_thrust_stats} reports the mean and peak thrust coefficients comparing to the data published in \citet{li_dong_2016}.
 Although we obtained different statistics in the force coefficients (mean and peak values), we report similar trends as in the original study.
 First, the absolute peak value and mean value for the thrust coefficient increase with the Reynolds number.
 Second, the lift force peaks twice every half cycle, for all Reynolds numbers.
@@ -819,7 +819,7 @@ Furthermore, the maximum value for the spanwise coefficient remains the same, wh
 \subsection{Effect of the phase difference between pitching and rolling}
 
 For all simulations reported so far, the phase-difference angle between the rolling and pitching motions was set to $\psi = 90^o$.
-We now look at the effect of the phase difference on the wake topology and propulsive performances of a circular plate ($AR = 1.27$) at Reynolds number $Re = 200$ and Strouhal number $St = 0.6$.
+We now look at the effect of the phase difference on the wake topology and propulsive performance of a circular plate ($AR = 1.27$) at Reynolds number $Re = 200$ and Strouhal number $St = 0.6$.
 We ran six additional simulations with phase-difference angles $\psi = 60^o$, $70^o$, $80^o$, $100^o$, $110^o$, and $120^o$.
 
 \begin{figure}[!h]
@@ -895,7 +895,7 @@ In other words, larger phase-difference angles lead to larger deflection of the 
 We also note the wake oblique angle $\alpha$ increases with the phase-difference angles.
 \cref{tab:phase_angles} reports the wake oblique angles and wake deflection angles computed at time $t/T = 4.25$ for solutions obtained with various phase-difference angles.
 Although values for the oblique and deflection angles differ from the original study, the trends are similar.
-(Note we visually estimated these angles from the snapshots; we do not consider these measures to be very accurate but report them to show similar trend as in the original study.)
+(Note that we visually estimated these angles from the snapshots; we do not consider these measures to be very accurate but report them to show similar trend as in the original study.)
 
 \begin{figure}[!h]
   \centering
@@ -913,7 +913,7 @@ Although values for the oblique and deflection angles differ from the original s
 
 \cref{fig:phase_force_coefficients} shows the history of the force coefficients over two flapping cycles for a circular wing with phase-difference angles between $90^o$ and $120^o$.
 We observe an increase in the peak magnitudes for all force components as the angle increases.
-This increase coincides with the disappearance of the second peak in the thrust and lift forces, that was reported for the baseline case ($\psi = 90^o$).
+This increase coincides with the disappearance of the second peak in the thrust and lift forces that was reported for the baseline case ($\psi = 90^o$).
 \cref{fig:phase_efficiency} reports the computed mean thrust coefficients and propulsive performance obtained for angles between $60^o$ and $120^o$.
 The mean thrust coefficient increases as we increase the phase-difference angle.
 As in the original study, we obtained a maximum propulsive efficiency for the case with $\psi = 100^o$.
