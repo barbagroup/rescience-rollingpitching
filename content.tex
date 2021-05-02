@@ -549,7 +549,7 @@ Also observable on \cref{fig:baseline_wake_topology:lateral} are the set of ``co
 \begin{figure}[!h]
   \centering
   \includegraphics[width=\linewidth]{Re200_St0.6_AR1.27_psi90/force_coefficients.png}
-  \caption{History of the thrust ($C_T$), lift ($C_L$), and spanwise ($C_Z$) coefficients during the fourth and fifth flapping cycles of a circular plate ($AR = 1.27$) with $St = 0.6$, $Re = 200$, and $\psi = 90^o$. We also report the digitized coefficients from Fig.\ 9 of \cite{li_dong_2016} and the instantaneous values of the rolling and pitching angles (dashed blue line and dotted green line, respectively).}
+  \caption{History of the thrust ($C_T$), lift ($C_L$), and spanwise ($C_Z$) coefficients during the fourth and fifth flapping cycles of a circular plate ($AR = 1.27$) with $St = 0.6$, $Re = 200$, and $\psi = 90^o$. We also report the digitized coefficients from Fig. 9 of \cite{li_dong_2016} and the instantaneous values of the rolling and pitching angles (dashed blue line and dotted green line, respectively).}
   \label{fig:baseline_force_coefficients}
 \end{figure}
 
@@ -717,7 +717,7 @@ Overall, we observe similar features as those published in \citet{li_dong_2016} 
   \label{tab:reynolds_thrust_stats}
 \end{table}
 
-\cref{fig:reynolds_force_coefficients} displays the history of the force coefficients over two flapping cycles for  $Re =100$, $200$, and $400$.
+\cref{fig:reynolds_force_coefficients} displays the history of the force coefficients over two flapping cycles for $Re =100$, $200$, and $400$.
 \cref{tab:reynolds_thrust_stats} reports the mean and peak thrust coefficients comparing to the data published in \citet{li_dong_2016}.
 Although we obtained different statistics in the force coefficients (mean and peak values), we report similar trends as in the original study.
 First, the absolute peak value and mean value for the thrust coefficient increase with the Reynolds number.
@@ -930,7 +930,7 @@ For example, PetIBM outputs the pressure and velocity fields, as well as the bod
 We often use multiple post-processing scripts to generate the final data and figures reported and analyzed in the manuscript; it involves computing secondary data, such as the vorticity field, the aerodynamic power and forces.
 If the code is not made available, readers cannot inspect what has been done to produce these data; bugs introduced in these post-processing steps would go undetected.
 If no code is available, we cannot explain discrepancies observed between our replication and the original study.
-As Donoho and coworkers \citet{donoho_et_al_2008} once said: ``The only way we'd ever get to the bottom of such a discrepancy is if we both worked reproducibly and studied detailed differences between code and data.''
+As Donoho and coworkers\supercite{donoho_et_al_2008} once said: ``The only way we'd ever get to the bottom of such a discrepancy is if we both worked reproducibly and studied detailed differences between code and data.''
 
 We made our best efforts to ensure that our replication study is reproducible.
 Our computational application makes use of fully open-source tools, and
