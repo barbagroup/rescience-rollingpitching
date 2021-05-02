@@ -48,7 +48,7 @@ We have re-implemented the three-dimensional rolling and pitching kinematics in 
   \label{tab:parameters}
 \end{table}
 
-\section{Numerical methods and implementation}
+\section{Numerical methods and problem setup}
 
 The original study modeled the wing kinematics with an elliptical disk that undergoes a rolling motion around the streamwise $x$-axis and a pitching motion around its spanwise axis.
 The wing is characterized by the chord length $c$ and the spanwise length $S$.
@@ -85,10 +85,10 @@ This approach enables us to solve the equations on a simple fixed structured Car
 Different near-boundary treatments lead to different immersed boundary methods.
 The original study used a sharp-interface method with a ghost-cell methodology.\supercite{mittal_et_al_2008}
 PetIBM employs regularized delta functions to transfer data between the Lagrangian markers and the Eulerian grid points (on which the fluid equations are solved).
-Our code base includes several implementations of the immersed-boundary projection method\supercite{taira_colonius_2007}; we use the formulation of \citet{li_et_al_2016} for all computations of the present study.
+Our code base includes several implementations of the immersed-boundary projection method;\supercite{taira_colonius_2007} we use the formulation of \citet{li_et_al_2016} for all computations of the present study.
 These methods fall into the category of diffuse-interface methods, as the discrete delta function smears the solution over a few grid cells around the boundary.
 
-Each time step, we successively solve three linear systems to an intermediate velocity field, the Lagrangian forces, and the pressure field.
+Each time step, we successively solve three linear systems for an intermediate velocity field, the Lagrangian forces, and the pressure field.
 The system for the velocity is solved using a stabilized bi-conjugate gradient method (from the PETSc library) with a Jacobi preconditioner and a convergence criterion based on the absolute $L_2$-norm of the residual set to $atol = 10^{-6}$.
 We solve the system for the Lagrangian forces with a direct solver (SuperLU\_dist library).
 The pressure Poisson system is solved with a conjugate-gradient method using a classical algebraic multigrid technique (via the NVIDIA AmgX library); here, too, convergence is reached when the absolute $L_2$-norm of the residual is $10^{-6}$.
@@ -96,21 +96,22 @@ The pressure Poisson system is solved with a conjugate-gradient method using a c
 To quantify aerodynamic performance of the wing, we report the thrust, lift, and spanwise force coefficients, defined as
 
 \begin{equation}
-  C_{T, L, Z} = \frac{\left( T, L, Z \right)}{\frac{1}{2} \rho U_\infty^2 A_\text{plan}}
+  C_{T, L, Z} = \frac{\left( T, L, Z \right)}{\frac{1}{2} \rho U_\infty^2 A_\text{plan}},
 \end{equation}
 
 where $T$, $L$, and $Z$ are the thrust, lift, and spanwise forces, obtained by integrating the $x$, $y$, and $z$ components of the Lagrangian forces along the surface of the immersed boundary.
+The forces are a primary output variable of PetIBM.
 
-Following the original study, we also define the propulsive efficiency of the wing
+Following the original study, we also define the propulsive efficiency of the wing:
 
 \begin{equation}
-  \eta = \frac{\overline{T} U_\infty}{\overline{P}}
+  \eta = \frac{\overline{T} U_\infty}{\overline{P}},
 \end{equation}
 
 where $P$ is the hydrodynamic power, and the overline symbol represents a cycle-averaged quantity.
 (In line with the original study, we only consider the positive power to compute the average.)
 
-While \citet{li_dong_2016} do not report explicitly how they computed the hydrodynamic power, we feel the need to elaborate on it in the context of a diffuse-interface immersed boundary.
+While \citet{li_dong_2016} do not report how they computed the hydrodynamic power, we feel the need to elaborate on it in the context of a diffuse-interface immersed boundary.
 The regularized delta kernel smears the solution near the body.
 It means that the solution within the support of the kernel may contain spurious artifacts.
 To avoid this problem, the surface pressure is defined as the fluid pressure interpolated at a distance of $3\%$ of the chord length along the wing normal on each side of the flat surface.
