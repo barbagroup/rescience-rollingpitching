@@ -28,7 +28,7 @@ The authors carried out a parametric study, using their own research code, to qu
 The deliverable from this study was the journal publication itself; the computational code, input data, and conditions of analysis used to produce the numerical results were not made available.
 Thus, referring back to Peng's reproducibility spectrum, we consider the study to be not reproducible.
 Our objective was to replicate the scientific findings claimed in the original study and to do it in a reproducible way.
-We have re-implemented the three-dimensional rolling and pitching kinematics in an open-source code shared on GitHub (\url{github.com/barbagroup/petibm-rollingpitching}) and prepared extensive reproducibility packages for all results.
+We have re-implemented the three-dimensional rolling and pitching kinematics in an open-source code shared on GitHub\footnote{PetIBM-rollingpitching: \url{github.com/barbagroup/petibm-rollingpitching}} and prepared extensive reproducibility packages for all results.
 
 \begin{table}%[!h]
   \centering
@@ -934,7 +934,7 @@ As Donoho and coworkers\supercite{donoho_et_al_2008} once said: ``The only way w
 
 We made our best efforts to ensure that our replication study is reproducible.
 Our computational application makes use of fully open-source tools, and
-we created a GitHub repository for this study (\url{github.com/barbagroup/petibm-rollingpitching}).
+we created a GitHub repository\footnote{PetIBM-rollingpitching: \url{github.com/barbagroup/petibm-rollingpitching}} for this study.
 The repository contains the source code of the PetIBM application, as well as all input files of the simulations reported here, and pre- and post-processing Python scripts.
 We adopted a reproducible workflow to run computational simulations; it makes use of Docker images and Singularity recipes to capture the computational environment.
 With Singularity, we ran container-based jobs on our university-managed HPC cluster.
@@ -942,10 +942,10 @@ The GitHub repository also contains the job-submission scripts that were use to 
 
 Admittedly, not everyone has access to an HPC cluster with GPU nodes and with Singularity installed.
 Lacking those resources, it becomes difficult to fully reproduce our workflow.
-However, we made the effort to deposit on Zenodo (DOI GOES HERE) the primary data (directly output from our CFD solver) and post-processing scripts needed to reproduce the figures of the present manuscript.
+However, we made the effort to deposit on Zenodo\footnote{Repro-packs: \url{doi.org/10.5281/zenodo.4732946}} the primary data (directly output from our CFD solver) and post-processing scripts needed to reproduce the figures of the present manuscript.
 Once the Zenodo repository is downloaded, readers should be able to spin up a Docker container and run a Bash script to compute the secondary data and generate the figures,
 or generate different figures to explore the data in new ways.
-The Docker images produced and used for this study are stored on DockerHub (\url{hub.docker.com/repository/docker/mesnardo/petibm-rollingpitching}), under a basic free subscription.
+The Docker images produced and used for this study are stored on DockerHub\footnote{DockerHub registry: \url{hub.docker.com/repository/docker/mesnardo/petibm-rollingpitching}}, under a basic free subscription.
 In the event Docker adopts a policy to automatically purge inactive images (those who have not been recently downloaded) from the Hub, the Dockerfiles are version-controlled on the GitHub repository and can be used to re-build the images.
 
 We spent time engineering a transparent and reproducible workflow to produce the artifacts of this replication study.
