@@ -45,54 +45,54 @@
 % --- Font stack --------------------------------------------------------------
 
 %% PDFLaTeX
-%% \RequirePackage[light,condensed]{roboto} % Sans Serif
-%% \RequirePackage[default,light,semibold,tabular]{sourceserifpro} % Roman
-%% \RequirePackage[varqu]{zi4} % Monotype
-%% \makeatletter
-%% \def\bfseries@sf{sb}
-%% \makeatother
+ \RequirePackage[light,condensed]{roboto} % Sans Serif
+ \RequirePackage[default,light,semibold,tabular]{sourceserifpro} % Roman
+ \RequirePackage[varqu]{zi4} % Monotype
+ \makeatletter
+ \def\bfseries@sf{sb}
+ \makeatother
 
 % XeLaTeX
-\RequirePackage{fontspec}
-\defaultfontfeatures{Ligatures=TeX}
-\setmainfont{Source Serif Pro}[
-  Path = ./source-serif-pro/SourceSerifPro-, Extension = .otf,
-  UprightFont= Light,
-  ItalicFont = LightIt,
-  BoldFont   = Regular,
-  BoldItalicFont = It,
-]
-\setsansfont{Roboto Condensed}[
-  Path = ./roboto/RobotoCondensed-, Extension = .ttf,
-  UprightFont = Light,
-  BoldFont = Regular
-]
-
-\setmonofont{Source Code Pro}[
-  Path = ./source-code-pro/SourceCodePro-, Extension = .otf,
-  UprightFont = Light,
-  BoldFont = Regular
-]
-
-\newfontfamily\RobotoCon{Roboto Condensed}[
-  Path = ./roboto/RobotoCondensed-, Extension = .ttf,
-  UprightFont = Regular,
-  BoldFont = Bold
-]  
-
-\newfontfamily\Roboto{Roboto}[
-  Path = ./roboto/Roboto-, Extension = .ttf,
-  UprightFont = Regular,
-  BoldFont = Black
-]  
-
-\newfontfamily\SpaceRoboto{Roboto}[
-  Path = ./roboto/Roboto-, Extension = .ttf,
-  UprightFont = Regular,
-  BoldFont = Medium,
-  UprightFeatures={LetterSpace=35},
-  BoldFeatures={LetterSpace=35}
-]  
+%\RequirePackage{fontspec}
+%\defaultfontfeatures{Ligatures=TeX}
+%\setmainfont{Source Serif Pro}[
+%  Path = ./source-serif-pro/SourceSerifPro-, Extension = .otf,
+%  UprightFont= Light,
+%  ItalicFont = LightIt,
+%  BoldFont   = Regular,
+%  BoldItalicFont = It,
+%]
+%\setsansfont{Roboto Condensed}[
+%  Path = ./roboto/RobotoCondensed-, Extension = .ttf,
+%  UprightFont = Light,
+%  BoldFont = Regular
+%]
+%
+%\setmonofont{Source Code Pro}[
+%  Path = ./source-code-pro/SourceCodePro-, Extension = .otf,
+%  UprightFont = Light,
+%  BoldFont = Regular
+%]
+%
+%\newfontfamily\RobotoCon{Roboto Condensed}[
+%  Path = ./roboto/RobotoCondensed-, Extension = .ttf,
+%  UprightFont = Regular,
+%  BoldFont = Bold
+%]  
+%
+%\newfontfamily\Roboto{Roboto}[
+%  Path = ./roboto/Roboto-, Extension = .ttf,
+%  UprightFont = Regular,
+%  BoldFont = Black
+%]  
+%
+%\newfontfamily\SpaceRoboto{Roboto}[
+%  Path = ./roboto/Roboto-, Extension = .ttf,
+%  UprightFont = Regular,
+%  BoldFont = Medium,
+%  UprightFeatures={LetterSpace=35},
+%  BoldFeatures={LetterSpace=35}
+%]  
 
 
 \RequirePackage{microtype}
@@ -340,7 +340,9 @@
       }
     }
   }
-  \vspace{-.25em} \RobotoCon \articleTITLE
+  \vspace{-.25em} 
+  %\RobotoCon 
+  \articleTITLE
 }
 
 
