@@ -129,13 +129,13 @@ In that regard, we consider the study to not be reproducible.
 Thus, we aim to replicate the scientific findings claimed in the original study with our own research software stack and deliver reproducible results.
 
 PetIBM\supercite{chuang_et_al_2018} is developed in the open under the permissive (non-copyleft) 3-Clause BSD license, version-controlled with Git, and hosted on a public GitHub repository.\footnote{PetIBM: \url{github.com/barbagroup/petibm}}
-Each major release of the software is archived on the data repository Zenodo.
+Each significant release of the software is archived on the data repository Zenodo (e.g., version 0.5.1\supercite{mesnard_et_al_2020_zenodo_petibm}).
 
 Our implementation of the three-dimensional rolling and pitching wing, which relies on PetIBM, is also open source and available on GitHub\footnote{PetIBM-rollingpitching: \url{github.com/barbagroup/petibm-rollingpitching}} under the same license.
 The repository contains all input data and processing scripts that were used to produce the computational results reported in the next section.
 This allows anyone to inspect the code, to verify the steps that were taken to produce computational results, and to modify and re-use it for other applications.
 The repository also includes \textsc{README} files to guide readers that may be interested in re-running the analysis.
-Upon submission of the present manuscript, the application repository, as well as the data needed to reproduce the figures, have been archived on Zenodo.
+Upon submission of the present manuscript, the application repository has been archived on Zenodo,\supercite{mesnard_barba_2021_zenodo_petibm_app} as well as the data needed to reproduce the figures.\supercite{mesnard_barba_2021_zenodo_repropacks}
 
 We leveraged our University high-performance-computing (HPC) cluster, called Pegasus, to run all simulations reported here.
 (We used computational nodes with Dual 20-Core 3.70GHz Intel Xeon Gold 6148 processors and NVIDIA V100 GPU devices. More details about the hardware configuration and run times can be found in the README of GitHub repository.)
@@ -961,11 +961,15 @@ The GitHub repository also contains the job-submission scripts that were use to 
 
 Admittedly, not everyone has access to an HPC cluster with GPU nodes and with Singularity installed.
 Lacking those resources, it becomes difficult to fully reproduce our workflow.
-However, we made the effort to deposit on Zenodo\footnote{Repro-packs: \url{doi.org/10.5281/zenodo.4732946}} the primary data (directly output from our CFD solver) and post-processing scripts needed to reproduce the figures of the present manuscript.
+However, we made the effort to deposit on Zenodo\supercite{mesnard_barba_2021_zenodo_repropacks} the primary data (directly output from our CFD solver) and post-processing scripts needed to reproduce the figures of the present manuscript.
 Once the Zenodo repository is downloaded, readers should be able to spin up a Docker container and run a Bash script to compute the secondary data and generate the figures,
 or generate different figures to explore the data in new ways.
 The Docker images produced and used for this study are stored on DockerHub\footnote{DockerHub registry: \url{hub.docker.com/repository/docker/mesnardo/petibm-rollingpitching}}, under a basic free subscription.
-In the event Docker adopts a policy to automatically purge inactive images (those who have not been recently downloaded) from the Hub, the Dockerfiles are version-controlled on the GitHub repository and can be used to re-build the images.
+In the event Docker adopts a policy to automatically purge inactive images (those who have not been recently downloaded) from the Hub, we have also deposited on Zenodo the Docker and Singularity images used in this study.\supercite{mesnard_barba_2021_zenodo_images}
+Although our Dockerfiles are version-controlled on the GitHub repository, we cannot guarantee a successful re-build of the Docker images.
+Indeed, our Docker images rely on a base image from NVIDIA, which could very well change over time, altering the outcome of the build process (even failing it).
+Also, our Dockerfile makes use of the command \textsc{apt-get update}, which fetches newer versions of underlying libraries.
+The build of a Docker image may not reproducible given just the recipe (Dockerfile).
 
 We spent time engineering a transparent and reproducible workflow to produce the artifacts of this replication study.
 Surely, we cannot assert our steps will be fully reproducible in years from now; the software stack could very well become obsolete with new hardware generations.
