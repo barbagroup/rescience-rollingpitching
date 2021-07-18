@@ -112,10 +112,14 @@ where $P$ is the hydrodynamic power, and the overline symbol represents a cycle-
 (In line with the original study, we only consider the positive power to compute the average.)
 
 While \citet{li_dong_2016} do not report how they computed the hydrodynamic power, we feel the need to elaborate on it in the context of a diffuse-interface immersed boundary.
-The regularized delta kernel smears the solution near the body.
+Ideally, the surface pressure distribution would be obtained via trilinear interpolation from grid points onto body markers.
+However, the regularized delta kernel smears the solution near the body.
 It means that the solution within the support of the kernel may contain spurious artifacts.
-To avoid this problem, the surface pressure is defined as the fluid pressure interpolated at a distance of $3\%$ of the chord length along the wing normal on each side of the flat surface.
+To avoid this problem, the surface pressure is redefined as the fluid pressure interpolated along the wing normal on each side of the flat surface at a distance where all interpolating points lie outside the support of the delta kernel.
 In other words, the hydrodynamic power is defined as the integral over an expanded surface of the inner product between the interpolated fluid pressure and the body velocity.
+Since the delta kernel used in the present study has a support of $3$ cell widths (in each Cartesian direction), we chose to interpolate the pressure at $3\%$ of the chord length along the wing normal.
+For our baseline simulation ($AR = 1.27$, $Re = 200$, $St = 0.6$, and $\psi = 90^o$) and nominal grid (with smallest cell width $\Delta x = 0.01 c$), interpolating at $3\%$ returned a value of $\eta = 0.1635$ for the propulsive efficiency.
+Interpolating closer (at $2\%$) and further ($4\%$) to the surface did not significantly change the result: $\eta = 0.1613$ at $2\%$ and $0.1664$ at $4\%$, both within a relative difference of $1.8\%$.
 
 \section{Reproducible computational workflow}
 
