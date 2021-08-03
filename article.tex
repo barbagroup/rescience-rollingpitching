@@ -5,12 +5,15 @@
 \usepackage{graphicx}
 \usepackage{multirow}
 \usepackage[capitalize,noabbrev]{cleveref}
+\usepackage[symbol,perpage]{footmisc}
 
 \graphicspath{{figures/}}
 
 \begin{document}
 
 \renewcommand{\arraystretch}{1.2}
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
 
 \input{header.tex}
 \input{content.tex}
