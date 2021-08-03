@@ -970,7 +970,7 @@ In the event Docker adopts a policy to automatically purge inactive images (thos
 Although our Dockerfiles are version-controlled on the GitHub repository, we cannot guarantee a successful re-build of the Docker images.
 Indeed, our Docker images rely on a base image from NVIDIA, which could very well change over time, altering the outcome of the build process (even failing it).
 Also, our Dockerfile makes use of the command \textsc{apt-get update}, which fetches newer versions of underlying libraries.
-The build of a Docker image may not reproducible given just the recipe (Dockerfile).
+The build of a Docker image may not be reproducible given just the recipe (Dockerfile).
 
 We spent time engineering a transparent and reproducible workflow to produce the artifacts of this replication study.
 Surely, we cannot assert our steps will be fully reproducible in years from now; the software stack could very well become obsolete with new hardware generations.
