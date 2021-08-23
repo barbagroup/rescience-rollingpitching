@@ -39,7 +39,7 @@ keywords: rescience c, Computational Fluid Dynamics, C++, Python, Singularity co
 code:
   - url: https://github.com/barbagroup/petibm-rollingpitching
   - doi: 
-  - swh: 
+  - swh: swh:1:dir:087f13c9f78908967077071108092f245d1f707b
 
 # Data URL and DOI (optional if no data)
 data:
@@ -79,34 +79,34 @@ language: C++
 
 # For example, the URL of the GitHub issue where review actually occurred
 review: 
-  - url: 
+  - url: https://github.com/ReScience/submissions/issues/55
 
 contributors:
-  - name:
-    orcid: 
+  - name: Konrad Hinsen
+    orcid: 0000-0003-0330-9428
     role: editor
-  - name:
-    orcid:
+  - name: Chengyu Li
+    orcid: 0000-0002-8379-2423
     role: reviewer
-  - name:
-    orcid:
+  - name: Olivier Pantalé
+    orcid: 0000-0001-7367-5453
     role: reviewer
 
 # This information will be provided by the editor
 dates:
   - received:  May 2, 2021
-  - accepted:
-  - published: 
+  - accepted: August 20, 2021
+  - published: August 23, 2021
 
 # This information will be provided by the editor
 article:
-  - number: # Article number will be automatically assigned during publication
-  - doi:    # DOI from Zenodo
-  - url:    # Final PDF URL (Zenodo or rescience website?)
+  - number: 7 # Article number will be automatically assigned during publication
+  - doi:    10.5281/zenodo.5234931  # DOI from Zenodo
+  - url:    https://zenodo.org/record/5234931/files/article.pdf # Final PDF URL (Zenodo or rescience website?)
 
 # This information will be provided by the editor
 journal:
   - name:   "ReScience C"
   - issn:   2430-3658
-  - volume: 4
+  - volume: 7
   - issue:  1
