@@ -1,6 +1,8 @@
 # [Re] Three-dimensional wake topology and propulsive performance of low-aspect-ratio pitching-rolling plates
 
-This repository contains the source files of the manuscript submitted to [ReScience C](https://rescience.github.io/).
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.5234931.svg)](https://doi.org/10.5281/zenodo.5234931)
+
+This repository contains the source files of the manuscript published in [ReScience C](https://rescience.github.io/).
 The repository was forked from the [ReScience C template](https://github.com/ReScience/template).
 
 Authors:
