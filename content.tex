@@ -190,13 +190,6 @@ To the readers interested in further inspecting the geometric characteristics of
 
 In the present study, we model the wing with a flat elliptical surface, discretized with Lagrangian markers uniformly distributed on its surface (with a similar resolution as the grid-spacing size of the background Eulerian grid).
 
-\begin{figure}[!h]
-  \centering
-  \includegraphics[width=\textwidth]{independence/force_coefficients_compare_dx.png}
-  \caption{History of the thrust ($C_T$), lift ($C_L$), and spanwise ($C_Z$) coefficients over two flapping cycles of a circular plate ($AR = 1.27$) at Reynolds number $Re = 200$ and Strouhal number $St = 0.6$. We compare the solution obtained with PetIBM on three spatial grids: coarse ($\Delta x = 0.03c$), nominal ($\Delta x = 0.01c$), and fine ($\Delta x = 0.005c$). We also report the force coefficients published in \citet{li_dong_2016}.}
-  \label{fig:independence_force_coefficients_dx}
-\end{figure}
-
 As in the original study, we consider the case of a circular wing ($AR = 1.27$) with Reynolds number $Re = 200$, Strouhal number $St = 0.6$, and phase-difference angle $\psi = 90^o$, to assess independence in the numerical results.
 We investigated the effect of the grid-spacing size, the time-step size, and the convergence criterion of the iterative solvers, on the numerical solution.
 
