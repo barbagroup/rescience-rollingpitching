@@ -112,10 +112,14 @@ where $P$ is the hydrodynamic power, and the overline symbol represents a cycle-
 (In line with the original study, we only consider the positive power to compute the average.)
 
 While \citet{li_dong_2016} do not report how they computed the hydrodynamic power, we feel the need to elaborate on it in the context of a diffuse-interface immersed boundary.
-The regularized delta kernel smears the solution near the body.
+Ideally, the surface pressure distribution would be obtained via trilinear interpolation from grid points onto body markers.
+However, the regularized delta kernel smears the solution near the body.
 It means that the solution within the support of the kernel may contain spurious artifacts.
-To avoid this problem, the surface pressure is defined as the fluid pressure interpolated at a distance of $3\%$ of the chord length along the wing normal on each side of the flat surface.
+To avoid this problem, the surface pressure is redefined as the fluid pressure interpolated along the wing normal on each side of the flat surface at a distance where all interpolating points lie outside the support of the delta kernel.
 In other words, the hydrodynamic power is defined as the integral over an expanded surface of the inner product between the interpolated fluid pressure and the body velocity.
+Since the delta kernel used in the present study has a support of $3$ cell widths (in each Cartesian direction), we chose to interpolate the pressure at $3\%$ of the chord length along the wing normal.
+For our baseline simulation ($AR = 1.27$, $Re = 200$, $St = 0.6$, and $\psi = 90^o$) and nominal grid (with smallest cell width $\Delta x = 0.01 c$), interpolating at $3\%$ returned a value of $\eta = 0.1635$ for the propulsive efficiency.
+Interpolating closer (at $2\%$) and further ($4\%$) to the surface did not significantly change the result: $\eta = 0.1613$ at $2\%$ and $0.1664$ at $4\%$, both within a relative difference of $1.8\%$.
 
 \section{Reproducible computational workflow}
 
@@ -124,17 +128,18 @@ Although the manuscript is well detailed, the code and input data used to produc
 In that regard, we consider the study to not be reproducible.
 Thus, we aim to replicate the scientific findings claimed in the original study with our own research software stack and deliver reproducible results.
 
-PetIBM\supercite{chuang_et_al_2018} is developed in the open under the permissive (non-copyleft) 3-Clause BSD license, version-controlled with Git, and hosted on a public GitHub repository.\footnote{PetIBM: \url{github.com/barbagroup/petibm}}
-Each major release of the software is archived on the data repository Zenodo.
+PetIBM is developed in the open under the permissive (non-copyleft) 3-Clause BSD license, version-controlled with Git, and hosted on a public GitHub repository.\footnote{PetIBM: \url{github.com/barbagroup/petibm}}
+The software has also been submitted, reviewed, and published in the Journal of Open Source Software (\citet{chuang_et_al_2018}), where reviewers have installed the code, ran tests, and submitted feedback to improve it.
+Furthermore, each significant release of the software is archived on the data repository Zenodo (e.g., version 0.5.1\supercite{mesnard_et_al_2020_zenodo_petibm}).
 
 Our implementation of the three-dimensional rolling and pitching wing, which relies on PetIBM, is also open source and available on GitHub\footnote{PetIBM-rollingpitching: \url{github.com/barbagroup/petibm-rollingpitching}} under the same license.
 The repository contains all input data and processing scripts that were used to produce the computational results reported in the next section.
 This allows anyone to inspect the code, to verify the steps that were taken to produce computational results, and to modify and re-use it for other applications.
 The repository also includes \textsc{README} files to guide readers that may be interested in re-running the analysis.
-Upon submission of the present manuscript, the application repository, as well as the data needed to reproduce the figures, have been archived on Zenodo.
+Upon submission of the present manuscript, the application repository has been archived on Zenodo,\supercite{mesnard_barba_2021_zenodo_petibm_app} as well as the data needed to reproduce the figures.\supercite{mesnard_barba_2021_zenodo_repropacks}
 
 We leveraged our University high-performance-computing (HPC) cluster, called Pegasus, to run all simulations reported here.
-(We used computational nodes with Dual 20-Core 3.70GHz Intel Xeon Gold 6148 processors and NVIDIA V100 GPU devices.)
+(We used computational nodes with Dual 20-Core 3.70GHz Intel Xeon Gold 6148 processors and NVIDIA V100 GPU devices. More details about the hardware configuration and run times can be found in the README of GitHub repository.)
 To reduce the burden of building PetIBM and its applications on the cluster, we used the container technology from Docker\supercite{merkel_2014} and Singularity.\supercite{kurtzer_et_al_2017}
 Containers allow us to capture the conditions of analysis in a formatted image that can be shared with others.
 We have already used Docker containers in the past to create a reproducible workflow for scientific applications on the public cloud provider Microsoft Azure.\supercite{mesnard_barba_2020}
@@ -173,7 +178,15 @@ We keep the spatial grid uniform (with highest resolution) in the sub-area of th
 Outside this area, we also add an extra uniform layer with grid-spacing size $\Delta x = 0.05c$, in the sub-domain $\left[ -2c, 6c \right] \times \left[ -3c, 3c \right] \times \left[ -1c, 2c \right]$, which covers the near-wake region.
 (We opted for a smooth transition between the two uniform regions, in which the grid-cell widths are stretched with a constant ratio of $1.1$ in all directions, except in the streamwise direction behind the wing where we used a ratio of $1.03$.)
 Finally, the grid-cell width is stretched to the external boundaries with a constant ratio of $1.2$.
+\cref{fig:nominal_grid} shows a view of the nominal grid used for the simulations of a circular wing ($AR = 1.27$).
 To the readers interested in further inspecting the geometric characteristics of the grids used in the present study: we used Python scripts to codify the grid parameters and saved them into PetIBM-readable \texttt{yaml} files (available on the GitHub repository).
+
+\begin{figure}[!h]
+  \centering
+  \includegraphics[width=0.8\textwidth]{Re200_St0.6_AR1.27_psi90/meshgrid.png}
+  \caption{Sub-view of the nominal grid around a circular plate ($AR = 1.27$). Here, we show the sub-domain $10c \times 10c \times 10c$, centered on the hinge of the wing (cross marker). The full domain length is $30c \times 25c \times 25c$ and is discretized with 21.1 grid cells ($331 \times 302 \times 211$).}
+  \label{fig:nominal_grid}
+\end{figure}
 
 In the present study, we model the wing with a flat elliptical surface, discretized with Lagrangian markers uniformly distributed on its surface (with a similar resolution as the grid-spacing size of the background Eulerian grid).
 
@@ -942,12 +955,22 @@ The GitHub repository also contains the job-submission scripts that were use to 
 
 Admittedly, not everyone has access to an HPC cluster with GPU nodes and with Singularity installed.
 Lacking those resources, it becomes difficult to fully reproduce our workflow.
-However, we made the effort to deposit on Zenodo\footnote{Repro-packs: \url{doi.org/10.5281/zenodo.4732946}} the primary data (directly output from our CFD solver) and post-processing scripts needed to reproduce the figures of the present manuscript.
+However, we made the effort to deposit on Zenodo\supercite{mesnard_barba_2021_zenodo_repropacks} the primary data (directly output from our CFD solver) and post-processing scripts needed to reproduce the figures of the present manuscript.
 Once the Zenodo repository is downloaded, readers should be able to spin up a Docker container and run a Bash script to compute the secondary data and generate the figures,
 or generate different figures to explore the data in new ways.
 The Docker images produced and used for this study are stored on DockerHub\footnote{DockerHub registry: \url{hub.docker.com/repository/docker/mesnardo/petibm-rollingpitching}}, under a basic free subscription.
-In the event Docker adopts a policy to automatically purge inactive images (those who have not been recently downloaded) from the Hub, the Dockerfiles are version-controlled on the GitHub repository and can be used to re-build the images.
+In the event Docker adopts a policy to automatically purge inactive images (those who have not been recently downloaded) from the Hub, we have also deposited on Zenodo the Docker and Singularity images used in this study.\supercite{mesnard_barba_2021_zenodo_images}
+Although our Dockerfiles are version-controlled on the GitHub repository, we cannot guarantee a successful re-build of the Docker images.
+Indeed, our Docker images rely on a base image from NVIDIA, which could very well change over time, altering the outcome of the build process (even failing it).
+Also, our Dockerfile makes use of the command \textsc{apt-get update}, which fetches newer versions of underlying libraries.
+The build of a Docker image may not be reproducible given just the recipe (Dockerfile).
 
 We spent time engineering a transparent and reproducible workflow to produce the artifacts of this replication study.
 Surely, we cannot assert our steps will be fully reproducible in years from now; the software stack could very well become obsolete with new hardware generations.
 While the likelihood of the study being reproducible may decrease with the years, the transparency of the steps we took to generate the data shall remain constant.
+
+\section*{Acknowledgments}
+
+This work was supported by NSF Grant CCF-1747669.
+The authors would like to thank the reviewers, Olivier Pantal\'e and Chengyu Li, for their detailed feedback on the manuscript.
+They are also immensely grateful to the editor, Konrad Hinsen, for his contributions and constructive interactions.
